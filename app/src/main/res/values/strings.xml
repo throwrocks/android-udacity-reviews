@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">android-udacity-reviews</string>
-    <string name="title_activity_reviews_detail">ReviewsDetailActivity</string>
+    <string name="app_name">My Udacity Code Reviews</string>
+    <string name="title_activity_reviews_detail">Review Details</string>
     <string name="action_settings">Settings</string>
 </resources>
