@@ -2,6 +2,7 @@ package rocks.athrow.android_udacity_reviews.Data;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,8 +10,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import rocks.athrow.android_udacity_reviews.BuildConfig;
+import rocks.athrow.android_udacity_reviews.Utilities;
 
 /**
  * Created by joselopez on 3/10/16.
@@ -19,12 +22,39 @@ class API {
 
     Context mContext;
 
-    private static final String apiURI = "https://review-api.udacity.com/api/v1/me/submissions/completed";
+    private String reviewsAPIUrl = "https://review-api.udacity.com/api/v1/me/submissions/completed";
     private static final String apiKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
 
     // Constructor
-    public API(Context context){
+    public API(Context context) {
         this.mContext = context;
+    }
+
+    public String callAPI(String module, String dateStart, String dateEnd) {
+        ArrayList<String> params = new ArrayList<>();
+        boolean hasParams = false;
+        if (dateStart != null) {
+            params.add("start_date=" + dateStart);
+            hasParams = true;
+        }
+        if (dateEnd != null) {
+            params.add("end_date=" + dateEnd);
+            hasParams = true;
+        }
+        if (hasParams) {
+            Utilities util = new Utilities();
+            String UrlParams = util.buildStringFromArray(params, "&");
+            if (UrlParams != null) {
+                Log.e("urlParams ", UrlParams);
+                Log.e("reviewApiUrl ", reviewsAPIUrl);
+                reviewsAPIUrl = reviewsAPIUrl + "?" + UrlParams;
+                Log.e("params ", reviewsAPIUrl);
+            }
+        }else{
+            Log.e("params ", "no params");
+        }
+
+        return httpConnect(reviewsAPIUrl);
     }
 
     /**
@@ -32,13 +62,13 @@ class API {
      *
      * @return
      */
-    public String callAPI (){
+    private String httpConnect(String APIurl) {
         String results = null;
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         try {
             // Build the URL
-            Uri builtUri = Uri.parse(apiURI).buildUpon().build();
+            Uri builtUri = Uri.parse(APIurl).buildUpon().build();
             URL url = new URL(builtUri.toString());
             // Establish the connection
             urlConnection = (HttpURLConnection) url.openConnection();

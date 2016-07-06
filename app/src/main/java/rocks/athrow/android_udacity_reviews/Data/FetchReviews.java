@@ -9,14 +9,14 @@ import rocks.athrow.android_udacity_reviews.ReviewListAdapter;
 import rocks.athrow.android_udacity_reviews.ReviewsListActivity;
 
 /**
- * Created by joselopez on 7/5/16.
+ * FetchReviews
+ * A class to fetch Review data from the Udacity API
+ * and to handle calling the parse methods and the update database methods
  */
 public class FetchReviews extends AsyncTask<String, Void, Void> {
-    private static final String LOG_TAG = API.class.getSimpleName();
     private final Context mContext;
     private final ReviewListAdapter mAdapter;
     private ReviewsListActivity.ReviewsListFragmentCallback listener;
-
 
     // Constructor
     public FetchReviews(Context context, ReviewListAdapter adapter, ReviewsListActivity.ReviewsListFragmentCallback listener) {
@@ -28,26 +28,23 @@ public class FetchReviews extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... params) {
-
         String jsonResults;
         ContentValues[] parsedResults;
         // Create an API object
         API mAPI = new API(mContext);
+        // TODO: get todays date/time and the last review's date/time and pass them as parameters so we only fetch what's needed
         // Get the results from the API
-        jsonResults = mAPI.callAPI();
+        jsonResults = mAPI.callAPI("submissions_completed", "2016-06-16T10:25:58.841Z", "2016-07-17T10:30:26.393Z");
         //Parse the results if not null
         if (jsonResults != null) {
             Log.i("Parsed Results: ", "" + jsonResults);
             JSONParser parser = new JSONParser(mContext);
             parsedResults = parser.parseReviews(jsonResults);
             if (parsedResults != null) {
-
                 UpdateRealm updateRealm = new UpdateRealm(mContext);
                 updateRealm.updateReviews(parsedResults);
             }
         }
-
-
         return null;
     }
 
@@ -55,7 +52,6 @@ public class FetchReviews extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         mAdapter.notifyDataSetChanged();
-
         listener.onFetchReviewsCompleted();
 
     }

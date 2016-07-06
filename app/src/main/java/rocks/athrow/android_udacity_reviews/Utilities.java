@@ -1,7 +1,10 @@
 package rocks.athrow.android_udacity_reviews;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -71,8 +74,28 @@ public class Utilities {
      * StringSplit
      */
     public String[] stringSplit(String string, String splitCharacter) {
-        String[] items = string.split(splitCharacter);
-        return items;
+        return string.split(splitCharacter);
+
+    }
+
+    /**
+     * buildStringFromArray
+     * @param stringArray the String[] to convert
+     * @param separator the string separator
+     * @return the separated string
+     */
+    public String buildStringFromArray(ArrayList<String> stringArray, String separator){
+        if (stringArray.size() > 0) {
+            StringBuilder nameBuilder = new StringBuilder();
+            for (String n : stringArray) {
+                    nameBuilder.append(n).append(separator);
+                Log.i("loop", "loop");
+            }
+            nameBuilder.deleteCharAt(nameBuilder.length() - 1);
+            return nameBuilder.toString();
+        } else {
+            return null;
+        }
     }
 
 }
