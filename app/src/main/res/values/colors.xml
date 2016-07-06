@@ -8,4 +8,8 @@
     <color name="lightPrimaryColor">#CFD8DC</color>
     <color name="textIcons">#FFFFFF</color>
     <color name="dividerColor">#B6B6B6</color>
+
+    <color name="greenPassed">#00C853</color>
+    <color name="orangeFailed">#EF6C00</color>
+    <color name="grayCantReview">#757575</color>
 </resources>

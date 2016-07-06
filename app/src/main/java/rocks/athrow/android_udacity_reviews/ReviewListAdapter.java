@@ -1,5 +1,7 @@
 package rocks.athrow.android_udacity_reviews;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +20,15 @@ import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmRecyclerViewAdapte
  * ReviewListFragmentActivity RecyclerView
  */
 public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
+    private Context context;
+
     private class ViewHolder extends RecyclerView.ViewHolder {
         public TextView viewReviewId;
         public TextView viewProjectName;
         public TextView viewCompletedAt;
         public TextView viewUserName;
         public TextView viewResult;
+
         public ViewHolder(View view) {
             super(view);
             viewProjectName = (TextView) view.findViewById(R.id.review_item_project_name);
@@ -33,6 +38,10 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
             viewResult = (TextView) view.findViewById(R.id.review_result);
             viewReviewId = (TextView) view.findViewById(R.id.review_id);
         }
+    }
+
+    public ReviewListAdapter(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -55,12 +64,27 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
         String completedAt = util.formatDate(completedAtRaw);
         String userName = reviewRecord.getUser_name();
         String result = reviewRecord.getResult();
-        reviewListRecyclerView.viewReviewId.setText( id );
-        reviewListRecyclerView.viewProjectName.setText( projectName );
-        reviewListRecyclerView.viewCompletedAt.setText( completedAt );
-        reviewListRecyclerView.viewUserName.setText( userName );
-        reviewListRecyclerView.viewUserName.setText( userName );
-        reviewListRecyclerView.viewResult.setText( result );
+        reviewListRecyclerView.viewReviewId.setText(id);
+        reviewListRecyclerView.viewProjectName.setText(projectName);
+        reviewListRecyclerView.viewCompletedAt.setText(completedAt);
+        reviewListRecyclerView.viewUserName.setText(userName);
+        reviewListRecyclerView.viewUserName.setText(userName);
+
+
+        int resultBackgroundColor;
+        if (result.equals("passed")) {
+            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_passed) );
+        } else if (result.equals("failed")) {
+            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_failed) );
+        } else {
+            result = "can't review";
+            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_cant_review) );
+            reviewListRecyclerView.viewResult.setTextSize(10);
+        }
+
+
+
+        reviewListRecyclerView.viewResult.setText(result);
 
     }
 

@@ -6,23 +6,31 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
+ * Utilities
+ * General Utilities
  * Created by josel on 7/5/2016.
  */
 public class Utilities {
 
-    public String formatDate(String oldDateString){
+    /**
+     * formatDate
+     * This method is used to convert the dat format
+     *
+     * @param oldDateString yyyy-MM-dd'T'HH:mm:ss.SSS'Z
+     * @return newString MM/dd/yy
+     */
+    public String formatDate(String oldDateString) {
         final String OLD_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         final String NEW_FORMAT = "MM/dd/yy";
 
         String newDateString;
 
         SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT, Locale.getDefault());
-        try{
+        try {
             Date d = sdf.parse(oldDateString);
             sdf.applyPattern(NEW_FORMAT);
             newDateString = sdf.format(d);
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             return e.toString();
         }
 

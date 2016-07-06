@@ -30,7 +30,7 @@ public class ReviewsListFragmentActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Set the adapter with the query results
-        reviewListAdapter = new ReviewListAdapter();
+        reviewListAdapter = new ReviewListAdapter(getContext());
         // Fetch all the reviews from the API and update the database
         // TODO: Move to update action (swipe down to refresh)
         FetchReviews fetchReviews = new FetchReviews(getContext(), reviewListAdapter);
