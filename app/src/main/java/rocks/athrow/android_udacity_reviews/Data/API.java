@@ -16,13 +16,16 @@ import rocks.athrow.android_udacity_reviews.BuildConfig;
 import rocks.athrow.android_udacity_reviews.Utilities;
 
 /**
+ * API
+ * This class manages the connection to the Udacity API
  * Created by joselopez on 3/10/16.
  */
-class API {
+public class API {
 
     Context mContext;
 
     private String reviewsAPIUrl = "https://review-api.udacity.com/api/v1/me/submissions/completed";
+    private String studentFeedbacksUrl = "https://review-api.udacity.com/api/v1/me/student_feedbacks";
     private static final String apiKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
 
     // Constructor
@@ -30,7 +33,25 @@ class API {
         this.mContext = context;
     }
 
+    /**
+     * callAPI
+     * @param module the API module (supported: submittions_completed, student_feedbacks)
+     * @param dateStart the start date to retrieve results from
+     * @param dateEnd the end date to retrieve result to
+     * @return the API response in a string
+     */
     public String callAPI(String module, String dateStart, String dateEnd) {
+        Log.e("module ", module);
+        String APIUrl;
+        if ( module.equals("submissions_complete")){
+            APIUrl = reviewsAPIUrl;
+        }else if ( module.equals("student_feedbacks")){
+            APIUrl = studentFeedbacksUrl;
+        }else{
+            return "error: empty module argument";
+        }
+        Log.e("APIUrl ", APIUrl);
+
         ArrayList<String> params = new ArrayList<>();
         boolean hasParams = false;
         if (dateStart != null) {
@@ -47,20 +68,20 @@ class API {
             if (UrlParams != null) {
                 Log.e("urlParams ", UrlParams);
                 Log.e("reviewApiUrl ", reviewsAPIUrl);
-                reviewsAPIUrl = reviewsAPIUrl + "?" + UrlParams;
+                APIUrl = APIUrl + "?" + UrlParams;
                 Log.e("params ", reviewsAPIUrl);
             }
         }else{
             Log.e("params ", "no params");
         }
 
-        return httpConnect(reviewsAPIUrl);
+        return httpConnect(APIUrl);
     }
 
     /**
-     * callAPI
-     *
-     * @return
+     * httpConnect
+     * This method handles communicating with the API and converting the input stream into a string
+     * @return a json string to be used in a parsing method
      */
     private String httpConnect(String APIurl) {
         String results = null;
@@ -112,6 +133,7 @@ class API {
                 }
             }
         }
+        Log.i("json ", results);
         return results;
     }
 

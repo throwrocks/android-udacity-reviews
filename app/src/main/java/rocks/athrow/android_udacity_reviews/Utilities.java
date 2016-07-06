@@ -49,7 +49,6 @@ public class Utilities {
      */
     public String elapsedTime(String dateStart, String dateEnd) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-
         Date d1 = null;
         Date d2 = null;
         try {
@@ -67,7 +66,6 @@ public class Utilities {
         }
 
         return "";
-
     }
 
     /**

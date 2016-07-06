@@ -13,28 +13,31 @@ import rocks.athrow.android_udacity_reviews.ReviewsListActivity;
  * A class to fetch Review data from the Udacity API
  * and to handle calling the parse methods and the update database methods
  */
-public class FetchReviews extends AsyncTask<String, Void, Void> {
+public class FetchTask extends AsyncTask<String, Void, Void> {
     private final Context mContext;
+    private final String module;
     private final ReviewListAdapter mAdapter;
     private ReviewsListActivity.ReviewsListFragmentCallback listener;
 
     // Constructor
-    public FetchReviews(Context context, ReviewListAdapter adapter, ReviewsListActivity.ReviewsListFragmentCallback listener) {
+    public FetchTask(Context context, String module, ReviewListAdapter adapter, ReviewsListActivity.ReviewsListFragmentCallback listener) {
         this.mContext = context;
+        this.module = module;
         this.mAdapter = adapter;
-        this.listener=listener;
+        this.listener = listener;
+
 
     }
 
     @Override
     protected Void doInBackground(String... params) {
-        String jsonResults;
+        String jsonResults = null;
         ContentValues[] parsedResults;
         // Create an API object
         API mAPI = new API(mContext);
         // TODO: get todays date/time and the last review's date/time and pass them as parameters so we only fetch what's needed
         // Get the results from the API
-        jsonResults = mAPI.callAPI("submissions_completed", "2016-06-16T10:25:58.841Z", "2016-07-17T10:30:26.393Z");
+        jsonResults = mAPI.callAPI( module , "2016-06-16T10:25:58.841Z", "2016-07-17T10:30:26.393Z");
         //Parse the results if not null
         if (jsonResults != null) {
             Log.i("Parsed Results: ", "" + jsonResults);
@@ -45,6 +48,7 @@ public class FetchReviews extends AsyncTask<String, Void, Void> {
                 updateRealm.updateReviews(parsedResults);
             }
         }
+        Log.i("results", jsonResults);
         return null;
     }
 

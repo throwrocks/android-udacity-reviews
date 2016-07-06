@@ -16,7 +16,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
-import rocks.athrow.android_udacity_reviews.Data.FetchReviews;
+import rocks.athrow.android_udacity_reviews.Data.FetchTask;
 import rocks.athrow.android_udacity_reviews.Data.Review;
 import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmReviewsAdapter;
 
@@ -26,6 +26,8 @@ import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmReviewsAdapter;
 public class ReviewsListFragmentActivity extends Fragment implements ReviewsListActivity.ReviewsListFragmentCallback {
     ReviewListAdapter reviewListAdapter;
     private SwipeRefreshLayout swipeContainer;
+    private final String MODULE_REVIEWS = "submissions_completed";
+
 
 
     @Override
@@ -57,7 +59,7 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                FetchReviews fetchReviews = new FetchReviews(getContext(), reviewListAdapter,callback );
+                FetchTask fetchReviews = new FetchTask(getContext(), MODULE_REVIEWS, reviewListAdapter,callback );
                 fetchReviews.execute();
             }
         });
