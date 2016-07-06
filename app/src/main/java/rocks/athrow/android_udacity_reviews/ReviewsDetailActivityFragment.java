@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -19,12 +21,20 @@ public class ReviewsDetailActivityFragment extends Fragment {
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
-    public static final String ARG_REVIEW_ID = "review_id";
+    public static final String ARG_REVIEW_ID = "id";
     public static final String ARG_PROJECT_NAME = "project_name";
     public static final String ARG_USER_NAME = "user_name";
     public static final String ARG_RESULT = "result";
+    public static final String ARG_ASSIGNED_AT = "assigned_at";
     public static final String ARG_COMPLETED_AT= "completed_at";
+    public static final String ARG_ELAPSED_TIME = "elapsed_time";
     private String projectName;
+    private String reviewId;
+    private String userName;
+    private String assginedAt;
+    private String completedAt;
+    private String result;
+    private String elapsedTime;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -39,8 +49,12 @@ public class ReviewsDetailActivityFragment extends Fragment {
 
         // Get the review data from the intent extras
         projectName = getArguments().getString(ARG_PROJECT_NAME);
-        Log.e("bundle ", "" + getArguments());
-        Log.e("project name: ", "" + projectName);
+        reviewId = getArguments().getString(ARG_REVIEW_ID);
+        userName = getArguments().getString(ARG_USER_NAME);
+        assginedAt = getArguments().getString(ARG_ASSIGNED_AT);
+        completedAt = getArguments().getString(ARG_COMPLETED_AT);
+        result = getArguments().getString(ARG_RESULT);
+        elapsedTime = getArguments().getString(ARG_ELAPSED_TIME);
 
         if (getArguments().containsKey(ARG_PROJECT_NAME)) {
             // Load the dummy content specified by the fragment
@@ -49,9 +63,9 @@ public class ReviewsDetailActivityFragment extends Fragment {
 
 
             Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar);
+            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle("title");
+                appBarLayout.setTitle(projectName);
             }
         }
     }
@@ -63,9 +77,19 @@ public class ReviewsDetailActivityFragment extends Fragment {
 
 
         // Get the views
-        TextView projectNameView = (TextView) rootView.findViewById(R.id.review_detail_project_name);
+        TextView reviewIdView = (TextView) rootView.findViewById(R.id.review_detail_review_id);
+        TextView userNameView = (TextView) rootView.findViewById(R.id.review_detail_user_name);
+        TextView assignedAtView = (TextView) rootView.findViewById(R.id.review_detail_assigned_at);
+        TextView completedAtView = (TextView) rootView.findViewById(R.id.review_detail_completed_at);
+        TextView resultView = (TextView) rootView.findViewById(R.id.review_detail_result);
+        TextView elapsedTimeView = (TextView) rootView.findViewById(R.id.review_detail_elapsed_time);
         // Set the views
-        projectNameView.setText(projectName);
+        reviewIdView.setText(reviewId);
+        userNameView.setText(userName);
+        assignedAtView.setText(assginedAt);
+        completedAtView.setText(completedAt);
+        resultView.setText(result);
+        elapsedTimeView.setText(elapsedTime);
 
         return rootView;
     }

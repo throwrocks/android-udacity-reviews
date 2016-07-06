@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import rocks.athrow.android_udacity_reviews.Data.Review;
 import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmRecyclerViewAdapter;
@@ -61,19 +60,35 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
         ViewHolder reviewListRecyclerView = (ViewHolder) viewHolder;
         // Get the review record
         Review reviewRecord = getItem(position);
+        //------------------------------------------------------------------------------------------
         // Set the review variables
-        String id = Integer.toString(reviewRecord.getId());
+        //------------------------------------------------------------------------------------------
+        final String id = Integer.toString(reviewRecord.getId());
         final String projectName = reviewRecord.getProject_name();
-        String completedAt = reviewRecord.getCompleted_at();
+        final String assignedAt = reviewRecord.getAssigned_at();
+        final String completedAt = reviewRecord.getCompleted_at();
         final String userName = reviewRecord.getUser_name();
-        String result = reviewRecord.getResult();
-        // Format the completed date to MM/dd/YY
+        final String result = reviewRecord.getResult();
+        final String archiveUrl = reviewRecord.getArchive_url();
+        //------------------------------------------------------------------------------------------
+        // Format the dates for the List and Detail Views
+        //------------------------------------------------------------------------------------------
         Utilities util = new Utilities();
-        final String completedAtDisplay = util.formatDate(completedAt);
+        final String completedAtListDisplay = util.formatDate(completedAt, "MM/dd/yy");
+        final String completedAtDetailDisplay = util.formatDate(completedAt, "MM/dd/yy h:mm a");
+        final String assignedAtDetailDisplay = util.formatDate(assignedAt,  "MM/dd/yy h:mm a");
+        //------------------------------------------------------------------------------------------
+        // Get the elapsed time between start/end
+        //------------------------------------------------------------------------------------------
+        // TODO: Store this value in the database?
+        final String elapsedTime = util.elapsedTime(assignedAt, completedAt);
+        Log.i("elapsed ", elapsedTime );
+        //------------------------------------------------------------------------------------------
         // Set the views
+        //------------------------------------------------------------------------------------------
         reviewListRecyclerView.viewReviewId.setText(id);
         reviewListRecyclerView.viewProjectName.setText(projectName);
-        reviewListRecyclerView.viewCompletedAt.setText(completedAtDisplay);
+        reviewListRecyclerView.viewCompletedAt.setText(completedAtListDisplay);
         reviewListRecyclerView.viewUserName.setText(userName);
         reviewListRecyclerView.viewUserName.setText(userName);
 
@@ -95,9 +110,15 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
             @Override
             public void onClick(View view) {
                 Intent viewDetailsActivity = new Intent(context, ReviewsDetailActivity.class);
+                viewDetailsActivity.putExtra("id", id);
                 viewDetailsActivity.putExtra("project_name", projectName);
-                viewDetailsActivity.putExtra("completed_at", completedAtDisplay);
+                viewDetailsActivity.putExtra("assigned_at", assignedAtDetailDisplay);
+                viewDetailsActivity.putExtra("completed_at", completedAtDetailDisplay);
                 viewDetailsActivity.putExtra("user_name", userName);
+                viewDetailsActivity.putExtra("result", result);
+                viewDetailsActivity.putExtra("archive_url", archiveUrl);
+                viewDetailsActivity.putExtra("elapsed_time", elapsedTime);
+
                 context.startActivity(viewDetailsActivity);
             }
         });

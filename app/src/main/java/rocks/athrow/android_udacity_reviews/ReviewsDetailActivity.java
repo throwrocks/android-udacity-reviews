@@ -27,8 +27,16 @@ public class ReviewsDetailActivity extends AppCompatActivity {
             Bundle arguments = new Bundle();
             // Put the arguments in a bundle and pass them to the fragment
             arguments.putString(
+                    ReviewsDetailActivityFragment.ARG_REVIEW_ID,
+                    intent.getStringExtra(ReviewsDetailActivityFragment.ARG_REVIEW_ID)
+            );
+            arguments.putString(
                     ReviewsDetailActivityFragment.ARG_PROJECT_NAME,
                     intent.getStringExtra(ReviewsDetailActivityFragment.ARG_PROJECT_NAME)
+            );
+            arguments.putString(
+                    ReviewsDetailActivityFragment.ARG_USER_NAME,
+                    intent.getStringExtra(ReviewsDetailActivityFragment.ARG_USER_NAME)
             );
             arguments.putString(
                     ReviewsDetailActivityFragment.ARG_RESULT,
@@ -37,6 +45,14 @@ public class ReviewsDetailActivity extends AppCompatActivity {
             arguments.putString(
                     ReviewsDetailActivityFragment.ARG_COMPLETED_AT,
                     intent.getStringExtra(ReviewsDetailActivityFragment.ARG_COMPLETED_AT)
+            );
+            arguments.putString(
+                    ReviewsDetailActivityFragment.ARG_ASSIGNED_AT,
+                    intent.getStringExtra(ReviewsDetailActivityFragment.ARG_ASSIGNED_AT)
+            );
+            arguments.putString(
+                    ReviewsDetailActivityFragment.ARG_ELAPSED_TIME,
+                    intent.getStringExtra(ReviewsDetailActivityFragment.ARG_ELAPSED_TIME)
             );
 
 
