@@ -80,12 +80,14 @@ public class UpdateRealm {
                 String archive_url = value.getAsString("archive_url");
                 String udacity_key = value.getAsString("udacity_key");
                 String held_at = value.getAsString("held_at");
+                String student_notes = value.getAsString("notes");
                 newReview.setPrice(price);
                 newReview.setRepo_url(repo_url);
                 newReview.setCommit_sha(commit_sha);
                 newReview.setArchive_url(archive_url);
                 newReview.setUdacity_key(udacity_key);
                 newReview.setHeld_at(held_at);
+                newReview.setNotes(student_notes);
                 //----------------------------------------------------------------------------------
                 // Status and Result
                 //----------------------------------------------------------------------------------
@@ -101,17 +103,7 @@ public class UpdateRealm {
                 // Project data
                 //----------------------------------------------------------------------------------
                 String project_name = value.getAsString("project_name");
-                //String project_required_skills = value.getAsString("required_skills");
-                //int project_awaiting_review_count = value.getAsInteger("awaiting_review_count");
-                //String project_hash_tag = value.getAsString("hashtag");
-                //Boolean project_visible = value.getAsBoolean("visible");
-                //int project_audit_rubric_id = value.getAsInteger("audit_rubric_id");
                 newReview.setProject_name(project_name);
-                //newReview.setProject_required_skills(project_required_skills);
-                //newReview.setProject_awaiting_review_count(project_awaiting_review_count);
-                //newReview.setProject_hash_tag(project_hash_tag);
-                //newReview.setProject_visible(project_visible);
-                //newReview.setProject_audit_rubric_id(project_audit_rubric_id);
                 //----------------------------------------------------------------------------------
                 // + Copy to Realm
                 //----------------------------------------------------------------------------------

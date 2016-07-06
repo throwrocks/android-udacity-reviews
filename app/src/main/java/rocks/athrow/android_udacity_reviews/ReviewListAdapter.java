@@ -41,7 +41,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
             viewUserName = (TextView) view.findViewById(R.id.review_user_name);
             viewResult = (TextView) view.findViewById(R.id.review_result);
             viewReviewId = (TextView) view.findViewById(R.id.review_id);
-            viewFilename = (TextView) view.findViewById(R.id.review_detail_archive_filename);
+
         }
     }
 
@@ -72,6 +72,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
         final String userName = reviewRecord.getUser_name();
         final String result = reviewRecord.getResult();
         final String archiveUrl = reviewRecord.getArchive_url();
+        final String studentNotes = reviewRecord.getNotes();
         //------------------------------------------------------------------------------------------
         // Format the dates for the List and Detail Views
         //------------------------------------------------------------------------------------------
@@ -128,6 +129,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
                 viewDetailsActivity.putExtra("archive_url", archiveUrl);
                 viewDetailsActivity.putExtra("filename", fileName);
                 viewDetailsActivity.putExtra("elapsed_time", elapsedTime);
+                viewDetailsActivity.putExtra("notes", studentNotes);
 
                 context.startActivity(viewDetailsActivity);
             }

@@ -27,7 +27,7 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".ReviewListActivity"
-        tools:listitem="@layout/review_list_content" />
+        tools:listitem="@layout/reviews_list" />
 
     <FrameLayout
         android:id="@+id/review_detail_container"

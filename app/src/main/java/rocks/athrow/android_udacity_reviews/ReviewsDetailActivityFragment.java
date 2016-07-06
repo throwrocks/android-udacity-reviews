@@ -1,6 +1,8 @@
 package rocks.athrow.android_udacity_reviews;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -31,6 +34,7 @@ public class ReviewsDetailActivityFragment extends Fragment {
     public static final String ARG_ELAPSED_TIME = "elapsed_time";
     public static final String ARG_ARCHIVE_URL = "archive_url";
     public static final String ARG_FILENAME = "filename";
+    public static final String ARG_STUDENT_NOTES = "notes";
     private String projectName;
     private String reviewId;
     private String userName;
@@ -38,8 +42,10 @@ public class ReviewsDetailActivityFragment extends Fragment {
     private String completedAt;
     private String result;
     private String elapsedTime;
+    private String reviewUrl;
     private String archiveUrl;
     private String fileName;
+    private String studentNotes;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -60,8 +66,12 @@ public class ReviewsDetailActivityFragment extends Fragment {
         completedAt = getArguments().getString(ARG_COMPLETED_AT);
         result = getArguments().getString(ARG_RESULT);
         elapsedTime = getArguments().getString(ARG_ELAPSED_TIME);
+        reviewUrl = "https://review.udacity.com/#!/reviews/" + reviewId;
         archiveUrl = getArguments().getString(ARG_ARCHIVE_URL);
+        studentNotes = getArguments().getString(ARG_STUDENT_NOTES);
+
         fileName = getArguments().getString(ARG_FILENAME);
+
 
         if (getArguments().containsKey(ARG_PROJECT_NAME)) {
             // Load the dummy content specified by the fragment
@@ -90,7 +100,8 @@ public class ReviewsDetailActivityFragment extends Fragment {
         TextView completedAtView = (TextView) rootView.findViewById(R.id.review_detail_completed_at);
         TextView resultView = (TextView) rootView.findViewById(R.id.review_detail_result);
         TextView elapsedTimeView = (TextView) rootView.findViewById(R.id.review_detail_elapsed_time);
-        TextView filenameView = (TextView) rootView.findViewById(R.id.review_detail_archive_filename);
+        Button reviewButton = (Button) rootView.findViewById(R.id.review_details_project_review);
+        TextView studentNotesView = (TextView) rootView.findViewById(R.id.review_detail_student_notes);
         // Set the views
         reviewIdView.setText(reviewId);
         userNameView.setText(userName);
@@ -98,7 +109,9 @@ public class ReviewsDetailActivityFragment extends Fragment {
         completedAtView.setText(completedAt);
         resultView.setText(result);
         elapsedTimeView.setText(elapsedTime);
-        filenameView.setText(fileName);
+        reviewButton.setText(reviewUrl);
+        studentNotesView.setText(studentNotes);
+
 
         if (result.equals("passed")) {
             resultView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.badge_passed) );
@@ -108,6 +121,19 @@ public class ReviewsDetailActivityFragment extends Fragment {
             resultView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.badge_cant_review) );
 
         }
+
+        // Set the button to open the file
+        reviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url =  reviewUrl;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+
+
 
 
         return rootView;

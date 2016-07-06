@@ -2,19 +2,11 @@ package rocks.athrow.android_udacity_reviews.Data;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
-import rocks.athrow.android_udacity_reviews.Data.API;
 
 /**
  * Created by joselopez on 7/5/16.
@@ -78,12 +70,14 @@ public class JSONParser {
                 String archive_url = reviewRecord.getString("archive_url");
                 String udacity_key = reviewRecord.getString("udacity_key");
                 String held_at = reviewRecord.getString("held_at");
+                String student_notes = reviewRecord.getString("notes");
                 reviewValues.put("price", price);
                 reviewValues.put("repo_url", repo_url);
                 reviewValues.put("commit_sha", commit_sha);
                 reviewValues.put("archive_url", archive_url);
                 reviewValues.put("udacity_key", udacity_key);
                 reviewValues.put("held_at", held_at);
+                reviewValues.put("notes", student_notes);
                 //----------------------------------------------------------------------------------
                 // Status and Result
                 //----------------------------------------------------------------------------------
@@ -102,17 +96,7 @@ public class JSONParser {
                 //----------------------------------------------------------------------------------
                 JSONObject projectNode = reviewRecord.getJSONObject("project");
                 String project_name = projectNode.getString("name");
-                //String project_required_skills = projectNode.getString("required_skills");
-                //int project_awaiting_review_count = projectNode.getInt("awaiting_review_count");
-                //String project_hash_tag = projectNode.getString("hashtag");
-                //Boolean project_visible = projectNode.getBoolean("visible");
-                //int project_audit_rubric_id = projectNode.getInt("audit_rubric_id");
                 reviewValues.put("project_name", project_name);
-                //reviewValues.put("project_hash_tag", project_hash_tag);
-                //reviewValues.put("project_required_skills", project_required_skills);
-                //reviewValues.put("project_awaiting_review_count", project_awaiting_review_count);
-                //reviewValues.put("project_visible", project_visible);
-                //reviewValues.put("project_audit_rubric_id", project_audit_rubric_id);
                 //----------------------------------------------------------------------------------
                 // Add the ContentValues to the Array
                 //----------------------------------------------------------------------------------
@@ -121,8 +105,10 @@ public class JSONParser {
 
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+
         }
+
 
         return mContentValues;
     }

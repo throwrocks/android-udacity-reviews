@@ -36,6 +36,7 @@ public class Review extends RealmObject {
     String archive_url;
     String udacity_key;
     String held_at;
+    String notes;
     //----------------------------------------------------------------------------------
     // Submission data
     //----------------------------------------------------------------------------------
@@ -182,6 +183,14 @@ public class Review extends RealmObject {
 
     public void setHeld_at(String held_at) {
         this.held_at = held_at;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public String getStatus() {
