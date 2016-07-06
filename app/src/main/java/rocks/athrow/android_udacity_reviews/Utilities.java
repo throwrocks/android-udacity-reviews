@@ -21,7 +21,7 @@ public class Utilities {
      */
     public String formatDate(String oldDateString, String format) {
         final String OLD_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        final String NEW_FORMAT = format ;
+        final String NEW_FORMAT = format;
 
         String newDateString;
 
@@ -39,11 +39,12 @@ public class Utilities {
 
     /**
      * elapsedTime
+     *
      * @param dateStart
      * @param dateEnd
      * @return the elapsed hours and minutes
      */
-    public String elapsedTime(String dateStart, String dateEnd){
+    public String elapsedTime(String dateStart, String dateEnd) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
 
         Date d1 = null;
@@ -66,5 +67,12 @@ public class Utilities {
 
     }
 
+    /**
+     * StringSplit
+     */
+    public String[] stringSplit(String string, String splitCharacter) {
+        String[] items = string.split(splitCharacter);
+        return items;
+    }
 
 }

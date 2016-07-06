@@ -54,6 +54,14 @@ public class ReviewsDetailActivity extends AppCompatActivity {
                     ReviewsDetailActivityFragment.ARG_ELAPSED_TIME,
                     intent.getStringExtra(ReviewsDetailActivityFragment.ARG_ELAPSED_TIME)
             );
+            arguments.putString(
+                    ReviewsDetailActivityFragment.ARG_ARCHIVE_URL,
+                    intent.getStringExtra(ReviewsDetailActivityFragment.ARG_ARCHIVE_URL)
+            );
+            arguments.putString(
+                    ReviewsDetailActivityFragment.ARG_FILENAME,
+                    intent.getStringExtra(ReviewsDetailActivityFragment.ARG_FILENAME)
+            );
 
 
             ReviewsDetailActivityFragment fragment = new ReviewsDetailActivityFragment();

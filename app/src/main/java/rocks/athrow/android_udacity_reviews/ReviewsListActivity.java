@@ -7,24 +7,16 @@ import android.support.v7.widget.Toolbar;
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import rocks.athrow.android_udacity_reviews.Data.FetchReviews;
-
 public class ReviewsListActivity extends AppCompatActivity {
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
     private boolean mTwoPane;
-    ReviewListAdapter reviewListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews_list);
 
+        // Stetho used to inspect the Realm database
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
@@ -43,7 +35,7 @@ public class ReviewsListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-
+        // TODO: Implement two pane layout
         if (findViewById(R.id.review_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
@@ -53,8 +45,13 @@ public class ReviewsListActivity extends AppCompatActivity {
         }
     }
 
-
-
+    /**
+     * ReviewsListFragmentCallback
+     * An interface to update the UI after getting new reviews from the API
+     */
+    public interface ReviewsListFragmentCallback {
+        void onFetchReviewsCompleted();
+    }
 
 
 }

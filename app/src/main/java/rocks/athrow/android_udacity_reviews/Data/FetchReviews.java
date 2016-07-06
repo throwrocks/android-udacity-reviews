@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import rocks.athrow.android_udacity_reviews.ReviewListAdapter;
-import rocks.athrow.android_udacity_reviews.ReviewsListFragmentActivity;
+import rocks.athrow.android_udacity_reviews.ReviewsListActivity;
 
 /**
  * Created by joselopez on 7/5/16.
@@ -15,10 +15,14 @@ public class FetchReviews extends AsyncTask<String, Void, Void> {
     private static final String LOG_TAG = API.class.getSimpleName();
     private final Context mContext;
     private final ReviewListAdapter mAdapter;
+    private ReviewsListActivity.ReviewsListFragmentCallback listener;
+
+
     // Constructor
-    public FetchReviews(Context context, ReviewListAdapter adapter) {
+    public FetchReviews(Context context, ReviewListAdapter adapter, ReviewsListActivity.ReviewsListFragmentCallback listener) {
         this.mContext = context;
         this.mAdapter = adapter;
+        this.listener=listener;
 
     }
 
@@ -51,5 +55,8 @@ public class FetchReviews extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         mAdapter.notifyDataSetChanged();
+
+        listener.onFetchReviewsCompleted();
+
     }
 }

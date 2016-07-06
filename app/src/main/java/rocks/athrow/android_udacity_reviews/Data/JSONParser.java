@@ -33,7 +33,6 @@ public class JSONParser {
         try {
             JSONArray reviewsArray = new JSONArray(reviewsJSON);
             int reviewsQty = reviewsArray.length();
-            Log.e("qty ", Integer.toString(reviewsQty));
             mContentValues = new ContentValues[reviewsQty];
             for (int i = 0; i < reviewsQty; i++) {
                 JSONObject reviewRecord = reviewsArray.getJSONObject(i);
@@ -114,7 +113,6 @@ public class JSONParser {
                 //reviewValues.put("project_awaiting_review_count", project_awaiting_review_count);
                 //reviewValues.put("project_visible", project_visible);
                 //reviewValues.put("project_audit_rubric_id", project_audit_rubric_id);
-                Log.e(LOG_TAG, "" + reviewValues.size());
                 //----------------------------------------------------------------------------------
                 // Add the ContentValues to the Array
                 //----------------------------------------------------------------------------------

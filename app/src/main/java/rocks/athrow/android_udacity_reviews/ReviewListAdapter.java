@@ -30,6 +30,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
         public TextView viewCompletedAt;
         public TextView viewUserName;
         public TextView viewResult;
+        public TextView viewFilename;
 
         public ViewHolder(View view) {
             super(view);
@@ -40,6 +41,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
             viewUserName = (TextView) view.findViewById(R.id.review_user_name);
             viewResult = (TextView) view.findViewById(R.id.review_result);
             viewReviewId = (TextView) view.findViewById(R.id.review_id);
+            viewFilename = (TextView) view.findViewById(R.id.review_detail_archive_filename);
         }
     }
 
@@ -84,6 +86,13 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
         final String elapsedTime = util.elapsedTime(assignedAt, completedAt);
         Log.i("elapsed ", elapsedTime );
         //------------------------------------------------------------------------------------------
+        // Get the filename from the archive url
+        //------------------------------------------------------------------------------------------
+        String[] urlItems = util.stringSplit(archiveUrl,"/");
+        int urtlItemsCOunt = urlItems.length;
+        final String fileName = urlItems[urtlItemsCOunt-1];
+        Log.i("fileName ", fileName );
+        //------------------------------------------------------------------------------------------
         // Set the views
         //------------------------------------------------------------------------------------------
         reviewListRecyclerView.viewReviewId.setText(id);
@@ -117,6 +126,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
                 viewDetailsActivity.putExtra("user_name", userName);
                 viewDetailsActivity.putExtra("result", result);
                 viewDetailsActivity.putExtra("archive_url", archiveUrl);
+                viewDetailsActivity.putExtra("filename", fileName);
                 viewDetailsActivity.putExtra("elapsed_time", elapsedTime);
 
                 context.startActivity(viewDetailsActivity);
