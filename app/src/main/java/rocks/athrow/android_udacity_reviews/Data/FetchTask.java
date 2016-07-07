@@ -5,8 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.realm.Realm;
@@ -45,21 +43,36 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
         ContentValues[] parsedResults = null;
         // Create an API object
         API mAPI = new API(mContext);
+
+
         //------------------------------------------------------------------------------------------
-        // Set the DateStart and DateEnd for the query parameters (get most recent only)
+        // Get the DateStart and DateEnd for the query parameters (get most recent only)
         //------------------------------------------------------------------------------------------
-        // DateStart = Get the last completed date from the reviews
+        Date dateStart = null;
+        Date dateEnd = new Utilities().getTodaysDate(DATE_FORMAT);
+        // Begin Realm Transaction
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
         Realm.setDefaultConfiguration(realmConfig);
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        RealmQuery<RealmReview> query = realm.where(RealmReview.class);
-        RealmResults<RealmReview> results = query.findAll();
-        Date dateStart = results.maxDate("completed_at");
+        // REVIEWS - DateStart = Last completed_at date from the reviews
+        if (module.equals(MODULE_REVIEWS)) {
+            RealmQuery<RealmReview> reviewsQuery = realm.where(RealmReview.class);
+            RealmResults<RealmReview> reviewsResult = reviewsQuery.findAll();
+            if (reviewsResult.size() > 0) {
+                dateStart = reviewsResult.maxDate("completed_at");
+            }
+        }
+        // FEEDBACKS - DateStart = Last completed_at date from the feedbacks
+        if (module.equals(MODULE_FEEDBACKS)) {
+            RealmQuery<RealmFeedback> feedbacksQuery = realm.where(RealmFeedback.class);
+            RealmResults<RealmFeedback> feedbacksResult = feedbacksQuery.findAll();
+            if (feedbacksResult.size() > 0) {
+                dateStart = feedbacksResult.maxDate("created_at");
+            }
+        }
+        // Close realm
         realm.close();
-        // DateEnd = today's date
-        Utilities util = new Utilities();
-        Date dateEnd = util.getTodaysDate(DATE_FORMAT);
         //------------------------------------------------------------------------------------------
         // Get the results from the API
         //------------------------------------------------------------------------------------------

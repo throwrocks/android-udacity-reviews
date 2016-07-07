@@ -1,7 +1,5 @@
 package rocks.athrow.android_udacity_reviews;
 
-import android.util.Log;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
