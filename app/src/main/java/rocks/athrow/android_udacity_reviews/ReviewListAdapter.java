@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import rocks.athrow.android_udacity_reviews.Data.Review;
+import rocks.athrow.android_udacity_reviews.Data.RealmReview;
 import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmRecyclerViewAdapter;
 
 /**
@@ -20,7 +20,7 @@ import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmRecyclerViewAdapte
  * Binds the data from the Review Realm Objects to the
  * ReviewListFragmentActivity RecyclerView
  */
-public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
+public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
     private Context context;
 
     private class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,7 +61,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         ViewHolder reviewListRecyclerView = (ViewHolder) viewHolder;
         // Get the review record
-        Review reviewRecord = getItem(position);
+        RealmReview reviewRecord = getItem(position);
         //------------------------------------------------------------------------------------------
         // Set the review variables
         //------------------------------------------------------------------------------------------
@@ -85,14 +85,12 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<Review> {
         //------------------------------------------------------------------------------------------
         // TODO: Store this value in the database?
         final String elapsedTime = util.elapsedTime(assignedAt, completedAt);
-        Log.i("elapsed ", elapsedTime );
         //------------------------------------------------------------------------------------------
         // Get the filename from the archive url
         //------------------------------------------------------------------------------------------
         String[] urlItems = util.stringSplit(archiveUrl,"/");
         int urtlItemsCOunt = urlItems.length;
         final String fileName = urlItems[urtlItemsCOunt-1];
-        Log.i("fileName ", fileName );
         //------------------------------------------------------------------------------------------
         // Set the views
         //------------------------------------------------------------------------------------------

@@ -6,7 +6,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * Created by joselopez on 7/5/16.
  */
-public class Review extends RealmObject {
+public class RealmReview extends RealmObject {
     //----------------------------------------------------------------------------------
     // IDs
     //----------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ public class Review extends RealmObject {
     Boolean project_visible;
     int project_audit_rubric_id;
 
-    public Review(){
+    public RealmReview(){
     }
 
     public String getCompleted_at() {

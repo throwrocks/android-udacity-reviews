@@ -12,18 +12,26 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 /**
+ * UpdateRealm
+ * A class to handle updating the Realm database
  * Created by joselopez on 7/5/16.
  */
 public class UpdateRealm {
     private Context mContext;
+
     public UpdateRealm(Context mContext) {
         this.mContext = mContext;
     }
 
+    /**
+     * updateReviews
+     *
+     * @param reviews an array of ContentValues built from the JSONParser
+     */
     public void updateReviews(ContentValues[] reviews) {
         int reviewsCount = reviews.length;
-        Log.e("updateReviews Qty ","" + reviewsCount);
-        for (ContentValues value: reviews) {
+        Log.e("updateReviews Qty ", "" + reviewsCount);
+        for (ContentValues value : reviews) {
             //Log.e("value ","" + value.size());
             int findId = value.getAsInteger("id");
             RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
@@ -31,17 +39,16 @@ public class UpdateRealm {
             Realm realm = Realm.getDefaultInstance();
             realm.beginTransaction();
             // Build the query looking at all users:
-            RealmQuery<Review> query = realm.where(Review.class);
+            RealmQuery<RealmReview> query = realm.where(RealmReview.class);
             // Add query conditions:
             query.equalTo("id", findId);
-
             // Execute the query:
-            RealmResults<Review> results = query.findAll();
+            RealmResults<RealmReview> results = query.findAll();
             int resultsCount = results.size();
             // If record doesn't exist,. create it
-            if (resultsCount == 0 ) {
+            if (resultsCount == 0) {
                 // Create new Review object
-                Review newReview = new Review();
+                RealmReview newReview = new RealmReview();
                 //----------------------------------------------------------------------------------
                 // IDs
                 //----------------------------------------------------------------------------------
@@ -111,6 +118,75 @@ public class UpdateRealm {
 
             }
             realm.commitTransaction();
+            realm.close();
+
+        }
+    }
+
+    /**
+     * updateFeedbacks
+     *
+     * @param feedbacks an array of ContentValues built from the JSONParser
+     */
+    public void updateFeedbacks(ContentValues[] feedbacks) {
+        int feedbacksCount = feedbacks.length;
+        Log.e("feedbacks Qty ", "" + feedbacksCount);
+        for (ContentValues value : feedbacks) {
+            int findId = value.getAsInteger("id");
+            RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
+            Realm.setDefaultConfiguration(realmConfig);
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            // Build the query looking at all users:
+            RealmQuery<RealmFeedback> query = realm.where(RealmFeedback.class);
+            // Add query conditions:
+            query.equalTo("id", findId);
+            // Execute the query:
+            RealmResults<RealmFeedback> results = query.findAll();
+            int resultsCount = results.size();
+            // If record doesn't exist,. create it
+            if (resultsCount == 0) {
+                // Create new Review object
+                RealmFeedback newFeedback = new RealmFeedback();
+                //----------------------------------------------------------------------------------
+                // IDs
+                //----------------------------------------------------------------------------------
+                int id = value.getAsInteger("id");
+                int rubric_id = value.getAsInteger("rubric_id");
+                int submission_id = value.getAsInteger("submission_id");
+                int user_id = value.getAsInteger("id");
+                int grader_id = value.getAsInteger("grader_id");
+                //int project_id = value.getAsInteger("id");
+                String project_name = value.getAsString("project_name");
+                newFeedback.setId(id);
+                newFeedback.setRubric_id(rubric_id);
+                newFeedback.setSubmission_id(submission_id);
+                newFeedback.setUser_id(user_id);
+                newFeedback.setGrader_id(grader_id);
+                //newFeedback.setProject_id(project_id);
+                newFeedback.setProject_name(project_name);
+                //----------------------------------------------------------------------------------
+                // Feedback information
+                //----------------------------------------------------------------------------------
+                int rating = value.getAsInteger("rating");
+                String body = value.getAsString("body");
+                newFeedback.setRating(rating);
+                newFeedback.setBody(body);
+                //----------------------------------------------------------------------------------
+                // Dates
+                //----------------------------------------------------------------------------------
+                String created_at = value.getAsString("created_at");
+                String updated_at = value.getAsString("updated_at");
+                newFeedback.setCreated_at(created_at);
+                newFeedback.setUpdated_at(updated_at);
+                //----------------------------------------------------------------------------------
+                // + Copy to Realm
+                //----------------------------------------------------------------------------------
+                realm.copyToRealmOrUpdate(newFeedback);
+
+            }
+            realm.commitTransaction();
+            realm.close();
 
         }
     }

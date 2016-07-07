@@ -17,10 +17,16 @@ public class JSONParser {
     Context mContext;
 
     // Constructor
-    public JSONParser(Context context){
+    public JSONParser(Context context) {
         this.mContext = context;
     }
 
+    /**
+     * parseReviews
+     *
+     * @param reviewsJSON a string of results from submissions completed API call
+     * @return a ContentValues array with the results as ContentValues
+     */
     public ContentValues[] parseReviews(String reviewsJSON) {
         try {
             JSONArray reviewsArray = new JSONArray(reviewsJSON);
@@ -103,12 +109,70 @@ public class JSONParser {
                 mContentValues[i] = reviewValues;
             }
 
-        }
-        catch (JSONException e) {
-            //e.printStackTrace();
-
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
+        return mContentValues;
+    }
+
+    /**
+     * parseFeedbacks
+     *
+     * @param feedbacksJSON a string of results from student feedbacks API call
+     * @return a ContentValues array with the results as ContentValues
+     */
+    public ContentValues[] parseFeedbacks(String feedbacksJSON) {
+        try {
+            JSONArray feedbacksArray = new JSONArray(feedbacksJSON);
+            int feedbacksQty = feedbacksArray.length();
+            mContentValues = new ContentValues[feedbacksQty];
+            for (int i = 0; i < feedbacksQty; i++) {
+                JSONObject reviewRecord = feedbacksArray.getJSONObject(i);
+                // Create a ContentValues object
+                ContentValues reviewValues = new ContentValues();
+                // Parse the individual data elements and build the ContentValues
+                //----------------------------------------------------------------------------------
+                // IDs
+                //----------------------------------------------------------------------------------
+                int id = reviewRecord.getInt("id");
+                int rubric_id = reviewRecord.getInt("rubric_id");
+                int submission_id = reviewRecord.getInt("submission_id");
+                int user_id = reviewRecord.getInt("id");
+                int grader_id = reviewRecord.getInt("grader_id");
+                //int project_id = reviewRecord.getInt("project_id");
+                JSONObject projectNode = reviewRecord.getJSONObject("project");
+                String project_name = projectNode.getString("name");
+                reviewValues.put("id", id);
+                reviewValues.put("submission_id", submission_id);
+                reviewValues.put("rubric_id", rubric_id);
+                reviewValues.put("user_id", user_id);
+                reviewValues.put("grader_id", grader_id);
+                //reviewValues.put("project_id", project_id);
+                reviewValues.put("project_name", project_name);
+                //----------------------------------------------------------------------------------
+                // Feedback information
+                //----------------------------------------------------------------------------------
+                int rating = reviewRecord.getInt("rating");
+                String body = reviewRecord.getString("body");
+                reviewValues.put("rating", rating);
+                reviewValues.put("body", body);
+                //----------------------------------------------------------------------------------
+                // Dates
+                //----------------------------------------------------------------------------------
+                String created_at = reviewRecord.getString("created_at");
+                String updated_at = reviewRecord.getString("updated_at");
+                reviewValues.put("created_at", created_at);
+                reviewValues.put("updated_at", updated_at);
+                //----------------------------------------------------------------------------------
+                // Add the ContentValues to the Array
+                //----------------------------------------------------------------------------------
+                mContentValues[i] = reviewValues;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return mContentValues;
     }

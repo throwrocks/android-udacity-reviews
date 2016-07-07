@@ -12,7 +12,7 @@ import rocks.athrow.android_udacity_reviews.Data.API;
 import rocks.athrow.android_udacity_reviews.Data.FetchTask;
 
 public class ReviewsListActivity extends AppCompatActivity {
-    private final String MODULE_FEEDBACKS = "student_feedbacks";
+
     private boolean mTwoPane;
 
     @Override

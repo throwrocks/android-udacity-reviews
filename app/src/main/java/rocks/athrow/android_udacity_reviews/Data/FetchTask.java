@@ -18,6 +18,8 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     private final String module;
     private final ReviewListAdapter mAdapter;
     private ReviewsListActivity.ReviewsListFragmentCallback listener;
+    private final String MODULE_REVIEWS = "submissions_completed";
+    private final String MODULE_FEEDBACKS = "student_feedbacks";
 
     // Constructor
     public FetchTask(Context context, String module, ReviewListAdapter adapter, ReviewsListActivity.ReviewsListFragmentCallback listener) {
@@ -25,27 +27,40 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
         this.module = module;
         this.mAdapter = adapter;
         this.listener = listener;
-
-
     }
 
     @Override
     protected Void doInBackground(String... params) {
         String jsonResults = null;
-        ContentValues[] parsedResults;
+        ContentValues[] parsedResults = null;
         // Create an API object
         API mAPI = new API(mContext);
         // TODO: get todays date/time and the last review's date/time and pass them as parameters so we only fetch what's needed
         // Get the results from the API
-        jsonResults = mAPI.callAPI( module , "2016-06-16T10:25:58.841Z", "2016-07-17T10:30:26.393Z");
+        jsonResults = mAPI.callAPI(module, null, null);
         //Parse the results if not null
         if (jsonResults != null) {
             Log.i("Parsed Results: ", "" + jsonResults);
             JSONParser parser = new JSONParser(mContext);
-            parsedResults = parser.parseReviews(jsonResults);
+            if (module.equals(MODULE_REVIEWS)) {
+                parsedResults = parser.parseReviews(jsonResults);
+            } else if (module.equals(MODULE_FEEDBACKS)) {
+                parsedResults = parser.parseFeedbacks(jsonResults);
+            }
+            // The parsedResults are not null, update the Realm database
             if (parsedResults != null) {
                 UpdateRealm updateRealm = new UpdateRealm(mContext);
-                updateRealm.updateReviews(parsedResults);
+                if (module.equals(MODULE_REVIEWS)) {
+                    //----------------------------------------------------------------------------------
+                    // Update RealmReviews
+                    //----------------------------------------------------------------------------------
+                    updateRealm.updateReviews(parsedResults);
+                } else if (module.equals(MODULE_FEEDBACKS)) {
+                    //----------------------------------------------------------------------------------
+                    // Update RealmFeedbacks
+                    //----------------------------------------------------------------------------------
+                    updateRealm.updateFeedbacks(parsedResults);
+                }
             }
         }
         Log.i("results", jsonResults);
@@ -55,8 +70,10 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        mAdapter.notifyDataSetChanged();
-        listener.onFetchReviewsCompleted();
+        if (module.equals(MODULE_REVIEWS)) {
+            mAdapter.notifyDataSetChanged();
+            listener.onFetchReviewsCompleted();
+        }
 
     }
 }

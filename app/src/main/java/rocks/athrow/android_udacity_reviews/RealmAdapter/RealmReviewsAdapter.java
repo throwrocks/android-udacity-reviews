@@ -3,7 +3,7 @@ package rocks.athrow.android_udacity_reviews.RealmAdapter;
 import android.content.Context;
 
 import io.realm.RealmResults;
-import rocks.athrow.android_udacity_reviews.Data.Review;
+import rocks.athrow.android_udacity_reviews.Data.RealmReview;
 
 /**
  * RealmReviewsAdapter
@@ -11,8 +11,8 @@ import rocks.athrow.android_udacity_reviews.Data.Review;
  * supporting the RealmObject type I want
  * http://gradlewhy.ghost.io/realm-results-with-recyclerview/
  */
-public class RealmReviewsAdapter extends RealmModelAdapter<Review> {
-    public RealmReviewsAdapter(Context context, RealmResults<Review> realmResults) {
+public class RealmReviewsAdapter extends RealmModelAdapter<RealmReview> {
+    public RealmReviewsAdapter(Context context, RealmResults<RealmReview> realmResults) {
         super(context, realmResults);
     }
 }

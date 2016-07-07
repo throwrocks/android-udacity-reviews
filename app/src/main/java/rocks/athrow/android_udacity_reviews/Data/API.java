@@ -23,7 +23,8 @@ import rocks.athrow.android_udacity_reviews.Utilities;
 public class API {
 
     Context mContext;
-
+    private final String MODULE_REVIEWS = "submissions_completed";
+    private final String MODULE_FEEDBACKS = "student_feedbacks";
     private String reviewsAPIUrl = "https://review-api.udacity.com/api/v1/me/submissions/completed";
     private String studentFeedbacksUrl = "https://review-api.udacity.com/api/v1/me/student_feedbacks";
     private static final String apiKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
@@ -43,9 +44,9 @@ public class API {
     public String callAPI(String module, String dateStart, String dateEnd) {
         Log.e("module ", module);
         String APIUrl;
-        if ( module.equals("submissions_complete")){
+        if ( module.equals(MODULE_REVIEWS)){
             APIUrl = reviewsAPIUrl;
-        }else if ( module.equals("student_feedbacks")){
+        }else if ( module.equals(MODULE_FEEDBACKS)){
             APIUrl = studentFeedbacksUrl;
         }else{
             return "error: empty module argument";
