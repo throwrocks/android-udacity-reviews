@@ -21,6 +21,14 @@
         <item name="android:textColor">@color/primaryText</item>
     </style>
 
+    <style name="reviewStar">
+        <item name="android:background">@drawable/icon_star_unfilled</item>
+        <item name="android:layout_width">12dp</item>
+        <item name="android:layout_height">12dp</item>
+    </style>
+
+
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

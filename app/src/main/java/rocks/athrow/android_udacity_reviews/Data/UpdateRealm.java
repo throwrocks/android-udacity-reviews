@@ -188,6 +188,15 @@ public class UpdateRealm {
                 // + Copy to Realm
                 //----------------------------------------------------------------------------------
                 realm.copyToRealmOrUpdate(newFeedback);
+                //----------------------------------------------------------------------------------
+                // Update the project rating
+                //----------------------------------------------------------------------------------
+                RealmQuery<RealmReview> reviewsQuery = realm.where(RealmReview.class);
+                reviewsQuery.equalTo("id", submission_id);
+                RealmResults<RealmReview> reviewsResult = reviewsQuery.findAll();
+                if (reviewsResult.size() > 0) {
+                    reviewsResult.get(0).setFeedback_rating(rating);
+                }
 
             }
             realm.commitTransaction();

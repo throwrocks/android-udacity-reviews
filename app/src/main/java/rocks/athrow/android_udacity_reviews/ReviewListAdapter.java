@@ -2,12 +2,14 @@ package rocks.athrow.android_udacity_reviews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,7 +35,13 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         public TextView viewUserName;
         public TextView viewResult;
         public TextView viewFilename;
-
+        public LinearLayout viewRatingBox;
+        public TextView viewReviewNone;
+        public ImageView viewReviewStar1;
+        public ImageView viewReviewStar2;
+        public ImageView viewReviewStar3;
+        public ImageView viewReviewStar4;
+        public ImageView viewReviewStar5;
 
         public ViewHolder(View view) {
             super(view);
@@ -44,6 +52,13 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
             viewUserName = (TextView) view.findViewById(R.id.review_user_name);
             viewResult = (TextView) view.findViewById(R.id.review_result);
             viewReviewId = (TextView) view.findViewById(R.id.review_id);
+            viewRatingBox = (LinearLayout) view.findViewById(R.id.review_rating_box);
+            viewReviewNone = (TextView) view.findViewById(R.id.review_rating_none);
+            viewReviewStar1 = (ImageView) view.findViewById(R.id.review_rating_star1);
+            viewReviewStar2 = (ImageView) view.findViewById(R.id.review_rating_star2);
+            viewReviewStar3 = (ImageView) view.findViewById(R.id.review_rating_star3);
+            viewReviewStar4 = (ImageView) view.findViewById(R.id.review_rating_star4);
+            viewReviewStar5 = (ImageView) view.findViewById(R.id.review_rating_star5);
 
         }
     }
@@ -95,6 +110,10 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         int urtlItemsCount = urlItems.length;
         final String fileName = urlItems[urtlItemsCount-1];
         //------------------------------------------------------------------------------------------
+        // Get the rating
+        //------------------------------------------------------------------------------------------
+        int rating = reviewRecord.getFeedback_rating();
+        //------------------------------------------------------------------------------------------
         // Set the views
         //------------------------------------------------------------------------------------------
         reviewListRecyclerView.viewReviewId.setText(id);
@@ -102,6 +121,37 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         reviewListRecyclerView.viewCompletedAt.setText(completedAtListDisplay);
         reviewListRecyclerView.viewUserName.setText(userName);
         reviewListRecyclerView.viewUserName.setText(userName);
+
+        if ( rating == 0 ){
+            reviewListRecyclerView.viewReviewNone.setText("Not Rated");
+            reviewListRecyclerView.viewReviewNone.setVisibility(View.VISIBLE);
+            reviewListRecyclerView.viewRatingBox.setVisibility(View.GONE);
+        }else if ( rating > 0) {
+            reviewListRecyclerView.viewReviewNone.setVisibility(View.GONE);
+            reviewListRecyclerView.viewRatingBox.setVisibility(View.VISIBLE);
+            Drawable starFilled = ContextCompat.getDrawable(context, R.drawable.icon_star_filled);
+            if (rating == 1) {
+                reviewListRecyclerView.viewReviewStar1.setBackground(starFilled);
+            } else if (rating == 2) {
+                reviewListRecyclerView.viewReviewStar1.setBackground(starFilled);
+                reviewListRecyclerView.viewReviewStar2.setBackground(starFilled);
+            } else if (rating == 3) {
+                reviewListRecyclerView.viewReviewStar1.setBackground(starFilled);
+                reviewListRecyclerView.viewReviewStar2.setBackground(starFilled);
+                reviewListRecyclerView.viewReviewStar3.setBackground(starFilled);
+            } else if (rating == 4) {
+                reviewListRecyclerView.viewReviewStar1.setBackground(starFilled);
+                reviewListRecyclerView.viewReviewStar2.setBackground(starFilled);
+                reviewListRecyclerView.viewReviewStar3.setBackground(starFilled);
+                reviewListRecyclerView.viewReviewStar4.setBackground(starFilled);
+            } else if (rating == 5) {
+                reviewListRecyclerView.viewReviewStar1.setBackground(starFilled);
+                reviewListRecyclerView.viewReviewStar2.setBackground(starFilled);
+                reviewListRecyclerView.viewReviewStar3.setBackground(starFilled);
+                reviewListRecyclerView.viewReviewStar4.setBackground(starFilled);
+                reviewListRecyclerView.viewReviewStar5.setBackground(starFilled);
+            }
+        }
 
         String resultDisplay;
         if (result.equals("passed")) {

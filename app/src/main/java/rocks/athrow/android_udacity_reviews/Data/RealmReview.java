@@ -55,6 +55,10 @@ public class RealmReview extends RealmObject {
     int project_awaiting_review_count;
     Boolean project_visible;
     int project_audit_rubric_id;
+    //----------------------------------------------------------------------------------
+    // Added / Not in the API
+    //----------------------------------------------------------------------------------
+    int feedback_rating;
 
     public RealmReview(){
     }
@@ -274,4 +278,13 @@ public class RealmReview extends RealmObject {
     public void setProject_audit_rubric_id(int project_audit_rubric_id) {
         this.project_audit_rubric_id = project_audit_rubric_id;
     }
+
+    public int getFeedback_rating() {
+        return feedback_rating;
+    }
+
+    public void setFeedback_rating(int feedback_rating) {
+        this.feedback_rating = feedback_rating;
+    }
+
 }

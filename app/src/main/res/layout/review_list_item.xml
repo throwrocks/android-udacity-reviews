@@ -73,6 +73,46 @@
                 android:gravity="center"
                 android:textColor="@color/textIcons"
                 android:textSize="12sp" />
+            <TextView
+                android:visibility="gone"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:textColor="#BDBDBD"
+                android:id="@+id/review_rating_none"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingEnd="4dp"
+                android:id="@+id/review_rating_box"
+                android:paddingStart="4dp">
+
+                <ImageView
+                    style="@style/reviewStar"
+                    android:id="@+id/review_rating_star1"
+                    />
+                <ImageView
+                    style="@style/reviewStar"
+                    android:id="@+id/review_rating_star2"
+                   />
+                <ImageView
+                    style="@style/reviewStar"
+                    android:id="@+id/review_rating_star3"
+                   />
+                <ImageView
+                    style="@style/reviewStar"
+                    android:id="@+id/review_rating_star4"
+                    />
+                <ImageView
+                    style="@style/reviewStar"
+                    android:id="@+id/review_rating_star5"
+                    />
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
