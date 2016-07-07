@@ -28,6 +28,9 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
     private SwipeRefreshLayout swipeContainer;
     private final String MODULE_REVIEWS = "submissions_completed";
     private final String MODULE_FEEDBACKS = "student_feedbacks";
+    FetchTask fetchReviews;
+    FetchTask fetchFeedbacks;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Create a new adapter
@@ -57,9 +60,9 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                FetchTask fetchReviews = new FetchTask(getContext(), MODULE_REVIEWS, reviewListAdapter, callback);
+                fetchReviews = new FetchTask(getContext(), MODULE_REVIEWS, reviewListAdapter, callback);
                 fetchReviews.execute();
-                FetchTask fetchFeedbacks = new FetchTask(getContext(), MODULE_FEEDBACKS, null, null);
+                fetchFeedbacks = new FetchTask(getContext(), MODULE_FEEDBACKS, null, null);
                 fetchFeedbacks.execute();
 
             }
@@ -95,6 +98,19 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
         RealmReviewsAdapter realmAdapter = new RealmReviewsAdapter(getContext(), reviews);
         reviewListAdapter.setRealmAdapter(realmAdapter);
         reviewListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        swipeContainer.setRefreshing(false);
+        if (fetchReviews != null) {
+            fetchReviews.cancel(true);
+        }
+        if (fetchFeedbacks != null) {
+            fetchFeedbacks.cancel(true);
+        }
+
     }
 
     @Override

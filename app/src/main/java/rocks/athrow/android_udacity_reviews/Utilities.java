@@ -2,6 +2,7 @@ package rocks.athrow.android_udacity_reviews;
 
 import android.util.Log;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,84 +17,82 @@ import java.util.Locale;
 public class Utilities {
 
     /**
-     * formatDate
-     * This method is used to convert the dat format
-     *
-     * @param oldDateString yyyy-MM-dd'T'HH:mm:ss.SSS'Z
-     * @return newString MM/dd/yy
+     * getDateAsString
+     * Convert a date into a string
+     * @param date the date
+     * @param format the format in which to return the string
+     * @return the new formatted date string
      */
-    public String formatDate(String oldDateString, String format) {
-        final String OLD_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        final String NEW_FORMAT = format;
+    public String getDateAsString(Date date, String format) {
+        DateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+        return formatter.format(date);
+    }
 
-        String newDateString;
-
-        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT, Locale.getDefault());
+    /**
+     * getStringAsDate
+     * @param dateString a string in date format
+     * @param format the resulting date format
+     * @return a new date in the specified format
+     */
+    public Date getStringAsDate(String dateString, String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+        Date date = new Date();
         try {
-            Date d = sdf.parse(oldDateString);
-            sdf.applyPattern(NEW_FORMAT);
-            newDateString = sdf.format(d);
+            date = formatter.parse(dateString);
         } catch (ParseException e) {
-            return e.toString();
+            e.printStackTrace();
         }
-
-        return newDateString;
+        return date;
     }
 
     /**
      * elapsedTime
-     *
-     * @param dateStart
-     * @param dateEnd
+     * Get the elapsed time between two dates
+     * @param dateStart the date start
+     * @param dateEnd the date end
      * @return the elapsed hours and minutes
      */
-    public String elapsedTime(String dateStart, String dateEnd) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-        Date d1 = null;
-        Date d2 = null;
-        try {
-            d1 = format.parse(dateStart);
-            d2 = format.parse(dateEnd);
-            // Get msec from each, and subtract.
-            long diff = d2.getTime() - d1.getTime();
-            long diffSeconds = diff / 1000 % 60;
-            long diffMinutes = diff / (60 * 1000) % 60;
-            long diffHours = diff / (60 * 60 * 1000);
-            return Long.toString(diffHours) + ":" + Long.toString(diffMinutes);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return "";
+    public String elapsedTime(Date dateStart, Date dateEnd) {
+        long diff = dateEnd.getTime() - dateStart.getTime();
+        long diffMinutes = diff / (60 * 1000) % 60;
+        long diffHours = diff / (60 * 60 * 1000);
+        return Long.toString(diffHours) + ":" + Long.toString(diffMinutes);
     }
-
     /**
-     * StringSplit
+     * getTodaysDate
+     *
+     * @param format the date format in which to return the date
+     * @return today's date in the specified format
      */
-    public String[] stringSplit(String string, String splitCharacter) {
-        return string.split(splitCharacter);
-
+    public Date getTodaysDate(String format) {
+        Date date = new Date();
+        String dateString = getDateAsString(date, format);
+        return getStringAsDate(dateString, format);
     }
-
     /**
      * buildStringFromArray
      * @param stringArray the String[] to convert
-     * @param separator the string separator
+     * @param separator   the string separator
      * @return the separated string
      */
-    public String buildStringFromArray(ArrayList<String> stringArray, String separator){
+    public String buildStringFromArray(ArrayList<String> stringArray, String separator) {
         if (stringArray.size() > 0) {
             StringBuilder nameBuilder = new StringBuilder();
             for (String n : stringArray) {
-                    nameBuilder.append(n).append(separator);
-                Log.i("loop", "loop");
+                nameBuilder.append(n).append(separator);
             }
             nameBuilder.deleteCharAt(nameBuilder.length() - 1);
             return nameBuilder.toString();
         } else {
             return null;
         }
+    }
+    /**
+     * StringSplit
+     */
+    public String[] stringSplit(String string, String splitCharacter) {
+        return string.split(splitCharacter);
+
     }
 
 }

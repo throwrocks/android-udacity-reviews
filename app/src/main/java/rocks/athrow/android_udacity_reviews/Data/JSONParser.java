@@ -11,10 +11,10 @@ import org.json.JSONObject;
 /**
  * Created by joselopez on 7/5/16.
  */
-public class JSONParser {
+class JSONParser {
     private static final String LOG_TAG = API.class.getSimpleName();
-    ContentValues[] mContentValues;
-    Context mContext;
+    private ContentValues[] mContentValues;
+    private Context mContext;
 
     // Constructor
     public JSONParser(Context context) {

@@ -5,8 +5,17 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import rocks.athrow.android_udacity_reviews.ReviewListAdapter;
 import rocks.athrow.android_udacity_reviews.ReviewsListActivity;
+import rocks.athrow.android_udacity_reviews.Utilities;
 
 /**
  * FetchReviews
@@ -20,6 +29,7 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     private ReviewsListActivity.ReviewsListFragmentCallback listener;
     private final String MODULE_REVIEWS = "submissions_completed";
     private final String MODULE_FEEDBACKS = "student_feedbacks";
+    private final static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
     // Constructor
     public FetchTask(Context context, String module, ReviewListAdapter adapter, ReviewsListActivity.ReviewsListFragmentCallback listener) {
@@ -31,16 +41,31 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... params) {
-        String jsonResults = null;
+        String jsonResults;
         ContentValues[] parsedResults = null;
         // Create an API object
         API mAPI = new API(mContext);
-        // TODO: get todays date/time and the last review's date/time and pass them as parameters so we only fetch what's needed
+        //------------------------------------------------------------------------------------------
+        // Set the DateStart and DateEnd for the query parameters (get most recent only)
+        //------------------------------------------------------------------------------------------
+        // DateStart = Get the last completed date from the reviews
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
+        Realm.setDefaultConfiguration(realmConfig);
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        RealmQuery<RealmReview> query = realm.where(RealmReview.class);
+        RealmResults<RealmReview> results = query.findAll();
+        Date dateStart = results.maxDate("completed_at");
+        realm.close();
+        // DateEnd = today's date
+        Utilities util = new Utilities();
+        Date dateEnd = util.getTodaysDate(DATE_FORMAT);
+        //------------------------------------------------------------------------------------------
         // Get the results from the API
-        jsonResults = mAPI.callAPI(module, null, null);
+        //------------------------------------------------------------------------------------------
+        jsonResults = mAPI.callAPI(module, dateStart, dateEnd);
         //Parse the results if not null
         if (jsonResults != null) {
-            Log.i("Parsed Results: ", "" + jsonResults);
             JSONParser parser = new JSONParser(mContext);
             if (module.equals(MODULE_REVIEWS)) {
                 parsedResults = parser.parseReviews(jsonResults);
@@ -70,9 +95,14 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        if (module.equals(MODULE_REVIEWS)) {
-            mAdapter.notifyDataSetChanged();
-            listener.onFetchReviewsCompleted();
+        Log.i("results", "" + isCancelled());
+        if (!isCancelled()) {
+            if (module.equals(MODULE_REVIEWS)) {
+                mAdapter.notifyDataSetChanged();
+            }
+            if (listener != null) {
+                listener.onFetchReviewsCompleted();
+            }
         }
 
     }

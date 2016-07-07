@@ -1,5 +1,7 @@
 package rocks.athrow.android_udacity_reviews.Data;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -23,10 +25,10 @@ public class RealmReview extends RealmObject {
     //----------------------------------------------------------------------------------
     // Dates
     //----------------------------------------------------------------------------------
-    String created_at;
-    String updated_at;
-    String assigned_at;
-    String completed_at;
+    Date created_at;
+    Date updated_at;
+    Date assigned_at;
+    Date completed_at;
     //----------------------------------------------------------------------------------
     // Submission data
     //----------------------------------------------------------------------------------
@@ -57,11 +59,11 @@ public class RealmReview extends RealmObject {
     public RealmReview(){
     }
 
-    public String getCompleted_at() {
+    public Date getCompleted_at() {
         return completed_at;
     }
 
-    public void setCompleted_at(String completed_at) {
+    public void setCompleted_at(Date completed_at) {
         this.completed_at = completed_at;
     }
 
@@ -113,27 +115,27 @@ public class RealmReview extends RealmObject {
         this.user_name = user_name;
     }
 
-    public String getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public Date getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
     }
 
-    public String getAssigned_at() {
+    public Date getAssigned_at() {
         return assigned_at;
     }
 
-    public void setAssigned_at(String assigned_at) {
+    public void setAssigned_at(Date assigned_at) {
         this.assigned_at = assigned_at;
     }
 

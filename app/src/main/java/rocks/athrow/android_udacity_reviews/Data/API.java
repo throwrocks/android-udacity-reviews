@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 
 import rocks.athrow.android_udacity_reviews.BuildConfig;
 import rocks.athrow.android_udacity_reviews.Utilities;
@@ -22,13 +23,9 @@ import rocks.athrow.android_udacity_reviews.Utilities;
  */
 public class API {
 
-    Context mContext;
-    private final String MODULE_REVIEWS = "submissions_completed";
-    private final String MODULE_FEEDBACKS = "student_feedbacks";
-    private String reviewsAPIUrl = "https://review-api.udacity.com/api/v1/me/submissions/completed";
-    private String studentFeedbacksUrl = "https://review-api.udacity.com/api/v1/me/student_feedbacks";
+    private Context mContext;
     private static final String apiKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
-
+    private final static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     // Constructor
     public API(Context context) {
         this.mContext = context;
@@ -41,13 +38,18 @@ public class API {
      * @param dateEnd the end date to retrieve result to
      * @return the API response in a string
      */
-    public String callAPI(String module, String dateStart, String dateEnd) {
+    public String callAPI(String module, Date dateStart, Date dateEnd) {
+        Utilities util = new Utilities();
         Log.e("module ", module);
         String APIUrl;
+        String MODULE_REVIEWS = "submissions_completed";
+        String MODULE_FEEDBACKS = "student_feedbacks";
+        String reviewsAPIUrl = "https://review-api.udacity.com/api/v1/me/submissions/completed";
+        String feedbacksAPIUrl =  "https://review-api.udacity.com/api/v1/me/student_feedbacks";
         if ( module.equals(MODULE_REVIEWS)){
             APIUrl = reviewsAPIUrl;
         }else if ( module.equals(MODULE_FEEDBACKS)){
-            APIUrl = studentFeedbacksUrl;
+            APIUrl = feedbacksAPIUrl;
         }else{
             return "error: empty module argument";
         }
@@ -56,21 +58,22 @@ public class API {
         ArrayList<String> params = new ArrayList<>();
         boolean hasParams = false;
         if (dateStart != null) {
-            params.add("start_date=" + dateStart);
+            Log.e("dateStart ", "true");
+            params.add("start_date=" + util.getDateAsString(dateStart,DATE_FORMAT));
             hasParams = true;
         }
         if (dateEnd != null) {
-            params.add("end_date=" + dateEnd);
+            params.add("end_date=" + util.getDateAsString(dateEnd, DATE_FORMAT));
             hasParams = true;
         }
+        Log.e("url ", APIUrl);
         if (hasParams) {
-            Utilities util = new Utilities();
             String UrlParams = util.buildStringFromArray(params, "&");
             if (UrlParams != null) {
                 Log.e("urlParams ", UrlParams);
                 Log.e("reviewApiUrl ", reviewsAPIUrl);
                 APIUrl = APIUrl + "?" + UrlParams;
-                Log.e("params ", reviewsAPIUrl);
+                Log.e("API URL ", APIUrl);
             }
         }else{
             Log.e("params ", "no params");

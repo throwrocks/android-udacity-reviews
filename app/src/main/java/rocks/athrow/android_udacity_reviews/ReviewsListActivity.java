@@ -3,13 +3,9 @@ package rocks.athrow.android_udacity_reviews;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
-
-import rocks.athrow.android_udacity_reviews.Data.API;
-import rocks.athrow.android_udacity_reviews.Data.FetchTask;
 
 public class ReviewsListActivity extends AppCompatActivity {
 
@@ -56,5 +52,7 @@ public class ReviewsListActivity extends AppCompatActivity {
     public interface ReviewsListFragmentCallback {
         void onFetchReviewsCompleted();
     }
+
+
 
 }

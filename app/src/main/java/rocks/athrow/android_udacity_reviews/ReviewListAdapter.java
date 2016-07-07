@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import java.util.Date;
+
 import rocks.athrow.android_udacity_reviews.Data.RealmReview;
 import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmRecyclerViewAdapter;
 
@@ -31,6 +33,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         public TextView viewUserName;
         public TextView viewResult;
         public TextView viewFilename;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -67,8 +70,8 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         //------------------------------------------------------------------------------------------
         final String id = Integer.toString(reviewRecord.getId());
         final String projectName = reviewRecord.getProject_name();
-        final String assignedAt = reviewRecord.getAssigned_at();
-        final String completedAt = reviewRecord.getCompleted_at();
+        final Date assignedAt = reviewRecord.getAssigned_at();
+        final Date completedAt = reviewRecord.getCompleted_at();
         final String userName = reviewRecord.getUser_name();
         final String result = reviewRecord.getResult();
         final String archiveUrl = reviewRecord.getArchive_url();
@@ -77,9 +80,9 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         // Format the dates for the List and Detail Views
         //------------------------------------------------------------------------------------------
         Utilities util = new Utilities();
-        final String completedAtListDisplay = util.formatDate(completedAt, "MM/dd/yy");
-        final String completedAtDetailDisplay = util.formatDate(completedAt, "MM/dd/yy h:mm a");
-        final String assignedAtDetailDisplay = util.formatDate(assignedAt,  "MM/dd/yy h:mm a");
+        final String completedAtListDisplay = util.getDateAsString(completedAt, "MM/dd/yy");
+        final String completedAtDetailDisplay = util.getDateAsString(completedAt, "MM/dd/yy h:mm a") ;//"MM/dd/yy h:mm a");
+        final String assignedAtDetailDisplay = util.getDateAsString(assignedAt,"MM/dd/yy h:mm a");  //"MM/dd/yy h:mm a");
         //------------------------------------------------------------------------------------------
         // Get the elapsed time between start/end
         //------------------------------------------------------------------------------------------
@@ -89,8 +92,8 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         // Get the filename from the archive url
         //------------------------------------------------------------------------------------------
         String[] urlItems = util.stringSplit(archiveUrl,"/");
-        int urtlItemsCOunt = urlItems.length;
-        final String fileName = urlItems[urtlItemsCOunt-1];
+        int urtlItemsCount = urlItems.length;
+        final String fileName = urlItems[urtlItemsCount-1];
         //------------------------------------------------------------------------------------------
         // Set the views
         //------------------------------------------------------------------------------------------

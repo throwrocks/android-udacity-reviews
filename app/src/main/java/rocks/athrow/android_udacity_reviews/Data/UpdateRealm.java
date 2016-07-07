@@ -6,10 +6,13 @@ import android.content.Context;
 import android.util.Log;
 
 
+import java.util.Date;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import rocks.athrow.android_udacity_reviews.Utilities;
 
 /**
  * UpdateRealm
@@ -18,7 +21,7 @@ import io.realm.RealmResults;
  */
 public class UpdateRealm {
     private Context mContext;
-
+    private final static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public UpdateRealm(Context mContext) {
         this.mContext = mContext;
     }
@@ -70,10 +73,11 @@ public class UpdateRealm {
                 //----------------------------------------------------------------------------------
                 // Dates
                 //----------------------------------------------------------------------------------
-                String created_at = value.getAsString("created_at");
-                String updated_at = value.getAsString("updated_at");
-                String assigned_at = value.getAsString("assigned_at");
-                String completed_at = value.getAsString("completed_at");
+                Utilities util = new Utilities();
+                Date created_at = util.getStringAsDate(value.getAsString("created_at"), DATE_FORMAT);
+                Date updated_at = util.getStringAsDate(value.getAsString("updated_at"), DATE_FORMAT);
+                Date assigned_at = util.getStringAsDate(value.getAsString("assigned_at"), DATE_FORMAT);
+                Date completed_at = util.getStringAsDate(value.getAsString("completed_at"), DATE_FORMAT);
                 newReview.setCreated_at(created_at);
                 newReview.setUpdated_at(updated_at);
                 newReview.setAssigned_at(assigned_at);
@@ -175,8 +179,9 @@ public class UpdateRealm {
                 //----------------------------------------------------------------------------------
                 // Dates
                 //----------------------------------------------------------------------------------
-                String created_at = value.getAsString("created_at");
-                String updated_at = value.getAsString("updated_at");
+                Utilities util = new Utilities();
+                Date created_at = util.getStringAsDate(value.getAsString("created_at"), DATE_FORMAT);
+                Date updated_at = util.getStringAsDate(value.getAsString("updated_at"), DATE_FORMAT);
                 newFeedback.setCreated_at(created_at);
                 newFeedback.setUpdated_at(updated_at);
                 //----------------------------------------------------------------------------------

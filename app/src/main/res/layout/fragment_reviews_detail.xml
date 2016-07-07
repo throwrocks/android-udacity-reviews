@@ -16,6 +16,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:baselineAligned="false"
         android:orientation="horizontal">
         <!--Review #-->
         <LinearLayout
@@ -29,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/review_detail_review_id_label"
                     style="@style/labelStyle"
@@ -36,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:labelFor="@+id/review_detail_review_id"
                     android:text="Review# " />
+
                 <TextView
                     android:id="@+id/review_detail_review_id"
                     style="@style/regularTextStyle"
@@ -47,6 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/review_detail_user_name_label"
                     style="@style/labelStyle"
@@ -54,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:labelFor="@+id/review_detail_user_name"
                     android:text="Student " />
+
                 <TextView
                     android:id="@+id/review_detail_user_name"
                     style="@style/regularTextStyle"
@@ -94,10 +99,11 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingEnd="16dp"
-        android:paddingStart="16dp">
+        android:paddingStart="16dp"
+        android:baselineAligned="false">
         <!--FROM-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -183,13 +189,14 @@
 
      =============================================================================================-->
     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_width="wrap_content"
-        android:layout_gravity="start"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/review_details_project_review"
             style="?android:attr/buttonBarButtonStyle"
@@ -198,22 +205,21 @@
     </LinearLayout>
 
 
-
     <LinearLayout
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:orientation="horizontal">
 
         <TextView
-            android:background="#FFFDE7"
-            android:padding="8dp"
-            android:hint="Student Notes"
             android:id="@+id/review_detail_student_notes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#FFFDE7"
+            android:hint="Student Notes"
+            android:padding="8dp" />
     </LinearLayout>
 
 </LinearLayout>

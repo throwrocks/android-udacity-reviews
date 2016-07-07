@@ -1,5 +1,7 @@
 package rocks.athrow.android_udacity_reviews.Data;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -14,8 +16,8 @@ public class RealmFeedback extends RealmObject {
     int user_id;
     int rating;
     String body;
-    String created_at;
-    String updated_at;
+    Date created_at;
+    Date updated_at;
     int grader_id;
     String read_at;
     int project_id;
@@ -72,19 +74,19 @@ public class RealmFeedback extends RealmObject {
         this.rating = rating;
     }
 
-    public String getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public Date getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
     }
 
