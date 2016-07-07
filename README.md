@@ -11,7 +11,6 @@ Set your token in the gradle.properties file.
 - [ ] Fetch data when the app is first installed and the token is set
 - [ ] Pass the start/end date parameters to the callAPI method. The start/end should be date of last record, and today (so it only fetches new data)
 - [ ] Improve UpdateRealm method with bulk insert?
-- 
 
 ### Reports
 
