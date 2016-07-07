@@ -30,7 +30,7 @@ public class ReviewsDetailActivityFragment extends Fragment {
     public static final String ARG_USER_NAME = "user_name";
     public static final String ARG_RESULT = "result";
     public static final String ARG_ASSIGNED_AT = "assigned_at";
-    public static final String ARG_COMPLETED_AT= "completed_at";
+    public static final String ARG_COMPLETED_AT = "completed_at";
     public static final String ARG_ELAPSED_TIME = "elapsed_time";
     public static final String ARG_ARCHIVE_URL = "archive_url";
     public static final String ARG_FILENAME = "filename";
@@ -110,15 +110,19 @@ public class ReviewsDetailActivityFragment extends Fragment {
         resultView.setText(result);
         elapsedTimeView.setText(elapsedTime);
         reviewButton.setText(reviewUrl);
+
+        if (studentNotes.equals("null")) {
+            studentNotes = "No notes provided";
+        }
         studentNotesView.setText(studentNotes);
 
 
         if (result.equals("passed")) {
-            resultView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.badge_passed) );
+            resultView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.badge_passed));
         } else if (result.equals("failed")) {
-            resultView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.badge_failed) );
+            resultView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.badge_failed));
         } else {
-            resultView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.badge_cant_review) );
+            resultView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.badge_cant_review));
 
         }
 
@@ -126,14 +130,12 @@ public class ReviewsDetailActivityFragment extends Fragment {
         reviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url =  reviewUrl;
+                String url = reviewUrl;
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
             }
         });
-
-
 
 
         return rootView;

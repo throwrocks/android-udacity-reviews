@@ -22,7 +22,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="vertical"
             android:weightSum="1">
 
@@ -67,15 +67,15 @@
             </LinearLayout>
 
         </LinearLayout>
-        <!--Result Badge-->
+        <!--Result Badge & Rating-->
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginBottom="4dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/review_detail_result"
@@ -83,6 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textIcons" />
+
+            <include layout="@layout/rating_stars" />
         </LinearLayout>
     </LinearLayout>
     <!--============================================================================================
@@ -96,11 +98,11 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="#F5F5F5"
+        android:baselineAligned="false"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingEnd="16dp"
-        android:paddingStart="16dp"
-        android:baselineAligned="false">
+        android:paddingStart="16dp">
         <!--FROM-->
         <LinearLayout
             android:layout_width="0dp"
@@ -218,8 +220,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFDE7"
-            android:hint="Student Notes"
             android:padding="8dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/review_detail_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFDE7"
+            android:padding="8dp"
+            android:text="Rating" />
     </LinearLayout>
 
 </LinearLayout>

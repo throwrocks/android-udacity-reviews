@@ -93,7 +93,7 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
         Realm.setDefaultConfiguration(realmConfig);
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        RealmResults<RealmReview> reviews = realm.where(RealmReview.class).findAll().sort("id", Sort.DESCENDING);
+        RealmResults<RealmReview> reviews = realm.where(RealmReview.class).findAll().sort("completed_at", Sort.DESCENDING);
         realm.commitTransaction();
         RealmReviewsAdapter realmAdapter = new RealmReviewsAdapter(getContext(), reviews);
         reviewListAdapter.setRealmAdapter(realmAdapter);
