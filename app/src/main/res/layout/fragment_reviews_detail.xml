@@ -213,7 +213,15 @@
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/review_detail_student_notes_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student Notes"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/review_detail_student_notes"
@@ -230,15 +238,22 @@
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/review_detail_rating"
+            android:id="@+id/review_detail_student_feedback_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student Rating"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/review_detail_student_feedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFDE7"
-            android:padding="8dp"
-            android:text="Rating" />
+            android:padding="8dp" />
     </LinearLayout>
 
 </LinearLayout>

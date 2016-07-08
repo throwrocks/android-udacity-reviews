@@ -103,8 +103,8 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         //------------------------------------------------------------------------------------------
         Utilities util = new Utilities();
         final String completedAtListDisplay = util.getDateAsString(completedAt, "MM/dd/yy");
-        final String completedAtDetailDisplay = util.getDateAsString(completedAt, "MM/dd/yy h:mm a") ;//"MM/dd/yy h:mm a");
-        final String assignedAtDetailDisplay = util.getDateAsString(assignedAt,"MM/dd/yy h:mm a");  //"MM/dd/yy h:mm a");
+        final String completedAtDetailDisplay = util.getDateAsString(completedAt, "MM/dd/yy h:mm a") ;
+        final String assignedAtDetailDisplay = util.getDateAsString(assignedAt,"MM/dd/yy h:mm a");
         //------------------------------------------------------------------------------------------
         // Get the elapsed time between start/end
         //------------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         //------------------------------------------------------------------------------------------
         // Get the rating
         //------------------------------------------------------------------------------------------
-        int rating = reviewRecord.getFeedback_rating();
+        final int rating = reviewRecord.getFeedback_rating();
         //------------------------------------------------------------------------------------------
         // Set the views
         //------------------------------------------------------------------------------------------
@@ -188,6 +188,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
                 viewDetailsActivity.putExtra("filename", fileName);
                 viewDetailsActivity.putExtra("elapsed_time", elapsedTime);
                 viewDetailsActivity.putExtra("notes", studentNotes);
+                viewDetailsActivity.putExtra("rating", rating);
 
                 context.startActivity(viewDetailsActivity);
             }

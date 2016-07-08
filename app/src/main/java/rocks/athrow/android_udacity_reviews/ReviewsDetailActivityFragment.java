@@ -2,6 +2,7 @@ package rocks.athrow.android_udacity_reviews;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -12,9 +13,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+import io.realm.Sort;
+import rocks.athrow.android_udacity_reviews.Data.RealmFeedback;
+import rocks.athrow.android_udacity_reviews.Data.RealmReview;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -35,6 +46,7 @@ public class ReviewsDetailActivityFragment extends Fragment {
     public static final String ARG_ARCHIVE_URL = "archive_url";
     public static final String ARG_FILENAME = "filename";
     public static final String ARG_STUDENT_NOTES = "notes";
+    public static final String ARG_RATING = "rating";
     private String projectName;
     private String reviewId;
     private String userName;
@@ -46,6 +58,8 @@ public class ReviewsDetailActivityFragment extends Fragment {
     private String archiveUrl;
     private String fileName;
     private String studentNotes;
+    private int rating;
+    private String feedbackString;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -69,8 +83,22 @@ public class ReviewsDetailActivityFragment extends Fragment {
         reviewUrl = "https://review.udacity.com/#!/reviews/" + reviewId;
         archiveUrl = getArguments().getString(ARG_ARCHIVE_URL);
         studentNotes = getArguments().getString(ARG_STUDENT_NOTES);
-
+        rating = getArguments().getInt(ARG_RATING);
         fileName = getArguments().getString(ARG_FILENAME);
+
+        // Get the feedback
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
+        Realm.setDefaultConfiguration(realmConfig);
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        RealmQuery<RealmFeedback> query = realm.where(RealmFeedback.class);
+        // Add query conditions:
+        query.equalTo("submission_id", Integer.parseInt(reviewId));
+        RealmResults<RealmFeedback> feedbacks = query.findAll().sort("created_at", Sort.DESCENDING);
+        realm.commitTransaction();
+        if ( feedbacks.size() > 0 ){
+            feedbackString = feedbacks.get(0).getBody();
+        }
 
 
         if (getArguments().containsKey(ARG_PROJECT_NAME)) {
@@ -102,6 +130,14 @@ public class ReviewsDetailActivityFragment extends Fragment {
         TextView elapsedTimeView = (TextView) rootView.findViewById(R.id.review_detail_elapsed_time);
         Button reviewButton = (Button) rootView.findViewById(R.id.review_details_project_review);
         TextView studentNotesView = (TextView) rootView.findViewById(R.id.review_detail_student_notes);
+        LinearLayout viewRatingBox = (LinearLayout) rootView.findViewById(R.id.review_rating_box);
+        TextView viewReviewNone = (TextView) rootView.findViewById(R.id.review_rating_none);
+        ImageView viewReviewStar1  = (ImageView) rootView.findViewById(R.id.review_rating_star1);
+        ImageView viewReviewStar2 = (ImageView) rootView.findViewById(R.id.review_rating_star2);
+        ImageView viewReviewStar3 = (ImageView) rootView.findViewById(R.id.review_rating_star3);
+        ImageView  viewReviewStar4 = (ImageView) rootView.findViewById(R.id.review_rating_star4);
+        ImageView  viewReviewStar5 = (ImageView) rootView.findViewById(R.id.review_rating_star5);
+        TextView viewStudentFeedback = (TextView) rootView.findViewById(R.id.review_detail_student_feedback);
         // Set the views
         reviewIdView.setText(reviewId);
         userNameView.setText(userName);
@@ -110,6 +146,40 @@ public class ReviewsDetailActivityFragment extends Fragment {
         resultView.setText(result);
         elapsedTimeView.setText(elapsedTime);
         reviewButton.setText(reviewUrl);
+        viewStudentFeedback.setText(feedbackString);
+
+
+        if ( rating == 0 ){
+            viewReviewNone.setText("Not Rated");
+            viewReviewNone.setVisibility(View.VISIBLE);
+            viewRatingBox.setVisibility(View.GONE);
+        }else if ( rating > 0) {
+            viewReviewNone.setVisibility(View.GONE);
+            viewRatingBox.setVisibility(View.VISIBLE);
+            Drawable starFilled = ContextCompat.getDrawable(getContext(), R.drawable.icon_star_filled);
+            if (rating == 1) {
+                viewReviewStar1.setBackground(starFilled);
+            } else if (rating == 2) {
+                viewReviewStar1.setBackground(starFilled);
+                viewReviewStar2.setBackground(starFilled);
+            } else if (rating == 3) {
+                viewReviewStar1.setBackground(starFilled);
+                viewReviewStar2.setBackground(starFilled);
+                viewReviewStar3.setBackground(starFilled);
+            } else if (rating == 4) {
+                viewReviewStar1.setBackground(starFilled);
+                viewReviewStar2.setBackground(starFilled);
+                viewReviewStar3.setBackground(starFilled);
+                viewReviewStar4.setBackground(starFilled);
+            } else if (rating == 5) {
+                viewReviewStar1.setBackground(starFilled);
+                viewReviewStar2.setBackground(starFilled);
+                viewReviewStar3.setBackground(starFilled);
+                viewReviewStar4.setBackground(starFilled);
+                viewReviewStar5.setBackground(starFilled);
+            }
+        }
+
 
         if (studentNotes.equals("null")) {
             studentNotes = "No notes provided";

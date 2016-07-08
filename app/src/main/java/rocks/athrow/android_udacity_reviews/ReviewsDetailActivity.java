@@ -66,6 +66,11 @@ public class ReviewsDetailActivity extends AppCompatActivity {
                     ReviewsDetailActivityFragment.ARG_STUDENT_NOTES,
                     intent.getStringExtra(ReviewsDetailActivityFragment.ARG_STUDENT_NOTES)
             );
+            arguments.putInt(
+                    ReviewsDetailActivityFragment.ARG_RATING,
+                    intent.getIntExtra(ReviewsDetailActivityFragment.ARG_RATING, 0)
+            );
+
 
 
             ReviewsDetailActivityFragment fragment = new ReviewsDetailActivityFragment();
