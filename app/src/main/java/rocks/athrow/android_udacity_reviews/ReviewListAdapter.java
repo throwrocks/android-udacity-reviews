@@ -17,6 +17,11 @@ import android.widget.TextView;
 
 import java.util.Date;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+import rocks.athrow.android_udacity_reviews.Data.RealmFeedback;
 import rocks.athrow.android_udacity_reviews.Data.RealmReview;
 import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmRecyclerViewAdapter;
 
@@ -84,7 +89,8 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         //------------------------------------------------------------------------------------------
         // Set the review variables
         //------------------------------------------------------------------------------------------
-        final String id = Integer.toString(reviewRecord.getId());
+        final int id = reviewRecord.getId();
+        final String idString = Integer.toString(id);
         final String projectName = reviewRecord.getProject_name();
         final Date assignedAt = reviewRecord.getAssigned_at();
         final Date completedAt = reviewRecord.getCompleted_at();
@@ -117,7 +123,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         //------------------------------------------------------------------------------------------
         // Set the views
         //------------------------------------------------------------------------------------------
-        reviewListRecyclerView.viewReviewId.setText(id);
+        reviewListRecyclerView.viewReviewId.setText(idString);
         reviewListRecyclerView.viewProjectName.setText(projectName);
         reviewListRecyclerView.viewCompletedAt.setText(completedAtListDisplay);
         reviewListRecyclerView.viewUserName.setText(userName);
@@ -172,7 +178,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
             @Override
             public void onClick(View view) {
                 Intent viewDetailsActivity = new Intent(context, ReviewsDetailActivity.class);
-                viewDetailsActivity.putExtra("id", id);
+                viewDetailsActivity.putExtra("id", idString);
                 viewDetailsActivity.putExtra("project_name", projectName);
                 viewDetailsActivity.putExtra("assigned_at", assignedAtDetailDisplay);
                 viewDetailsActivity.putExtra("completed_at", completedAtDetailDisplay);
