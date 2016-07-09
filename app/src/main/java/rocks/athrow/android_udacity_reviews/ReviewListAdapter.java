@@ -33,6 +33,8 @@ import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmRecyclerViewAdapte
 public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
     private Context context;
 
+    private final static String DATE_TIME_DISPLAY = "MM/dd/yy h:mm a";
+    private final static String DATE_DISPLAY = "MM/dd/yy";
     private class ViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout viewReviewItem;
         public TextView viewReviewId;
@@ -102,9 +104,9 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         // Format the dates for the List and Detail Views
         //------------------------------------------------------------------------------------------
         Utilities util = new Utilities();
-        final String completedAtListDisplay = util.getDateAsString(completedAt, "MM/dd/yy");
-        final String completedAtDetailDisplay = util.getDateAsString(completedAt, "MM/dd/yy h:mm a") ;
-        final String assignedAtDetailDisplay = util.getDateAsString(assignedAt,"MM/dd/yy h:mm a");
+        final String completedAtListDisplay = util.getDateAsString(completedAt, DATE_DISPLAY, null);
+        final String completedAtDetailDisplay = util.getDateAsString(completedAt, DATE_TIME_DISPLAY, null) ;
+        final String assignedAtDetailDisplay = util.getDateAsString(assignedAt,DATE_TIME_DISPLAY, null);
         //------------------------------------------------------------------------------------------
         // Get the elapsed time between start/end
         //------------------------------------------------------------------------------------------

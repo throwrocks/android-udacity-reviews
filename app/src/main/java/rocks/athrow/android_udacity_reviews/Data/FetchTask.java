@@ -27,7 +27,7 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     private ReviewsListActivity.ReviewsListFragmentCallback listener;
     private final String MODULE_REVIEWS = "submissions_completed";
     private final String MODULE_FEEDBACKS = "student_feedbacks";
-    private final static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
 
     // Constructor
     public FetchTask(Context context, String module, ReviewListAdapter adapter, ReviewsListActivity.ReviewsListFragmentCallback listener) {
@@ -41,6 +41,7 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... params) {
         String jsonResults;
         ContentValues[] parsedResults = null;
+        Utilities util = new Utilities();
         // Create an API object
         API mAPI = new API(mContext);
         //------------------------------------------------------------------------------------------
@@ -67,6 +68,8 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
             RealmResults<RealmFeedback> feedbacksResult = feedbacksQuery.findAll();
             if (feedbacksResult.size() > 0) {
                 dateStart = feedbacksResult.maxDate("created_at");
+
+
             }
         }
         // Close realm

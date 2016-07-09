@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Utilities
@@ -21,8 +22,13 @@ public class Utilities {
      * @param format the format in which to return the string
      * @return the new formatted date string
      */
-    public String getDateAsString(Date date, String format) {
+    public String getDateAsString(Date date, String format, String timezone) {
         DateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+        if ( timezone == null){
+            formatter.setTimeZone(TimeZone.getDefault());
+        }else{
+            formatter.setTimeZone(TimeZone.getTimeZone(timezone));
+        }
         return formatter.format(date);
     }
 
@@ -32,8 +38,13 @@ public class Utilities {
      * @param format the resulting date format
      * @return a new date in the specified format
      */
-    public Date getStringAsDate(String dateString, String format) {
+    public Date getStringAsDate(String dateString, String format, String timezone) {
         SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+        if ( timezone == null ){
+            formatter.setTimeZone(TimeZone.getDefault());
+        }else{
+            formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        }
         Date date = new Date();
         try {
             date = formatter.parse(dateString);
@@ -64,8 +75,8 @@ public class Utilities {
      */
     public Date getTodaysDate(String format) {
         Date date = new Date();
-        String dateString = getDateAsString(date, format);
-        return getStringAsDate(dateString, format);
+        String dateString = getDateAsString(date, format, null);
+        return getStringAsDate(dateString, format, null);
     }
     /**
      * buildStringFromArray

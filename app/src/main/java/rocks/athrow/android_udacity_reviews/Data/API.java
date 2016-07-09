@@ -59,11 +59,11 @@ public class API {
         boolean hasParams = false;
         if (dateStart != null) {
             Log.e("dateStart ", "true");
-            params.add("start_date=" + util.getDateAsString(dateStart,DATE_FORMAT));
+            params.add("start_date=" + util.getDateAsString(dateStart,DATE_FORMAT, "UTC"));
             hasParams = true;
         }
         if (dateEnd != null) {
-            params.add("end_date=" + util.getDateAsString(dateEnd, DATE_FORMAT));
+            params.add("end_date=" + util.getDateAsString(dateEnd, DATE_FORMAT, "UTC"));
             hasParams = true;
         }
         Log.e("url ", APIUrl);
