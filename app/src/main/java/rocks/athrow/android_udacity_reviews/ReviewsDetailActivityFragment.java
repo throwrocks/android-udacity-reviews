@@ -32,10 +32,7 @@ import rocks.athrow.android_udacity_reviews.Data.RealmReview;
  */
 public class ReviewsDetailActivityFragment extends Fragment {
 
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
+
     public static final String ARG_REVIEW_ID = "id";
     public static final String ARG_PROJECT_NAME = "project_name";
     public static final String ARG_USER_NAME = "user_name";
@@ -47,6 +44,8 @@ public class ReviewsDetailActivityFragment extends Fragment {
     public static final String ARG_FILENAME = "filename";
     public static final String ARG_STUDENT_NOTES = "notes";
     public static final String ARG_RATING = "rating";
+    public static final String ARG_STUDENT_FEEDBACK = "student_feedback";
+    private static final String UDACITY_REVIEWS_URL = "https://review.udacity.com/#!/reviews/";
     private String projectName;
     private String reviewId;
     private String userName;
@@ -59,7 +58,7 @@ public class ReviewsDetailActivityFragment extends Fragment {
     private String fileName;
     private String studentNotes;
     private int rating;
-    private String feedbackString;
+    private String studentFeedback;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -80,11 +79,12 @@ public class ReviewsDetailActivityFragment extends Fragment {
         completedAt = getArguments().getString(ARG_COMPLETED_AT);
         result = getArguments().getString(ARG_RESULT);
         elapsedTime = getArguments().getString(ARG_ELAPSED_TIME);
-        reviewUrl = "https://review.udacity.com/#!/reviews/" + reviewId;
+        reviewUrl = UDACITY_REVIEWS_URL + reviewId;
         archiveUrl = getArguments().getString(ARG_ARCHIVE_URL);
         studentNotes = getArguments().getString(ARG_STUDENT_NOTES);
         rating = getArguments().getInt(ARG_RATING);
         fileName = getArguments().getString(ARG_FILENAME);
+        studentFeedback = getArguments().getString(ARG_STUDENT_FEEDBACK);
 
         // Get the feedback
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
@@ -97,7 +97,7 @@ public class ReviewsDetailActivityFragment extends Fragment {
         RealmResults<RealmFeedback> feedbacks = query.findAll().sort("created_at", Sort.DESCENDING);
         realm.commitTransaction();
         if ( feedbacks.size() > 0 ){
-            feedbackString = feedbacks.get(0).getBody();
+            studentFeedback = feedbacks.get(0).getBody();
         }
 
 
@@ -105,7 +105,6 @@ public class ReviewsDetailActivityFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-
 
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
@@ -146,9 +145,9 @@ public class ReviewsDetailActivityFragment extends Fragment {
         resultView.setText(result);
         elapsedTimeView.setText(elapsedTime);
         reviewButton.setText(reviewUrl);
-        viewStudentFeedback.setText(feedbackString);
 
 
+        Log.d("rating",  "" + rating);
         if ( rating == 0 ){
             viewReviewNone.setText("Not Rated");
             viewReviewNone.setVisibility(View.VISIBLE);
@@ -181,10 +180,17 @@ public class ReviewsDetailActivityFragment extends Fragment {
         }
 
 
-        if (studentNotes.equals("null")) {
+        if (studentNotes.equals("") || studentNotes.equals("null")) {
             studentNotes = "No notes provided";
         }
         studentNotesView.setText(studentNotes);
+
+        if ( studentFeedback == null){
+            studentFeedback = "No feedback provided";
+        }else if ( studentFeedback.equals("") || studentFeedback.equals("null")){
+            studentFeedback = "No feedback provided";
+        }
+        viewStudentFeedback.setText(studentFeedback);
 
 
         if (result.equals("passed")) {

@@ -221,7 +221,7 @@
             android:layout_height="wrap_content"
             android:text="Student Notes"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/review_detail_student_notes"
@@ -244,9 +244,9 @@
             android:id="@+id/review_detail_student_feedback_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Student Rating"
+            android:text="Student Feedback"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/review_detail_student_feedback"

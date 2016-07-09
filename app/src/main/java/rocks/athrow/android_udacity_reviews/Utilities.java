@@ -65,7 +65,12 @@ public class Utilities {
         long diff = dateEnd.getTime() - dateStart.getTime();
         long diffMinutes = diff / (60 * 1000) % 60;
         long diffHours = diff / (60 * 60 * 1000);
-        return Long.toString(diffHours) + ":" + Long.toString(diffMinutes);
+        String mins =  Long.toString(diffMinutes);
+        if ( mins.length() == 1){
+            mins = "0" + mins;
+        }
+
+        return Long.toString(diffHours) + ":"  + mins;
     }
     /**
      * getTodaysDate

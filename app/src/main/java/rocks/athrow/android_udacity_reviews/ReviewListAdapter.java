@@ -32,10 +32,11 @@ import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmRecyclerViewAdapte
  */
 public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
     private Context context;
-
+    Utilities util = new Utilities();
     private final static String DATE_TIME_DISPLAY = "MM/dd/yy h:mm a";
     private final static String DATE_DISPLAY = "MM/dd/yy";
     private class ViewHolder extends RecyclerView.ViewHolder {
+
         public LinearLayout viewReviewItem;
         public TextView viewReviewId;
         public TextView viewProjectName;
@@ -96,6 +97,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         final String projectName = reviewRecord.getProject_name();
         final Date assignedAt = reviewRecord.getAssigned_at();
         final Date completedAt = reviewRecord.getCompleted_at();
+        final String completedAtDisplay = util.getDateAsString(completedAt,DATE_DISPLAY,null);
         final String userName = reviewRecord.getUser_name();
         final String result = reviewRecord.getResult();
         final String archiveUrl = reviewRecord.getArchive_url();
@@ -125,6 +127,8 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         //------------------------------------------------------------------------------------------
         // Set the views
         //------------------------------------------------------------------------------------------
+
+
         reviewListRecyclerView.viewReviewId.setText(idString);
         reviewListRecyclerView.viewProjectName.setText(projectName);
         reviewListRecyclerView.viewCompletedAt.setText(completedAtListDisplay);
