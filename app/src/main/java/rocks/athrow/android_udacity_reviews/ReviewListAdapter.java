@@ -2,26 +2,17 @@ package rocks.athrow.android_udacity_reviews;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewDebug;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
-
 
 import java.util.Date;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
-import rocks.athrow.android_udacity_reviews.Data.RealmFeedback;
 import rocks.athrow.android_udacity_reviews.Data.RealmReview;
 import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmRecyclerViewAdapter;
 
@@ -44,13 +35,8 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         public TextView viewUserName;
         public TextView viewResult;
         public TextView viewFilename;
-        public LinearLayout viewRatingBox;
         public TextView viewReviewNone;
-        public ImageView viewReviewStar1;
-        public ImageView viewReviewStar2;
-        public ImageView viewReviewStar3;
-        public ImageView viewReviewStar4;
-        public ImageView viewReviewStar5;
+        public RatingBar ratingBar;
 
         public ViewHolder(View view) {
             super(view);
@@ -61,14 +47,8 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
             viewUserName = (TextView) view.findViewById(R.id.review_user_name);
             viewResult = (TextView) view.findViewById(R.id.review_result);
             viewReviewId = (TextView) view.findViewById(R.id.review_id);
-            viewRatingBox = (LinearLayout) view.findViewById(R.id.review_rating_box);
+            ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
             viewReviewNone = (TextView) view.findViewById(R.id.review_rating_none);
-            viewReviewStar1 = (ImageView) view.findViewById(R.id.review_rating_star1);
-            viewReviewStar2 = (ImageView) view.findViewById(R.id.review_rating_star2);
-            viewReviewStar3 = (ImageView) view.findViewById(R.id.review_rating_star3);
-            viewReviewStar4 = (ImageView) view.findViewById(R.id.review_rating_star4);
-            viewReviewStar5 = (ImageView) view.findViewById(R.id.review_rating_star5);
-
         }
     }
 
@@ -138,32 +118,11 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         if ( rating == 0 ){
             reviewListRecyclerView.viewReviewNone.setText("Not Rated");
             reviewListRecyclerView.viewReviewNone.setVisibility(View.VISIBLE);
-            reviewListRecyclerView.viewRatingBox.setVisibility(View.GONE);
+            reviewListRecyclerView.ratingBar.setVisibility(View.GONE);
         }else if ( rating > 0) {
             reviewListRecyclerView.viewReviewNone.setVisibility(View.GONE);
-            reviewListRecyclerView.viewRatingBox.setVisibility(View.VISIBLE);
-            Drawable starFilled = ContextCompat.getDrawable(context, R.drawable.icon_star_filled);
-            if (rating == 1) {
-                reviewListRecyclerView.viewReviewStar1.setBackground(starFilled);
-            } else if (rating == 2) {
-                reviewListRecyclerView.viewReviewStar1.setBackground(starFilled);
-                reviewListRecyclerView.viewReviewStar2.setBackground(starFilled);
-            } else if (rating == 3) {
-                reviewListRecyclerView.viewReviewStar1.setBackground(starFilled);
-                reviewListRecyclerView.viewReviewStar2.setBackground(starFilled);
-                reviewListRecyclerView.viewReviewStar3.setBackground(starFilled);
-            } else if (rating == 4) {
-                reviewListRecyclerView.viewReviewStar1.setBackground(starFilled);
-                reviewListRecyclerView.viewReviewStar2.setBackground(starFilled);
-                reviewListRecyclerView.viewReviewStar3.setBackground(starFilled);
-                reviewListRecyclerView.viewReviewStar4.setBackground(starFilled);
-            } else if (rating == 5) {
-                reviewListRecyclerView.viewReviewStar1.setBackground(starFilled);
-                reviewListRecyclerView.viewReviewStar2.setBackground(starFilled);
-                reviewListRecyclerView.viewReviewStar3.setBackground(starFilled);
-                reviewListRecyclerView.viewReviewStar4.setBackground(starFilled);
-                reviewListRecyclerView.viewReviewStar5.setBackground(starFilled);
-            }
+            reviewListRecyclerView.ratingBar.setVisibility(View.VISIBLE);
+            reviewListRecyclerView.ratingBar.setRating(rating);
         }
 
         String resultDisplay;
