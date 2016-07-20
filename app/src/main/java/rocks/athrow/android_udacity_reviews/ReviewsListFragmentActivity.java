@@ -60,11 +60,21 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                fetchReviews = new FetchTask(getContext(), MODULE_REVIEWS, reviewListAdapter, callback);
-                fetchReviews.execute();
-                fetchFeedbacks = new FetchTask(getContext(), MODULE_FEEDBACKS, null, null);
-                fetchFeedbacks.execute();
-
+                Utilities util = new Utilities();
+                boolean isConnected = util.isConnected(getContext());
+                if (isConnected) {
+                    fetchReviews = new FetchTask(getContext(), MODULE_REVIEWS, reviewListAdapter, callback);
+                    fetchReviews.execute();
+                    fetchFeedbacks = new FetchTask(getContext(), MODULE_FEEDBACKS, null, null);
+                    fetchFeedbacks.execute();
+                } else {
+                    Context context = getContext();
+                    CharSequence text = "You are not connected to a network";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    swipeContainer.setRefreshing(false);
+                }
             }
         });
         // set up the refreshing colors
@@ -72,7 +82,6 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
         return rootView;
     }
 
@@ -84,7 +93,6 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(reviewListAdapter);
     }
-
 
     @Override
     public void onResume() {
@@ -117,6 +125,4 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
     public void onFetchReviewsCompleted() {
 
     }
-
-
 }

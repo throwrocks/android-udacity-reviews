@@ -41,14 +41,12 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... params) {
         String jsonResults;
         ContentValues[] parsedResults = null;
-        Utilities util = new Utilities();
         // Create an API object
         API mAPI = new API(mContext);
         //------------------------------------------------------------------------------------------
         // Get the DateStart and DateEnd for the query parameters (get most recent only)
         //------------------------------------------------------------------------------------------
         Date dateStart = null;
-        //Date dateEnd = new Utilities().getTodaysDate(DATE_FORMAT);
         // Begin Realm Transaction
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
         Realm.setDefaultConfiguration(realmConfig);
@@ -68,8 +66,6 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
             RealmResults<RealmFeedback> feedbacksResult = feedbacksQuery.findAll();
             if (feedbacksResult.size() > 0) {
                 dateStart = feedbacksResult.maxDate("created_at");
-
-
             }
         }
         // Close realm
@@ -77,7 +73,6 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
         //------------------------------------------------------------------------------------------
         // Get the results from the API
         //------------------------------------------------------------------------------------------
-        //jsonResults = mAPI.callAPI(module, null, null);
         jsonResults = mAPI.callAPI(module, dateStart, null);
         //Parse the results if not null
         if (jsonResults != null) {

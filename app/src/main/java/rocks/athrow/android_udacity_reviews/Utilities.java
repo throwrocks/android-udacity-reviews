@@ -1,5 +1,9 @@
 package rocks.athrow.android_udacity_reviews;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,15 +22,16 @@ public class Utilities {
     /**
      * getDateAsString
      * Convert a date into a string
-     * @param date the date
+     *
+     * @param date   the date
      * @param format the format in which to return the string
      * @return the new formatted date string
      */
     public String getDateAsString(Date date, String format, String timezone) {
         DateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
-        if ( timezone == null){
+        if (timezone == null) {
             formatter.setTimeZone(TimeZone.getDefault());
-        }else{
+        } else {
             formatter.setTimeZone(TimeZone.getTimeZone(timezone));
         }
         return formatter.format(date);
@@ -34,15 +39,16 @@ public class Utilities {
 
     /**
      * getStringAsDate
+     *
      * @param dateString a string in date format
-     * @param format the resulting date format
+     * @param format     the resulting date format
      * @return a new date in the specified format
      */
     public Date getStringAsDate(String dateString, String format, String timezone) {
         SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
-        if ( timezone == null ){
+        if (timezone == null) {
             formatter.setTimeZone(TimeZone.getDefault());
-        }else{
+        } else {
             formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         }
         Date date = new Date();
@@ -57,21 +63,23 @@ public class Utilities {
     /**
      * elapsedTime
      * Get the elapsed time between two dates
+     *
      * @param dateStart the date start
-     * @param dateEnd the date end
+     * @param dateEnd   the date end
      * @return the elapsed hours and minutes
      */
     public String elapsedTime(Date dateStart, Date dateEnd) {
         long diff = dateEnd.getTime() - dateStart.getTime();
         long diffMinutes = diff / (60 * 1000) % 60;
         long diffHours = diff / (60 * 60 * 1000);
-        String mins =  Long.toString(diffMinutes);
-        if ( mins.length() == 1){
+        String mins = Long.toString(diffMinutes);
+        if (mins.length() == 1) {
             mins = "0" + mins;
         }
 
-        return Long.toString(diffHours) + ":"  + mins;
+        return Long.toString(diffHours) + ":" + mins;
     }
+
     /**
      * getTodaysDate
      *
@@ -83,8 +91,10 @@ public class Utilities {
         String dateString = getDateAsString(date, format, null);
         return getStringAsDate(dateString, format, null);
     }
+
     /**
      * buildStringFromArray
+     *
      * @param stringArray the String[] to convert
      * @param separator   the string separator
      * @return the separated string
@@ -101,12 +111,28 @@ public class Utilities {
             return null;
         }
     }
+
     /**
      * StringSplit
      */
     public String[] stringSplit(String string, String splitCharacter) {
         return string.split(splitCharacter);
 
+    }
+
+    /**
+     * isConnected
+     * This method is used to check for network connectivity before attempting a network call
+     *
+     * @param context the activity from where the method is called
+     * @return true for is connected and false for is not connected
+     */
+    public boolean isConnected(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
 }
