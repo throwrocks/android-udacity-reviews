@@ -2,22 +2,18 @@ package rocks.athrow.android_udacity_reviews;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -25,7 +21,6 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import rocks.athrow.android_udacity_reviews.Data.RealmFeedback;
-import rocks.athrow.android_udacity_reviews.Data.RealmReview;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -129,13 +124,8 @@ public class ReviewsDetailActivityFragment extends Fragment {
         TextView elapsedTimeView = (TextView) rootView.findViewById(R.id.review_detail_elapsed_time);
         Button reviewButton = (Button) rootView.findViewById(R.id.review_details_project_review);
         TextView studentNotesView = (TextView) rootView.findViewById(R.id.review_detail_student_notes);
-        LinearLayout viewRatingBox = (LinearLayout) rootView.findViewById(R.id.review_rating_box);
+        RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.rating_bar);
         TextView viewReviewNone = (TextView) rootView.findViewById(R.id.review_rating_none);
-        ImageView viewReviewStar1  = (ImageView) rootView.findViewById(R.id.review_rating_star1);
-        ImageView viewReviewStar2 = (ImageView) rootView.findViewById(R.id.review_rating_star2);
-        ImageView viewReviewStar3 = (ImageView) rootView.findViewById(R.id.review_rating_star3);
-        ImageView  viewReviewStar4 = (ImageView) rootView.findViewById(R.id.review_rating_star4);
-        ImageView  viewReviewStar5 = (ImageView) rootView.findViewById(R.id.review_rating_star5);
         TextView viewStudentFeedback = (TextView) rootView.findViewById(R.id.review_detail_student_feedback);
         // Set the views
         reviewIdView.setText(reviewId);
@@ -151,32 +141,11 @@ public class ReviewsDetailActivityFragment extends Fragment {
         if ( rating == 0 ){
             viewReviewNone.setText("Not Rated");
             viewReviewNone.setVisibility(View.VISIBLE);
-            viewRatingBox.setVisibility(View.GONE);
+            ratingBar.setVisibility(View.GONE);
         }else if ( rating > 0) {
             viewReviewNone.setVisibility(View.GONE);
-            viewRatingBox.setVisibility(View.VISIBLE);
-            Drawable starFilled = ContextCompat.getDrawable(getContext(), R.drawable.icon_star_filled);
-            if (rating == 1) {
-                viewReviewStar1.setBackground(starFilled);
-            } else if (rating == 2) {
-                viewReviewStar1.setBackground(starFilled);
-                viewReviewStar2.setBackground(starFilled);
-            } else if (rating == 3) {
-                viewReviewStar1.setBackground(starFilled);
-                viewReviewStar2.setBackground(starFilled);
-                viewReviewStar3.setBackground(starFilled);
-            } else if (rating == 4) {
-                viewReviewStar1.setBackground(starFilled);
-                viewReviewStar2.setBackground(starFilled);
-                viewReviewStar3.setBackground(starFilled);
-                viewReviewStar4.setBackground(starFilled);
-            } else if (rating == 5) {
-                viewReviewStar1.setBackground(starFilled);
-                viewReviewStar2.setBackground(starFilled);
-                viewReviewStar3.setBackground(starFilled);
-                viewReviewStar4.setBackground(starFilled);
-                viewReviewStar5.setBackground(starFilled);
-            }
+            ratingBar.setVisibility(View.VISIBLE);
+            ratingBar.setRating(rating);
         }
 
 
