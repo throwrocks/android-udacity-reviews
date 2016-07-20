@@ -20,7 +20,16 @@
         <activity
             android:name=".ReviewsDetailActivity"
             android:label="@string/title_activity_reviews_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".ReviewsListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="rocks.athrow.android_udacity_reviews.ReviewsListActivity" />
+        </activity>
     </application>
 
 </manifest>
