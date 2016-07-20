@@ -27,6 +27,12 @@
         <item name="android:layout_height">12dp</item>
     </style>
 
+    <style name="reviewRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/icon_star_filled</item>
+        <item name="android:minHeight">12dp</item>
+        <item name="android:maxHeight">12dp</item>
+    </style>
+
 
 
 
