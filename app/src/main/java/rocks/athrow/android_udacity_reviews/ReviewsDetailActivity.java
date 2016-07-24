@@ -31,6 +31,7 @@ public class ReviewsDetailActivity extends AppCompatActivity {
             Intent intent = getIntent();
             String reviewId = intent.getStringExtra(ReviewsDetailActivityFragment.ARG_REVIEW_ID);
             String projectName = intent.getStringExtra(ReviewsDetailActivityFragment.ARG_PROJECT_NAME);
+            double price = intent.getDoubleExtra(ReviewsDetailActivityFragment.ARG_PRICE, 0);
             String userName =  intent.getStringExtra(ReviewsDetailActivityFragment.ARG_USER_NAME);
             String result = intent.getStringExtra(ReviewsDetailActivityFragment.ARG_RESULT);
             String completedAt = intent.getStringExtra(ReviewsDetailActivityFragment.ARG_COMPLETED_AT);
@@ -56,6 +57,7 @@ public class ReviewsDetailActivity extends AppCompatActivity {
             // Put the arguments in a bundle and pass them to the fragment
             arguments.putString( ReviewsDetailActivityFragment.ARG_REVIEW_ID, reviewId);
             arguments.putString( ReviewsDetailActivityFragment.ARG_PROJECT_NAME, projectName);
+            arguments.putDouble( ReviewsDetailActivityFragment.ARG_PRICE, price);
             arguments.putString( ReviewsDetailActivityFragment.ARG_USER_NAME, userName);
             arguments.putString( ReviewsDetailActivityFragment.ARG_RESULT, result);
             arguments.putString( ReviewsDetailActivityFragment.ARG_COMPLETED_AT, completedAt);

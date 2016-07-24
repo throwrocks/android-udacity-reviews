@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -133,6 +134,16 @@ public class Utilities {
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
+
+    /**
+     * formatCurrency
+     * @param amount the double amount to format as currency
+     * @return the USD value
+     */
+    public String formatCurrency(double amount){
+        DecimalFormat dFormat = new DecimalFormat("#.00");
+        return ("$" + dFormat.format(amount));
     }
 
 }

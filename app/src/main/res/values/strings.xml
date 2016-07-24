@@ -1,7 +1,19 @@
 <resources>
-    <string name="app_name">My Udacity Code Reviews</string>
+    <string name="app_name">Udacity Code Reviews</string>
     <string name="title_activity_reviews_detail">Review Details</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
-
+    <!-- Navigation -->
+    <string name="nav_reviews">Reviews</string>
+    <string name="nav_reports">Reports</string>
+    <!-- Review detail strings -->
+    <string name="label_by">By&#160;</string>
+    <string name="label_rate">Rate&#160;</string>
+    <string name="label_id">ID#&#160;</string>
+    <string name="label_from">From&#160;</string>
+    <string name="label_to">To&#160;</string>
+    <string name="label_completion_time">Completion Time </string>
+    <string name="label_student_notes">Student Notes</string>
+    <string name="label_student_feedback">Student Feedback</string>
+    <string name="title_activity_reports">ReportsActivity</string>
 </resources>

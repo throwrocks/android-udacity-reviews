@@ -13,7 +13,7 @@ import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class ReviewsListActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private boolean mTwoPane;
     private static  boolean DEBUG = false;

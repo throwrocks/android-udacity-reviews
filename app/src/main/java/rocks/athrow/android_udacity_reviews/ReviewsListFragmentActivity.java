@@ -23,7 +23,7 @@ import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmReviewsAdapter;
  * ReviewsListFragmentActivity
  * Created by josel on 7/5/2016.
  */
-public class ReviewsListFragmentActivity extends Fragment implements ReviewsListActivity.ReviewsListFragmentCallback {
+public class ReviewsListFragmentActivity extends Fragment implements MainActivity.ReviewsListFragmentCallback {
     ReviewListAdapter reviewListAdapter;
     private SwipeRefreshLayout swipeContainer;
     private final String MODULE_REVIEWS = "submissions_completed";
@@ -42,10 +42,11 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
         if (recyclerView != null) {
             setupRecyclerView((RecyclerView) recyclerView);
         }
+
         // Set up the SwipeRefreshLayout
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         // with a callBack to remove itself and present a toast when finishing the FetchReviews task
-        final ReviewsListActivity.ReviewsListFragmentCallback callback = new ReviewsListActivity.ReviewsListFragmentCallback() {
+        final MainActivity.ReviewsListFragmentCallback callback = new MainActivity.ReviewsListFragmentCallback() {
             @Override
             public void onFetchReviewsCompleted() {
                 swipeContainer.setRefreshing(false);

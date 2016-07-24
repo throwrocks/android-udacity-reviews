@@ -61,6 +61,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         View reviewListRecyclerView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.review_list_item, parent, false);
         return new ViewHolder(reviewListRecyclerView);
+
     }
 
 
@@ -75,9 +76,9 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         final int id = reviewRecord.getId();
         final String idString = Integer.toString(id);
         final String projectName = reviewRecord.getProject_name();
+        final double price = reviewRecord.getPrice();
         final Date assignedAt = reviewRecord.getAssigned_at();
         final Date completedAt = reviewRecord.getCompleted_at();
-        final String completedAtDisplay = util.getDateAsString(completedAt,DATE_DISPLAY,null);
         final String userName = reviewRecord.getUser_name();
         final String result = reviewRecord.getResult();
         final String archiveUrl = reviewRecord.getArchive_url();
@@ -145,6 +146,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
                 Intent viewDetailsActivity = new Intent(context, ReviewsDetailActivity.class);
                 viewDetailsActivity.putExtra("id", idString);
                 viewDetailsActivity.putExtra("project_name", projectName);
+                viewDetailsActivity.putExtra("price", price);
                 viewDetailsActivity.putExtra("assigned_at", assignedAtDetailDisplay);
                 viewDetailsActivity.putExtra("completed_at", completedAtDetailDisplay);
                 viewDetailsActivity.putExtra("user_name", userName);
