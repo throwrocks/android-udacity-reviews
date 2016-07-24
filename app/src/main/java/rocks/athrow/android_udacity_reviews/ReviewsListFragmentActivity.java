@@ -1,9 +1,10 @@
 package rocks.athrow.android_udacity_reviews;
 
-import android.app.Fragment;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +24,7 @@ import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmReviewsAdapter;
  * ReviewsListFragmentActivity
  * Created by josel on 7/5/2016.
  */
-public class ReviewsListFragmentActivity extends android.support.v4.app.Fragment implements MainActivity.ReviewsListFragmentCallback {
+public class ReviewsListFragmentActivity extends Fragment implements MainActivity.ReviewsListFragmentCallback {
     ReviewListAdapter reviewListAdapter;
     private SwipeRefreshLayout swipeContainer;
     private final String MODULE_REVIEWS = "submissions_completed";

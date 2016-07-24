@@ -32,15 +32,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity
-            android:name=".ReportsActivity"
-            android:label="@string/title_activity_reports"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="rocks.athrow.android_udacity_reviews.MainActivity" />
-        </activity>
     </application>
 
 </manifest>
