@@ -2,30 +2,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context="rocks.athrow.android_udacity_reviews.ReportsActivityFragment"
     tools:showIn="@layout/activity_main">
+    <TextView
+        android:id="@+id/reports_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/primaryText"
+        android:text="Reviews Period" />
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/reports_date1_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_from" />
+
         <TextView
             android:id="@+id/reports_date1"
-            android:layout_width="125dp"
-            android:hint="from"
+            android:layout_width="wrap_content"
+            android:hint="1/1/2016"
+            android:background="?attr/editTextBackground"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/reports_date2_label"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:text="@string/label_to" />
+
         <TextView
             android:id="@+id/reports_date2"
-            android:layout_width="125dp"
-            android:hint="to"
-            android:layout_height="wrap_content"
-            />
+            android:layout_width="wrap_content"
+            android:hint="1/31/2016"
+            android:background="?attr/editTextBackground"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
