@@ -21,17 +21,25 @@
         <item name="android:textColor">@color/primaryText</item>
     </style>
 
-    <style name="reviewStar">
-        <item name="android:background">@drawable/icon_star_unfilled</item>
-        <item name="android:layout_width">12dp</item>
-        <item name="android:layout_height">12dp</item>
+    <!--Review list styles -->
+    <style name="reviewListProjectTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
-
+    <style name="reviewListReviewId">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/secondaryText</item>
+    </style>
 
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

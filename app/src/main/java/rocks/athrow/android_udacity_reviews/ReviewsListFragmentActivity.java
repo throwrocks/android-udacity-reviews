@@ -1,9 +1,10 @@
 package rocks.athrow.android_udacity_reviews;
 
-import android.app.Fragment;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +24,7 @@ import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmReviewsAdapter;
  * ReviewsListFragmentActivity
  * Created by josel on 7/5/2016.
  */
-public class ReviewsListFragmentActivity extends Fragment implements ReviewsListActivity.ReviewsListFragmentCallback {
+public class ReviewsListFragmentActivity extends Fragment implements MainActivity.ReviewsListFragmentCallback {
     ReviewListAdapter reviewListAdapter;
     private SwipeRefreshLayout swipeContainer;
     private final String MODULE_REVIEWS = "submissions_completed";
@@ -42,10 +43,11 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
         if (recyclerView != null) {
             setupRecyclerView((RecyclerView) recyclerView);
         }
+
         // Set up the SwipeRefreshLayout
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         // with a callBack to remove itself and present a toast when finishing the FetchReviews task
-        final ReviewsListActivity.ReviewsListFragmentCallback callback = new ReviewsListActivity.ReviewsListFragmentCallback() {
+        final MainActivity.ReviewsListFragmentCallback callback = new MainActivity.ReviewsListFragmentCallback() {
             @Override
             public void onFetchReviewsCompleted() {
                 swipeContainer.setRefreshing(false);
@@ -60,11 +62,21 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                fetchReviews = new FetchTask(getContext(), MODULE_REVIEWS, reviewListAdapter, callback);
-                fetchReviews.execute();
-                fetchFeedbacks = new FetchTask(getContext(), MODULE_FEEDBACKS, null, null);
-                fetchFeedbacks.execute();
-
+                Utilities util = new Utilities();
+                boolean isConnected = util.isConnected(getContext());
+                if (isConnected) {
+                    fetchReviews = new FetchTask(getContext(), MODULE_REVIEWS, reviewListAdapter, callback);
+                    fetchReviews.execute();
+                    fetchFeedbacks = new FetchTask(getContext(), MODULE_FEEDBACKS, null, null);
+                    fetchFeedbacks.execute();
+                } else {
+                    Context context = getContext();
+                    CharSequence text = "You are not connected to a network";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    swipeContainer.setRefreshing(false);
+                }
             }
         });
         // set up the refreshing colors
@@ -72,7 +84,6 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
         return rootView;
     }
 
@@ -84,7 +95,6 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(reviewListAdapter);
     }
-
 
     @Override
     public void onResume() {
@@ -117,6 +127,4 @@ public class ReviewsListFragmentActivity extends Fragment implements ReviewsList
     public void onFetchReviewsCompleted() {
 
     }
-
-
 }

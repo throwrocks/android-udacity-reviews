@@ -12,8 +12,7 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import rocks.athrow.android_udacity_reviews.ReviewListAdapter;
-import rocks.athrow.android_udacity_reviews.ReviewsListActivity;
-import rocks.athrow.android_udacity_reviews.Utilities;
+import rocks.athrow.android_udacity_reviews.MainActivity;
 
 /**
  * FetchReviews
@@ -24,13 +23,13 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     private final Context mContext;
     private final String module;
     private final ReviewListAdapter mAdapter;
-    private ReviewsListActivity.ReviewsListFragmentCallback listener;
+    private MainActivity.ReviewsListFragmentCallback listener;
     private final String MODULE_REVIEWS = "submissions_completed";
     private final String MODULE_FEEDBACKS = "student_feedbacks";
 
 
     // Constructor
-    public FetchTask(Context context, String module, ReviewListAdapter adapter, ReviewsListActivity.ReviewsListFragmentCallback listener) {
+    public FetchTask(Context context, String module, ReviewListAdapter adapter, MainActivity.ReviewsListFragmentCallback listener) {
         this.mContext = context;
         this.module = module;
         this.mAdapter = adapter;
@@ -41,14 +40,12 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... params) {
         String jsonResults;
         ContentValues[] parsedResults = null;
-        Utilities util = new Utilities();
         // Create an API object
         API mAPI = new API(mContext);
         //------------------------------------------------------------------------------------------
         // Get the DateStart and DateEnd for the query parameters (get most recent only)
         //------------------------------------------------------------------------------------------
         Date dateStart = null;
-        //Date dateEnd = new Utilities().getTodaysDate(DATE_FORMAT);
         // Begin Realm Transaction
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
         Realm.setDefaultConfiguration(realmConfig);
@@ -68,8 +65,6 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
             RealmResults<RealmFeedback> feedbacksResult = feedbacksQuery.findAll();
             if (feedbacksResult.size() > 0) {
                 dateStart = feedbacksResult.maxDate("created_at");
-
-
             }
         }
         // Close realm
@@ -77,7 +72,6 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
         //------------------------------------------------------------------------------------------
         // Get the results from the API
         //------------------------------------------------------------------------------------------
-        //jsonResults = mAPI.callAPI(module, null, null);
         jsonResults = mAPI.callAPI(module, dateStart, null);
         //Parse the results if not null
         if (jsonResults != null) {

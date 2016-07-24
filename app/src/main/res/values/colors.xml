@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#607D8B</color>
-    <color name="colorPrimaryDark">#455A64</color>
-    <color name="colorAccent">#03A9F4</color>
+    <color name="colorPrimary">#0288D1</color>
+    <color name="colorPrimaryDark">#0288D1</color>
+    <color name="colorAccent">#FFC107</color>
     <color name="primaryText">#212121</color>
     <color name="secondaryText">#727272</color>
     <color name="lightPrimaryColor">#CFD8DC</color>
     <color name="textIcons">#FFFFFF</color>
     <color name="dividerColor">#B6B6B6</color>
 
+    <color name="lightBackgrond">#F5F5F5</color>
+    <color name="darkBakground">#616161</color>
+    <!-- Review result badge colors -->
     <color name="greenPassed">#00C853</color>
     <color name="orangeFailed">#EF6C00</color>
     <color name="grayCantReview">#757575</color>

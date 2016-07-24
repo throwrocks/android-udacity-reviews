@@ -9,7 +9,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context=".ReviewsListActivity">
+    tools:context=".MainActivity">
 
     <!--
     This layout is a two-pane layout for the reviews

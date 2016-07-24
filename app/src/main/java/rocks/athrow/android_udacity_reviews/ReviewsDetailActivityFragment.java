@@ -2,22 +2,21 @@ package rocks.athrow.android_udacity_reviews;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
-import org.w3c.dom.Text;
+import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -25,7 +24,6 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import rocks.athrow.android_udacity_reviews.Data.RealmFeedback;
-import rocks.athrow.android_udacity_reviews.Data.RealmReview;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -35,6 +33,7 @@ public class ReviewsDetailActivityFragment extends Fragment {
 
     public static final String ARG_REVIEW_ID = "id";
     public static final String ARG_PROJECT_NAME = "project_name";
+    public static final String ARG_PRICE = "price";
     public static final String ARG_USER_NAME = "user_name";
     public static final String ARG_RESULT = "result";
     public static final String ARG_ASSIGNED_AT = "assigned_at";
@@ -47,6 +46,8 @@ public class ReviewsDetailActivityFragment extends Fragment {
     public static final String ARG_STUDENT_FEEDBACK = "student_feedback";
     private static final String UDACITY_REVIEWS_URL = "https://review.udacity.com/#!/reviews/";
     private String projectName;
+    private double price;
+    private String priceDisplay;
     private String reviewId;
     private String userName;
     private String assginedAt;
@@ -70,9 +71,11 @@ public class ReviewsDetailActivityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Utilities util = new Utilities();
         // Get the review data from the intent extras
         projectName = getArguments().getString(ARG_PROJECT_NAME);
+        price = getArguments().getDouble(ARG_PRICE);
+        priceDisplay = util.formatCurrency(price);
         reviewId = getArguments().getString(ARG_REVIEW_ID);
         userName = getArguments().getString(ARG_USER_NAME);
         assginedAt = getArguments().getString(ARG_ASSIGNED_AT);
@@ -100,18 +103,6 @@ public class ReviewsDetailActivityFragment extends Fragment {
             studentFeedback = feedbacks.get(0).getBody();
         }
 
-
-        if (getArguments().containsKey(ARG_PROJECT_NAME)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(projectName);
-            }
-        }
     }
 
     @Override
@@ -121,23 +112,22 @@ public class ReviewsDetailActivityFragment extends Fragment {
 
 
         // Get the views
-        TextView reviewIdView = (TextView) rootView.findViewById(R.id.review_detail_review_id);
+        TextView projectNameView = (TextView) rootView.findViewById(R.id.review_detail_review_project_name);
         TextView userNameView = (TextView) rootView.findViewById(R.id.review_detail_user_name);
+        TextView reviewRateView = (TextView) rootView.findViewById(R.id.review_detail_review_rate);
+        TextView reviewIdView = (TextView) rootView.findViewById(R.id.review_detail_review_id);
         TextView assignedAtView = (TextView) rootView.findViewById(R.id.review_detail_assigned_at);
         TextView completedAtView = (TextView) rootView.findViewById(R.id.review_detail_completed_at);
         TextView resultView = (TextView) rootView.findViewById(R.id.review_detail_result);
         TextView elapsedTimeView = (TextView) rootView.findViewById(R.id.review_detail_elapsed_time);
         Button reviewButton = (Button) rootView.findViewById(R.id.review_details_project_review);
         TextView studentNotesView = (TextView) rootView.findViewById(R.id.review_detail_student_notes);
-        LinearLayout viewRatingBox = (LinearLayout) rootView.findViewById(R.id.review_rating_box);
+        RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.rating_bar);
         TextView viewReviewNone = (TextView) rootView.findViewById(R.id.review_rating_none);
-        ImageView viewReviewStar1  = (ImageView) rootView.findViewById(R.id.review_rating_star1);
-        ImageView viewReviewStar2 = (ImageView) rootView.findViewById(R.id.review_rating_star2);
-        ImageView viewReviewStar3 = (ImageView) rootView.findViewById(R.id.review_rating_star3);
-        ImageView  viewReviewStar4 = (ImageView) rootView.findViewById(R.id.review_rating_star4);
-        ImageView  viewReviewStar5 = (ImageView) rootView.findViewById(R.id.review_rating_star5);
         TextView viewStudentFeedback = (TextView) rootView.findViewById(R.id.review_detail_student_feedback);
         // Set the views
+        projectNameView.setText(projectName);
+        reviewRateView.setText(priceDisplay);
         reviewIdView.setText(reviewId);
         userNameView.setText(userName);
         assignedAtView.setText(assginedAt);
@@ -147,36 +137,15 @@ public class ReviewsDetailActivityFragment extends Fragment {
         reviewButton.setText(reviewUrl);
 
 
-        Log.d("rating",  "" + rating);
+        Log.d("price",  "" + price);
         if ( rating == 0 ){
             viewReviewNone.setText("Not Rated");
             viewReviewNone.setVisibility(View.VISIBLE);
-            viewRatingBox.setVisibility(View.GONE);
+            ratingBar.setVisibility(View.GONE);
         }else if ( rating > 0) {
             viewReviewNone.setVisibility(View.GONE);
-            viewRatingBox.setVisibility(View.VISIBLE);
-            Drawable starFilled = ContextCompat.getDrawable(getContext(), R.drawable.icon_star_filled);
-            if (rating == 1) {
-                viewReviewStar1.setBackground(starFilled);
-            } else if (rating == 2) {
-                viewReviewStar1.setBackground(starFilled);
-                viewReviewStar2.setBackground(starFilled);
-            } else if (rating == 3) {
-                viewReviewStar1.setBackground(starFilled);
-                viewReviewStar2.setBackground(starFilled);
-                viewReviewStar3.setBackground(starFilled);
-            } else if (rating == 4) {
-                viewReviewStar1.setBackground(starFilled);
-                viewReviewStar2.setBackground(starFilled);
-                viewReviewStar3.setBackground(starFilled);
-                viewReviewStar4.setBackground(starFilled);
-            } else if (rating == 5) {
-                viewReviewStar1.setBackground(starFilled);
-                viewReviewStar2.setBackground(starFilled);
-                viewReviewStar3.setBackground(starFilled);
-                viewReviewStar4.setBackground(starFilled);
-                viewReviewStar5.setBackground(starFilled);
-            }
+            ratingBar.setVisibility(View.VISIBLE);
+            ratingBar.setRating(rating);
         }
 
 
