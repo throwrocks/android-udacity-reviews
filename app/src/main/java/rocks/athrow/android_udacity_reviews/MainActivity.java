@@ -1,21 +1,21 @@
 package rocks.athrow.android_udacity_reviews;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.TabItem;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
+
 
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
+
+import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -23,15 +23,37 @@ import io.realm.RealmConfiguration;
 public class MainActivity extends AppCompatActivity {
 
     private boolean mTwoPane;
-    private static boolean DEBUG = false;
+
+
+    private final static String DATE_DISPLAY = "MM/dd/yy";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        boolean DEBUG = false;
+        Context context = getApplicationContext();
+        String PREF_REPORT_DATE1 = context.getResources().getString(R.string.report_date1);
+        String PREF_REPORT_DATE2 = context.getResources().getString(R.string.report_date2);
         setContentView(R.layout.activity_main);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        TabNavigationAdapter mSectionsPagerAdapter =
-                new TabNavigationAdapter(getSupportFragmentManager(), this);
+
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        String reportDate1 = sharedPref.getString(PREF_REPORT_DATE1, "null");
+        String reportDate2 = sharedPref.getString(PREF_REPORT_DATE2, "null");
+        if ( reportDate1.equals("null") && reportDate2.equals("null")){
+            Utilities util = new Utilities();
+            Date date1 = util.getTodaysDate(DATE_DISPLAY);
+            Date date2 = util.getTodaysDate(DATE_DISPLAY);
+            reportDate1 = util.getDateAsString(date1, DATE_DISPLAY, null);
+            reportDate2 = util.getDateAsString(date2, DATE_DISPLAY, null);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(PREF_REPORT_DATE1, reportDate1);
+            editor.putString(PREF_REPORT_DATE2, reportDate2);
+            editor.apply();
+        }
+
+
+
+        TabNavigationAdapter mSectionsPagerAdapter = new TabNavigationAdapter(getSupportFragmentManager(), this);
         ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         // Set up the TabLayout with the PageViewer

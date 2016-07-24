@@ -16,4 +16,7 @@
     <string name="label_student_notes">Student Notes</string>
     <string name="label_student_feedback">Student Feedback</string>
     <string name="title_activity_reports">ReportsActivity</string>
+    <!--Report keys-->
+    <string name="report_date1">date1</string>
+    <string name="report_date2">date2</string>
 </resources>

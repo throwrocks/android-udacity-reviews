@@ -26,6 +26,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
     Utilities util = new Utilities();
     private final static String DATE_TIME_DISPLAY = "MM/dd/yy h:mm a";
     private final static String DATE_DISPLAY = "MM/dd/yy";
+
     private class ViewHolder extends RecyclerView.ViewHolder {
 
         public LinearLayout viewReviewItem;
@@ -88,8 +89,8 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         //------------------------------------------------------------------------------------------
         Utilities util = new Utilities();
         final String completedAtListDisplay = util.getDateAsString(completedAt, DATE_DISPLAY, null);
-        final String completedAtDetailDisplay = util.getDateAsString(completedAt, DATE_TIME_DISPLAY, null) ;
-        final String assignedAtDetailDisplay = util.getDateAsString(assignedAt,DATE_TIME_DISPLAY, null);
+        final String completedAtDetailDisplay = util.getDateAsString(completedAt, DATE_TIME_DISPLAY, null);
+        final String assignedAtDetailDisplay = util.getDateAsString(assignedAt, DATE_TIME_DISPLAY, null);
         //------------------------------------------------------------------------------------------
         // Get the elapsed time between start/end
         //------------------------------------------------------------------------------------------
@@ -98,9 +99,9 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         //------------------------------------------------------------------------------------------
         // Get the filename from the archive url
         //------------------------------------------------------------------------------------------
-        String[] urlItems = util.stringSplit(archiveUrl,"/");
+        String[] urlItems = util.stringSplit(archiveUrl, "/");
         int urtlItemsCount = urlItems.length;
-        final String fileName = urlItems[urtlItemsCount-1];
+        final String fileName = urlItems[urtlItemsCount - 1];
         //------------------------------------------------------------------------------------------
         // Get the rating
         //------------------------------------------------------------------------------------------
@@ -116,11 +117,11 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         reviewListRecyclerView.viewUserName.setText(userName);
         reviewListRecyclerView.viewUserName.setText(userName);
 
-        if ( rating == 0 ){
+        if (rating == 0) {
             reviewListRecyclerView.viewReviewNone.setText("Not Rated");
             reviewListRecyclerView.viewReviewNone.setVisibility(View.VISIBLE);
             reviewListRecyclerView.ratingBar.setVisibility(View.GONE);
-        }else if ( rating > 0) {
+        } else if (rating > 0) {
             reviewListRecyclerView.viewReviewNone.setVisibility(View.GONE);
             reviewListRecyclerView.ratingBar.setVisibility(View.VISIBLE);
             reviewListRecyclerView.ratingBar.setRating(rating);
@@ -129,13 +130,13 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         String resultDisplay;
         if (result.equals("passed")) {
             resultDisplay = "P";
-            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_passed) );
+            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_passed));
         } else if (result.equals("failed")) {
             resultDisplay = "F";
-            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_failed) );
+            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_failed));
         } else {
             resultDisplay = "CR";
-            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_cant_review) );
+            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_cant_review));
             reviewListRecyclerView.viewResult.setTextSize(10);
         }
 
