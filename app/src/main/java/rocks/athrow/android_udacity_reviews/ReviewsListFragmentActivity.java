@@ -23,7 +23,7 @@ import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmReviewsAdapter;
  * ReviewsListFragmentActivity
  * Created by josel on 7/5/2016.
  */
-public class ReviewsListFragmentActivity extends Fragment implements MainActivity.ReviewsListFragmentCallback {
+public class ReviewsListFragmentActivity extends android.support.v4.app.Fragment implements MainActivity.ReviewsListFragmentCallback {
     ReviewListAdapter reviewListAdapter;
     private SwipeRefreshLayout swipeContainer;
     private final String MODULE_REVIEWS = "submissions_completed";

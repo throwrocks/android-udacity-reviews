@@ -20,15 +20,18 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
             </android.support.v7.widget.Toolbar>
         <android.support.design.widget.TabLayout
+            android:id="@+id/tabNavigation"
             android:layout_height="match_parent"
             android:layout_width="match_parent">
 
             <android.support.design.widget.TabItem
+                android:id="@+id/tab1"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="@string/nav_reviews"/>
 
             <android.support.design.widget.TabItem
+                android:id="@+id/tab2"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="@string/nav_reports"/>
@@ -36,20 +39,10 @@
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <fragment
-            android:id="@+id/fragment"
-            android:name="rocks.athrow.android_udacity_reviews.ReviewsListFragmentActivity"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:tag="reviewsList"
-            tools:layout="@layout/reviews_list" />
-
-    </FrameLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

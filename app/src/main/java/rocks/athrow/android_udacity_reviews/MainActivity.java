@@ -1,6 +1,12 @@
 package rocks.athrow.android_udacity_reviews;
 
 import android.content.Intent;
+import android.support.design.widget.TabItem;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,12 +22,20 @@ import io.realm.RealmConfiguration;
 public class MainActivity extends AppCompatActivity {
 
     private boolean mTwoPane;
-    private static  boolean DEBUG = false;
+    private static boolean DEBUG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reviews_list);
+        setContentView(R.layout.activity_main);
+
+        TabNavigationAdapter mSectionsPagerAdapter =
+                new TabNavigationAdapter(getSupportFragmentManager(), this);
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        // Set up the TabLayout with the PageViewer
+        TabLayout mTabLayout = (TabLayout) findViewById(R.id.tabNavigation);
+        mTabLayout.setupWithViewPager(mViewPager);
 
         // Stetho used to inspect the Realm database
         Stetho.initialize(
@@ -76,4 +90,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
