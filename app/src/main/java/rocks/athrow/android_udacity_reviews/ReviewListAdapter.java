@@ -113,6 +113,10 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
 
         reviewListRecyclerView.viewReviewId.setText(idString);
         reviewListRecyclerView.viewProjectName.setText(projectName);
+
+        // add marquee effect to project name textview
+        reviewListRecyclerView.viewProjectName.setSelected(true);
+
         reviewListRecyclerView.viewCompletedAt.setText(completedAtListDisplay);
         reviewListRecyclerView.viewUserName.setText(userName);
         reviewListRecyclerView.viewUserName.setText(userName);

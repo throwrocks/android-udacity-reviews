@@ -43,9 +43,16 @@
             android:paddingEnd="4dp"
             android:paddingStart="4dp">
 
+            <!-- add marquee effect to project name
+             as it could be a very long one-->
             <TextView
                 android:id="@+id/review_item_project_name"
                 style="@style/reviewListProjectTitle"
+                android:ellipsize="marquee"
+                android:fadingEdge="horizontal"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
