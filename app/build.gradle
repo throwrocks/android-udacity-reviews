@@ -18,7 +18,7 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'UDACITY_REVIEWER_API_KEY', MyUdacityReviewerAPIKey
+        it.buildConfigField 'String', 'UDACITY_REVIEWER_API_KEY', '""'
     }
 }
 repositories {
