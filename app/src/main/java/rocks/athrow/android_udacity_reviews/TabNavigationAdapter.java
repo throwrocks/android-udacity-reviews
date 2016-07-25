@@ -19,7 +19,6 @@ public class TabNavigationAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if ( position == 0 ){
             return new ReviewsListFragmentActivity();
-
         } else if ( position == 1 ) {
             return new ReportsActivityFragment();
         }else{

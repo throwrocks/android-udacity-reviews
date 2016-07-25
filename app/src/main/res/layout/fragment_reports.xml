@@ -4,24 +4,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="rocks.athrow.android_udacity_reviews.ReportsActivityFragment"
     tools:showIn="@layout/activity_main">
+
     <TextView
         android:id="@+id/reports_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="Reviews Period"
         android:textColor="@color/primaryText"
-        android:text="Reviews Period" />
+        android:textSize="18sp" />
 
     <LinearLayout
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginTop="16dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp">
 
         <TextView
             android:id="@+id/reports_date1_label"
@@ -32,22 +36,77 @@
         <TextView
             android:id="@+id/reports_date1"
             android:layout_width="wrap_content"
-            android:hint="1/1/2016"
-            android:background="?attr/editTextBackground"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:background="?attr/editTextBackground" />
 
         <TextView
             android:id="@+id/reports_date2_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:text="@string/label_to" />
 
         <TextView
             android:id="@+id/reports_date2"
             android:layout_width="wrap_content"
-            android:hint="1/31/2016"
-            android:background="?attr/editTextBackground"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:background="?attr/editTextBackground" />
+
+        <Button
+            android:id="@+id/reports_query_button"
+            style="@style/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            android:text="Find" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:id="@+id/reports_count_reviews_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Reviews " />
+
+        <TextView
+            android:id="@+id/reports_count_reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:id="@+id/reports_revenue_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Revenue " />
+
+        <TextView
+            android:id="@+id/reports_revenue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -77,7 +77,6 @@ public class Utilities {
         if (mins.length() == 1) {
             mins = "0" + mins;
         }
-
         return Long.toString(diffHours) + ":" + mins;
     }
 

@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
@@ -21,10 +20,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity {
-
     private boolean mTwoPane;
-
-
     private final static String DATE_DISPLAY = "MM/dd/yy";
 
     @Override
@@ -50,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
             editor.putString(PREF_REPORT_DATE2, reportDate2);
             editor.apply();
         }
-
-
 
         TabNavigationAdapter mSectionsPagerAdapter = new TabNavigationAdapter(getSupportFragmentManager(), this);
         ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
