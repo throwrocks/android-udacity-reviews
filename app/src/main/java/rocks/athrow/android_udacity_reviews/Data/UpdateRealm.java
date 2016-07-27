@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews.Data;
+package rocks.athrow.android_udacity_reviews.data;
 
 
 import android.content.ContentValues;
@@ -12,7 +12,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import rocks.athrow.android_udacity_reviews.Utilities;
+import rocks.athrow.android_udacity_reviews.util.Utilities;
 
 /**
  * UpdateRealm
@@ -74,11 +74,11 @@ public class UpdateRealm {
                 //----------------------------------------------------------------------------------
                 // Dates
                 //----------------------------------------------------------------------------------
-                Utilities util = new Utilities();
-                Date created_at = util.getStringAsDate(value.getAsString("created_at"), DATE_UTC, TIMEZONE_UTC);
-                Date updated_at = util.getStringAsDate(value.getAsString("updated_at"), DATE_UTC, TIMEZONE_UTC);
-                Date assigned_at = util.getStringAsDate(value.getAsString("assigned_at"), DATE_UTC, TIMEZONE_UTC);
-                Date completed_at = util.getStringAsDate(value.getAsString("completed_at"),DATE_UTC, TIMEZONE_UTC);
+
+                Date created_at = Utilities.getStringAsDate(value.getAsString("created_at"), DATE_UTC, TIMEZONE_UTC);
+                Date updated_at = Utilities.getStringAsDate(value.getAsString("updated_at"), DATE_UTC, TIMEZONE_UTC);
+                Date assigned_at = Utilities.getStringAsDate(value.getAsString("assigned_at"), DATE_UTC, TIMEZONE_UTC);
+                Date completed_at = Utilities.getStringAsDate(value.getAsString("completed_at"),DATE_UTC, TIMEZONE_UTC);
                 newReview.setCreated_at(created_at);
                 newReview.setUpdated_at(updated_at);
                 newReview.setAssigned_at(assigned_at);
@@ -180,9 +180,8 @@ public class UpdateRealm {
                 //----------------------------------------------------------------------------------
                 // Dates
                 //----------------------------------------------------------------------------------
-                Utilities util = new Utilities();
-                Date created_at = util.getStringAsDate(value.getAsString("created_at"), DATE_UTC, TIMEZONE_UTC);
-                Date updated_at = util.getStringAsDate(value.getAsString("updated_at"), DATE_UTC, TIMEZONE_UTC);
+                Date created_at = Utilities.getStringAsDate(value.getAsString("created_at"), DATE_UTC, TIMEZONE_UTC);
+                Date updated_at = Utilities.getStringAsDate(value.getAsString("updated_at"), DATE_UTC, TIMEZONE_UTC);
                 newFeedback.setCreated_at(created_at);
                 newFeedback.setUpdated_at(updated_at);
                 //----------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews.Data;
+package rocks.athrow.android_udacity_reviews.data;
 
 import android.content.Context;
 import android.net.Uri;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import rocks.athrow.android_udacity_reviews.BuildConfig;
-import rocks.athrow.android_udacity_reviews.Utilities;
+import rocks.athrow.android_udacity_reviews.util.Utilities;
 
 /**
  * API
@@ -39,7 +39,6 @@ public class API {
      * @return the API response in a string
      */
     public String callAPI(String module, Date dateStart, Date dateEnd) {
-        Utilities util = new Utilities();
         Log.e("module ", module);
         String APIUrl;
         String MODULE_REVIEWS = "submissions_completed";
@@ -59,16 +58,16 @@ public class API {
         boolean hasParams = false;
         if (dateStart != null) {
             Log.e("dateStart ", "true");
-            params.add("start_date=" + util.getDateAsString(dateStart,DATE_FORMAT, "UTC"));
+            params.add("start_date=" + Utilities.getDateAsString(dateStart,DATE_FORMAT, "UTC"));
             hasParams = true;
         }
         if (dateEnd != null) {
-            params.add("end_date=" + util.getDateAsString(dateEnd, DATE_FORMAT, "UTC"));
+            params.add("end_date=" + Utilities.getDateAsString(dateEnd, DATE_FORMAT, "UTC"));
             hasParams = true;
         }
         Log.e("url ", APIUrl);
         if (hasParams) {
-            String UrlParams = util.buildStringFromArray(params, "&");
+            String UrlParams = Utilities.buildStringFromArray(params, "&");
             if (UrlParams != null) {
                 Log.e("urlParams ", UrlParams);
                 Log.e("reviewApiUrl ", reviewsAPIUrl);

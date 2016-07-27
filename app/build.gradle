@@ -18,7 +18,7 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'UDACITY_REVIEWER_API_KEY', MyUdacityReviewerAPIKey
+        it.buildConfigField 'String', 'UDACITY_REVIEWER_API_KEY', '"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3NDAyLCJleHAiOjE0NzE0MzkyODYsInRva2VuX3R5cGUiOiJhcGkifQ.LoX4X5vaXfyJg-PQviPNmE3vR1m1aFlrJBl2cXgY788"'
     }
 }
 repositories {
