@@ -1,8 +1,12 @@
 ## Udacity Code Reviewer App
 
-Set your token in the gradle.properties file.
+### Developer API
+
+Set your API key in the gradle.properties file.
 
 `MyUdacityReviewerAPIKey = "my token"`
+
+### .gitignore
 
 If you are collaborating please add a .gitignore file with the following lines
 
