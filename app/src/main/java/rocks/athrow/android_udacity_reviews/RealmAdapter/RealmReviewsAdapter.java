@@ -1,9 +1,9 @@
-package rocks.athrow.android_udacity_reviews.realmadapter;
+package rocks.athrow.android_udacity_reviews.RealmAdapter;
 
 import android.content.Context;
 
 import io.realm.RealmResults;
-import rocks.athrow.android_udacity_reviews.data.RealmReview;
+import rocks.athrow.android_udacity_reviews.Data.RealmReview;
 
 /**
  * RealmReviewsAdapter

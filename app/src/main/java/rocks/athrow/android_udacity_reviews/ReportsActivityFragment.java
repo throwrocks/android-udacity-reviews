@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews.fragment;
+package rocks.athrow.android_udacity_reviews;
 
 
 import android.app.DatePickerDialog;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -20,9 +21,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import rocks.athrow.android_udacity_reviews.R;
-import rocks.athrow.android_udacity_reviews.util.Utilities;
-import rocks.athrow.android_udacity_reviews.data.RealmReview;;
+import rocks.athrow.android_udacity_reviews.Data.RealmReview;;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -93,6 +92,7 @@ public class ReportsActivityFragment extends Fragment {
     }
 
     public void reportQuery(){
+        Utilities util = new Utilities();
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
         Realm.setDefaultConfiguration(realmConfig);
         Realm realm = Realm.getDefaultInstance();
@@ -101,8 +101,8 @@ public class ReportsActivityFragment extends Fragment {
         // Add query conditions:
         String selectedDate1 = date1.getText().toString();
         String selectedDate2 = date2.getText().toString();
-        Date date1 = Utilities.getStringAsDate(selectedDate1, DATE_DISPLAY, "UTC" );
-        Date date2 = Utilities.getStringAsDate(selectedDate2, DATE_DISPLAY, "UTC" );
+        Date date1 = util.getStringAsDate(selectedDate1, DATE_DISPLAY, "UTC" );
+        Date date2 = util.getStringAsDate(selectedDate2, DATE_DISPLAY, "UTC" );
         Log.i("date1 ", "" + date1);
         Log.i("date2 ", "" + date2);
         query.between("completed_at", date1, date2);
@@ -111,7 +111,7 @@ public class ReportsActivityFragment extends Fragment {
         int count = results.size();
         String countDisplay = Integer.toString(count);
         Number revenue = results.sum("price");
-        String revenueDisplay = Utilities.formatCurrency(revenue.doubleValue());
+        String revenueDisplay = util.formatCurrency(revenue.doubleValue());
         realm.close();
 
         TextView revenueView = (TextView) rootView.findViewById(R.id.reports_revenue);
@@ -128,8 +128,9 @@ public class ReportsActivityFragment extends Fragment {
     DatePickerDialog.OnDateSetListener date1Set = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Utilities util = new Utilities();
             Date selectedDate = new Date(year - 1900, monthOfYear, dayOfMonth);
-            String date = Utilities.getDateAsString(selectedDate, DATE_DISPLAY, null);
+            String date = util.getDateAsString(selectedDate, DATE_DISPLAY, null);
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString(PREF_REPORT_DATE1, date);
@@ -144,8 +145,9 @@ public class ReportsActivityFragment extends Fragment {
     DatePickerDialog.OnDateSetListener date2Set = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Utilities util = new Utilities();
             Date selectedDate = new Date(year - 1900, monthOfYear, dayOfMonth);
-            String date = Utilities.getDateAsString(selectedDate, DATE_DISPLAY, null);
+            String date = util.getDateAsString(selectedDate, DATE_DISPLAY, null);
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString(PREF_REPORT_DATE2, date);

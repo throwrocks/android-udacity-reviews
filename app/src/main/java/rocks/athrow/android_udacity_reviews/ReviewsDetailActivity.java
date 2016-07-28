@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews.activity;
+package rocks.athrow.android_udacity_reviews;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,9 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import rocks.athrow.android_udacity_reviews.R;
-import rocks.athrow.android_udacity_reviews.data.RealmFeedback;
-import rocks.athrow.android_udacity_reviews.fragment.ReviewsDetailActivityFragment;
+import io.realm.Sort;
+import rocks.athrow.android_udacity_reviews.Data.RealmFeedback;
+import rocks.athrow.android_udacity_reviews.Data.RealmReview;
 
 public class ReviewsDetailActivity extends AppCompatActivity {
     @Override

@@ -1,8 +1,10 @@
-package rocks.athrow.android_udacity_reviews.fragment;
+package rocks.athrow.android_udacity_reviews;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -12,15 +14,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toolbar;
+
+import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
-import rocks.athrow.android_udacity_reviews.R;
-import rocks.athrow.android_udacity_reviews.util.Utilities;
-import rocks.athrow.android_udacity_reviews.data.RealmFeedback;
+import rocks.athrow.android_udacity_reviews.Data.RealmFeedback;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -68,10 +71,11 @@ public class ReviewsDetailActivityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utilities util = new Utilities();
         // Get the review data from the intent extras
         projectName = getArguments().getString(ARG_PROJECT_NAME);
         price = getArguments().getDouble(ARG_PRICE);
-        priceDisplay = Utilities.formatCurrency(price);
+        priceDisplay = util.formatCurrency(price);
         reviewId = getArguments().getString(ARG_REVIEW_ID);
         userName = getArguments().getString(ARG_USER_NAME);
         assginedAt = getArguments().getString(ARG_ASSIGNED_AT);

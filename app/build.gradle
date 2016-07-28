@@ -18,24 +18,24 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'UDACITY_REVIEWER_API_KEY', MyUdacityReviewerAPIKey
+        it.buildConfigField 'String', 'UDACITY_REVIEWER_API_KEY', MyUdacityApiKey
     }
-}
-repositories {
-    maven {
-        url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
+    repositories {
+        maven {
+            url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
+        }
     }
-}
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:support-v4:24.0.0'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
-    compile 'com.facebook.stetho:stetho:1.3.1'
-    compile 'io.realm:android-adapters:1.3.0'
-    compile 'com.uphyca:stetho_realm:0.9.0'
+    dependencies {
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+        testCompile 'junit:junit:4.12'
+        compile 'com.android.support:appcompat-v7:24.0.0'
+        compile 'com.android.support:support-v4:24.0.0'
+        compile 'com.android.support:recyclerview-v7:24.0.0'
+        compile 'com.android.support:design:24.0.0'
+        compile 'com.facebook.stetho:stetho:1.3.1'
+        compile 'io.realm:android-adapters:1.3.0'
+        compile 'com.uphyca:stetho_realm:0.9.0'
 
 
+    }
 }

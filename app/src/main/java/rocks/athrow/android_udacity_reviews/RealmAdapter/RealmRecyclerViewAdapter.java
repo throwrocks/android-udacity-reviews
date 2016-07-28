@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews.realmadapter;
+package rocks.athrow.android_udacity_reviews.RealmAdapter;
 
 import android.support.v7.widget.RecyclerView;
 

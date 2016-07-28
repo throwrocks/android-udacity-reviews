@@ -1,14 +1,10 @@
-package rocks.athrow.android_udacity_reviews.adapter;
+package rocks.athrow.android_udacity_reviews;
 
 import android.content.Context;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
-import rocks.athrow.android_udacity_reviews.R;
-import rocks.athrow.android_udacity_reviews.activity.ReviewsListFragmentActivity;
-import rocks.athrow.android_udacity_reviews.fragment.ReportsActivityFragment;
 
 /**
  * Created by jose on 7/24/16.

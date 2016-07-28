@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews.activity;
+package rocks.athrow.android_udacity_reviews;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

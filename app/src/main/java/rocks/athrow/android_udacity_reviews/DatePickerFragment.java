@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews.fragment;
+package rocks.athrow.android_udacity_reviews;
 
 import java.util.Calendar;
 import java.util.Date;
