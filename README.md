@@ -4,7 +4,7 @@
 
 Set your API key in the gradle.properties file.
 
-`MyUdacityReviewerAPIKey = "my token"`
+`MyUdacityApiKey = "my token"`
 
 ### .gitignore
 
