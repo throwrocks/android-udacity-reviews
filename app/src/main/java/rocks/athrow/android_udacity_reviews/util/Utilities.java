@@ -1,8 +1,10 @@
-package rocks.athrow.android_udacity_reviews;
+package rocks.athrow.android_udacity_reviews.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import junit.framework.Assert;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -18,7 +20,9 @@ import java.util.TimeZone;
  * General Utilities
  * Created by josel on 7/5/2016.
  */
-public class Utilities {
+public final class Utilities {
+
+    private Utilities(){ throw new AssertionError("No Utilities instances for you!"); } // suppress constructor
 
     /**
      * getDateAsString
@@ -28,7 +32,7 @@ public class Utilities {
      * @param format the format in which to return the string
      * @return the new formatted date string
      */
-    public String getDateAsString(Date date, String format, String timezone) {
+    public static String getDateAsString(Date date, String format, String timezone) {
         DateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
         if (timezone == null) {
             formatter.setTimeZone(TimeZone.getDefault());
@@ -45,7 +49,7 @@ public class Utilities {
      * @param format     the resulting date format
      * @return a new date in the specified format
      */
-    public Date getStringAsDate(String dateString, String format, String timezone) {
+    public static Date getStringAsDate(String dateString, String format, String timezone) {
         SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
         if (timezone == null) {
             formatter.setTimeZone(TimeZone.getDefault());
@@ -69,7 +73,7 @@ public class Utilities {
      * @param dateEnd   the date end
      * @return the elapsed hours and minutes
      */
-    public String elapsedTime(Date dateStart, Date dateEnd) {
+    public static String elapsedTime(Date dateStart, Date dateEnd) {
         long diff = dateEnd.getTime() - dateStart.getTime();
         long diffMinutes = diff / (60 * 1000) % 60;
         long diffHours = diff / (60 * 60 * 1000);
@@ -86,7 +90,7 @@ public class Utilities {
      * @param format the date format in which to return the date
      * @return today's date in the specified format
      */
-    public Date getTodaysDate(String format) {
+    public static Date getTodaysDate(String format) {
         Date date = new Date();
         String dateString = getDateAsString(date, format, null);
         return getStringAsDate(dateString, format, null);
@@ -99,7 +103,7 @@ public class Utilities {
      * @param separator   the string separator
      * @return the separated string
      */
-    public String buildStringFromArray(ArrayList<String> stringArray, String separator) {
+    public static String buildStringFromArray(ArrayList<String> stringArray, String separator) {
         if (stringArray.size() > 0) {
             StringBuilder nameBuilder = new StringBuilder();
             for (String n : stringArray) {
@@ -115,7 +119,7 @@ public class Utilities {
     /**
      * StringSplit
      */
-    public String[] stringSplit(String string, String splitCharacter) {
+    public static String[] stringSplit(String string, String splitCharacter) {
         return string.split(splitCharacter);
 
     }
@@ -127,7 +131,7 @@ public class Utilities {
      * @param context the activity from where the method is called
      * @return true for is connected and false for is not connected
      */
-    public boolean isConnected(Context context) {
+    public static boolean isConnected(Context context) {
         ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -140,7 +144,7 @@ public class Utilities {
      * @param amount the double amount to format as currency
      * @return the USD value
      */
-    public String formatCurrency(double amount){
+    public static String formatCurrency(double amount){
         DecimalFormat dFormat = new DecimalFormat("#.00");
         return ("$" + dFormat.format(amount));
     }

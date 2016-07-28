@@ -1,6 +1,5 @@
-package rocks.athrow.android_udacity_reviews;
+package rocks.athrow.android_udacity_reviews.activity;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,9 +14,11 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
-import rocks.athrow.android_udacity_reviews.Data.FetchTask;
-import rocks.athrow.android_udacity_reviews.Data.RealmReview;
-import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmReviewsAdapter;
+import rocks.athrow.android_udacity_reviews.R;
+import rocks.athrow.android_udacity_reviews.util.Utilities;
+import rocks.athrow.android_udacity_reviews.data.FetchTask;
+import rocks.athrow.android_udacity_reviews.data.RealmReview;
+import rocks.athrow.android_udacity_reviews.realmadapter.RealmReviewsAdapter;
 
 /**
  * ReviewsListFragmentActivity
@@ -61,8 +62,7 @@ public class ReviewsListFragmentActivity extends android.support.v4.app.Fragment
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Utilities util = new Utilities();
-                boolean isConnected = util.isConnected(getContext());
+                boolean isConnected = Utilities.isConnected(getContext());
                 if (isConnected) {
                     fetchReviews = new FetchTask(getContext(), MODULE_REVIEWS, reviewListAdapter, callback);
                     fetchReviews.execute();

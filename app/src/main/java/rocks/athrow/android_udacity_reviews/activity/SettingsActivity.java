@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews;
+package rocks.athrow.android_udacity_reviews.activity;
 
 
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+
+import rocks.athrow.android_udacity_reviews.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On

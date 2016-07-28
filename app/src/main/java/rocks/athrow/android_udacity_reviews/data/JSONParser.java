@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews.Data;
+package rocks.athrow.android_udacity_reviews.data;
 
 import android.content.ContentValues;
 import android.content.Context;
