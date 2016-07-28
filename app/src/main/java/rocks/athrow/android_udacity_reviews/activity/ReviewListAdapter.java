@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews;
+package rocks.athrow.android_udacity_reviews.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +13,10 @@ import android.widget.TextView;
 
 import java.util.Date;
 
-import rocks.athrow.android_udacity_reviews.Data.RealmReview;
-import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmRecyclerViewAdapter;
+import rocks.athrow.android_udacity_reviews.R;
+import rocks.athrow.android_udacity_reviews.util.Utilities;
+import rocks.athrow.android_udacity_reviews.data.RealmReview;
+import rocks.athrow.android_udacity_reviews.realmadapter.RealmRecyclerViewAdapter;
 
 /**
  * ReviewListAdapter
@@ -23,7 +25,7 @@ import rocks.athrow.android_udacity_reviews.RealmAdapter.RealmRecyclerViewAdapte
  */
 public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
     private Context context;
-    Utilities util = new Utilities();
+
     private final static String DATE_TIME_DISPLAY = "MM/dd/yy h:mm a";
     private final static String DATE_DISPLAY = "MM/dd/yy";
 
@@ -87,19 +89,18 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         //------------------------------------------------------------------------------------------
         // Format the dates for the List and Detail Views
         //------------------------------------------------------------------------------------------
-        Utilities util = new Utilities();
-        final String completedAtListDisplay = util.getDateAsString(completedAt, DATE_DISPLAY, null);
-        final String completedAtDetailDisplay = util.getDateAsString(completedAt, DATE_TIME_DISPLAY, null);
-        final String assignedAtDetailDisplay = util.getDateAsString(assignedAt, DATE_TIME_DISPLAY, null);
+        final String completedAtListDisplay = Utilities.getDateAsString(completedAt, DATE_DISPLAY, null);
+        final String completedAtDetailDisplay = Utilities.getDateAsString(completedAt, DATE_TIME_DISPLAY, null);
+        final String assignedAtDetailDisplay = Utilities.getDateAsString(assignedAt, DATE_TIME_DISPLAY, null);
         //------------------------------------------------------------------------------------------
         // Get the elapsed time between start/end
         //------------------------------------------------------------------------------------------
         // TODO: Store this value in the database?
-        final String elapsedTime = util.elapsedTime(assignedAt, completedAt);
+        final String elapsedTime = Utilities.elapsedTime(assignedAt, completedAt);
         //------------------------------------------------------------------------------------------
         // Get the filename from the archive url
         //------------------------------------------------------------------------------------------
-        String[] urlItems = util.stringSplit(archiveUrl, "/");
+        String[] urlItems = Utilities.stringSplit(archiveUrl, "/");
         int urtlItemsCount = urlItems.length;
         final String fileName = urlItems[urtlItemsCount - 1];
         //------------------------------------------------------------------------------------------

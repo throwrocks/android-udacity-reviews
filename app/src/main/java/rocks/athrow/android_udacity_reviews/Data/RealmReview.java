@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews.Data;
+package rocks.athrow.android_udacity_reviews.data;
 
 import java.util.Date;
 
