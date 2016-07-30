@@ -74,7 +74,6 @@ public class UpdateRealm {
                 //----------------------------------------------------------------------------------
                 // Dates
                 //----------------------------------------------------------------------------------
-
                 Date created_at = Utilities.getStringAsDate(value.getAsString("created_at"), DATE_UTC, TIMEZONE_UTC);
                 Date updated_at = Utilities.getStringAsDate(value.getAsString("updated_at"), DATE_UTC, TIMEZONE_UTC);
                 Date assigned_at = Utilities.getStringAsDate(value.getAsString("assigned_at"), DATE_UTC, TIMEZONE_UTC);

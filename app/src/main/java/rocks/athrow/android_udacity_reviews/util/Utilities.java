@@ -11,6 +11,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -147,6 +148,23 @@ public final class Utilities {
     public static String formatCurrency(double amount){
         DecimalFormat dFormat = new DecimalFormat("#.00");
         return ("$" + dFormat.format(amount));
+    }
+
+    /**
+     * getDateEnd
+     * @param date the date that needs to be converted to an end date
+     * @return a date at 11:59 PM
+     */
+    public static Date getDateEnd(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY,23);
+        cal.set(Calendar.MINUTE,59);
+        cal.set(Calendar.SECOND,59);
+        cal.set(Calendar.MILLISECOND,59);
+        long time = cal.getTimeInMillis();
+        date.setTime(time);
+        return date;
     }
 
 }

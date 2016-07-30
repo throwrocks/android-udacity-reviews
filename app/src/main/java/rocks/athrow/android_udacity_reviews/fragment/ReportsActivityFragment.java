@@ -20,6 +20,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.internal.Util;
 import rocks.athrow.android_udacity_reviews.R;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 import rocks.athrow.android_udacity_reviews.data.RealmReview;;
@@ -101,8 +102,8 @@ public class ReportsActivityFragment extends Fragment {
         // Add query conditions:
         String selectedDate1 = date1.getText().toString();
         String selectedDate2 = date2.getText().toString();
-        Date date1 = Utilities.getStringAsDate(selectedDate1, DATE_DISPLAY, "UTC" );
-        Date date2 = Utilities.getStringAsDate(selectedDate2, DATE_DISPLAY, "UTC" );
+        Date date1 = Utilities.getStringAsDate(selectedDate1, DATE_DISPLAY, null );
+        Date date2 = Utilities.getDateEnd(Utilities.getStringAsDate(selectedDate2, DATE_DISPLAY, null ));
         Log.i("date1 ", "" + date1);
         Log.i("date2 ", "" + date2);
         query.between("completed_at", date1, date2);

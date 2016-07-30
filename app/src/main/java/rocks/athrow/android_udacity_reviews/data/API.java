@@ -33,7 +33,7 @@ public class API {
 
     /**
      * callAPI
-     * @param module the API module (supported: submittions_completed, student_feedbacks)
+     * @param module the API module (supported: submissions_completed, student_feedbacks)
      * @param dateStart the start date to retrieve results from
      * @param dateEnd the end date to retrieve result to
      * @return the API response in a string
