@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import io.realm.internal.Util;
 import rocks.athrow.android_udacity_reviews.R;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 import rocks.athrow.android_udacity_reviews.data.RealmReview;;
@@ -29,7 +27,11 @@ import rocks.athrow.android_udacity_reviews.data.RealmReview;;
  * A placeholder fragment containing a simple view.
  */
 public class ReportsActivityFragment extends Fragment {
+    private final static String DATE_DISPLAY = "MM/dd/yy";
     private final static String DATE_UTC = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    private final static String FIELD_SELECTED_DATE = "selected_date";
+    private final static String FIELD_COMPLETED_DATE = "completed_at";
+    private final static String FIELD_PRICE = "price";
     View rootView;
     TextView date1;
     TextView date2;
@@ -38,35 +40,38 @@ public class ReportsActivityFragment extends Fragment {
     String PREF_REPORT_DATE2;
     public ReportsActivityFragment() {
     }
-    private final static String DATE_DISPLAY = "MM/dd/yy";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         PREF_REPORT_DATE1 = getContext().getResources().getString(R.string.report_date1);
         PREF_REPORT_DATE2 = getContext().getResources().getString(R.string.report_date2);
+        // Get the dates from the shared preferences
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         String reportDate1 = sharedPref.getString(PREF_REPORT_DATE1, "null");
         String reportDate2 = sharedPref.getString(PREF_REPORT_DATE2, "null");
-
+        // Inflate the layout
         rootView = inflater.inflate(R.layout.fragment_reports, container, false);
         date1 = (TextView) rootView.findViewById(R.id.reports_date1);
         date2 = (TextView) rootView.findViewById(R.id.reports_date2);
         queryButton = (Button) rootView.findViewById(R.id.reports_query_button);
-
+        // Set the views
         if ( !reportDate1.equals("null") && !reportDate2.equals("null")){
             date1.setText(reportDate1);
             date2.setText(reportDate2);
         }
 
         date1.setOnClickListener(new View.OnClickListener() {
+            String selectedDate = date1.getText().toString();
             @Override
             public void onClick(View view) {
-                showDatePicker(1);
+                showDatePicker(1, selectedDate);
             }
         });
         date2.setOnClickListener(new View.OnClickListener() {
+            String selectedDate = date2.getText().toString();
             @Override
             public void onClick(View view) {
-                showDatePicker(2);
+                showDatePicker(2, selectedDate);
             }
         });
         queryButton.setOnClickListener(new View.OnClickListener() {
@@ -82,44 +87,49 @@ public class ReportsActivityFragment extends Fragment {
      * showDatePicker
      * @param dateNumber the date number (1 FROM or 2 TO)
      */
-    private void showDatePicker(int dateNumber) {
-        DatePickerFragment date = new DatePickerFragment();
-        // Set Call back to capture selected date
+    private void showDatePicker(int dateNumber, String selectedDate) {
+        // Create a bundle to pass the selected date to the fragment
+        Bundle bundle = new Bundle();
+        bundle.putString(FIELD_SELECTED_DATE, selectedDate);
+        DatePickerFragment datePickerFragment = new DatePickerFragment();
+        datePickerFragment.setArguments(bundle);
+        // Set call back to capture selected date
         if (dateNumber == 1) {
-            date.setCallBack(date1Set);
+            datePickerFragment.setCallBack(date1Set);
         } else if (dateNumber == 2) {
-            date.setCallBack(date2Set);
+            datePickerFragment.setCallBack(date2Set);
         }
-        date.show(getFragmentManager(), "Date Picker");
+        // Show the fragment
+        datePickerFragment.show(getFragmentManager(), "Date Picker");
     }
 
+    /**
+     * reportQuery
+     * Find the records by date range and display the results
+     */
     public void reportQuery(){
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
         Realm.setDefaultConfiguration(realmConfig);
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         RealmQuery<RealmReview> query = realm.where(RealmReview.class);
-        // Add query conditions:
+        // Add query conditions
         String selectedDate1 = date1.getText().toString();
         String selectedDate2 = date2.getText().toString();
         Date date1 = Utilities.getStringAsDate(selectedDate1, DATE_DISPLAY, null );
         Date date2 = Utilities.getDateEnd(Utilities.getStringAsDate(selectedDate2, DATE_DISPLAY, null ));
-        Log.i("date1 ", "" + date1);
-        Log.i("date2 ", "" + date2);
-        query.between("completed_at", date1, date2);
-        // Execute the query:
+        query.between(FIELD_COMPLETED_DATE, date1, date2);
+        // Execute the query
         RealmResults<RealmReview> results = query.findAll(); realm.commitTransaction();
         int count = results.size();
         String countDisplay = Integer.toString(count);
-        Number revenue = results.sum("price");
+        Number revenue = results.sum(FIELD_PRICE);
         String revenueDisplay = Utilities.formatCurrency(revenue.doubleValue());
         realm.close();
-
         TextView revenueView = (TextView) rootView.findViewById(R.id.reports_revenue);
         TextView countView = (TextView) rootView.findViewById(R.id.reports_count_reviews);
         revenueView.setText(revenueDisplay);
         countView.setText(countDisplay);
-
     }
 
     /**
