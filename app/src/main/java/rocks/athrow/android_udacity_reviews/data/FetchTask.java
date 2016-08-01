@@ -11,7 +11,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import rocks.athrow.android_udacity_reviews.activity.ReviewListAdapter;
+import rocks.athrow.android_udacity_reviews.adapter.ReviewListAdapter;
 import rocks.athrow.android_udacity_reviews.activity.MainActivity;
 
 /**

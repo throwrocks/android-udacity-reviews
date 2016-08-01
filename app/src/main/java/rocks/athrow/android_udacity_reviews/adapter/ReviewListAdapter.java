@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews.activity;
+package rocks.athrow.android_udacity_reviews.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.Date;
 
 import rocks.athrow.android_udacity_reviews.R;
+import rocks.athrow.android_udacity_reviews.activity.ReviewsDetailActivity;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 import rocks.athrow.android_udacity_reviews.data.RealmReview;
 import rocks.athrow.android_udacity_reviews.realmadapter.RealmRecyclerViewAdapter;
