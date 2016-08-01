@@ -159,11 +159,14 @@ public class ReviewsDetailActivityFragment extends Fragment {
 
 
         if (result.equals("passed")) {
-            resultView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.badge_passed));
+            //noinspection deprecation
+            resultView.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.badge_passed));
         } else if (result.equals("failed")) {
-            resultView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.badge_failed));
+            //noinspection deprecation
+            resultView.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.badge_failed));
         } else {
-            resultView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.badge_cant_review));
+            //noinspection deprecation
+            resultView.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.badge_cant_review));
 
         }
 
