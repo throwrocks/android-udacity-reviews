@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:text="Reviews Period"
+        android:text="@string/label_reviews_period"
         android:textColor="@color/primaryText"
         android:textSize="18sp" />
 
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:paddingEnd="4dp"
             android:paddingStart="4dp"
-            android:text="Find" />
+            android:text="@string/label_find" />
     </LinearLayout>
 
     <LinearLayout
@@ -81,7 +81,7 @@
             android:id="@+id/reports_count_reviews_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Reviews " />
+            android:text="@string/label_total_reviews" />
 
         <TextView
             android:id="@+id/reports_count_reviews"
@@ -106,7 +106,7 @@
             android:id="@+id/reports_revenue_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Revenue " />
+            android:text="@string/label_revenue" />
 
         <TextView
             android:id="@+id/reports_revenue"
