@@ -19,4 +19,8 @@
     <!--Report keys-->
     <string name="report_date1">date1</string>
     <string name="report_date2">date2</string>
+    <string name="label_reviews_period">Reviews Period</string>
+    <string name="label_find">Find</string>
+    <string name="label_total_reviews">Total Reviews</string>
+    <string name="label_revenue">Revenue</string>
 </resources>
