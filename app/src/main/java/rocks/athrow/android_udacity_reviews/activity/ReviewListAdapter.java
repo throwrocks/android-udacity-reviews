@@ -67,7 +67,6 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
 
     }
 
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         ViewHolder reviewListRecyclerView = (ViewHolder) viewHolder;
@@ -131,13 +130,16 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         String resultDisplay;
         if (result.equals("passed")) {
             resultDisplay = "P";
-            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_passed));
+            //noinspection deprecation
+            reviewListRecyclerView.viewResult.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.badge_passed));
         } else if (result.equals("failed")) {
             resultDisplay = "F";
-            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_failed));
+            //noinspection deprecation
+            reviewListRecyclerView.viewResult.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.badge_failed));
         } else {
             resultDisplay = "CR";
-            reviewListRecyclerView.viewResult.setBackground(ContextCompat.getDrawable(context, R.drawable.badge_cant_review));
+            //noinspection deprecation
+            reviewListRecyclerView.viewResult.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.badge_cant_review));
             reviewListRecyclerView.viewResult.setTextSize(10);
         }
 
