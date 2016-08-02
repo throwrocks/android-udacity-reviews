@@ -26,12 +26,14 @@ import rocks.athrow.android_udacity_reviews.realmadapter.RealmReviewsAdapter;
  * Created by josel on 7/5/2016.
  */
 public class ReviewsListFragmentActivity extends android.support.v4.app.Fragment implements MainActivity.ReviewsListFragmentCallback {
-    ReviewListAdapter reviewListAdapter;
-    private SwipeRefreshLayout swipeContainer;
+
     private final String MODULE_REVIEWS = "submissions_completed";
     private final String MODULE_FEEDBACKS = "student_feedbacks";
-    FetchTask fetchReviews;
-    FetchTask fetchFeedbacks;
+    private final String MODULE_COMPLETED_AT = "completed_at";
+    private ReviewListAdapter reviewListAdapter;
+    private SwipeRefreshLayout swipeContainer;
+    private FetchTask fetchReviews;
+    private FetchTask fetchFeedbacks;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +47,8 @@ public class ReviewsListFragmentActivity extends android.support.v4.app.Fragment
             setupRecyclerView((RecyclerView) recyclerView);
         }
 
+        final Context context = getContext();
+
         // Set up the SwipeRefreshLayout
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         // with a callBack to remove itself and present a toast when finishing the FetchReviews task
@@ -52,10 +56,10 @@ public class ReviewsListFragmentActivity extends android.support.v4.app.Fragment
             @Override
             public void onFetchReviewsCompleted() {
                 swipeContainer.setRefreshing(false);
-                Context context = getContext();
-                CharSequence text = "Your reviews are up to date!";
+
+                CharSequence text = context.getString(R.string.label_reviews_to_date);
                 int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
+                final Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
             }
         };
@@ -70,8 +74,7 @@ public class ReviewsListFragmentActivity extends android.support.v4.app.Fragment
                     fetchFeedbacks = new FetchTask(getContext(), MODULE_FEEDBACKS, null, null);
                     fetchFeedbacks.execute();
                 } else {
-                    Context context = getContext();
-                    CharSequence text = "You are not connected to a network";
+                    CharSequence text = context.getString(R.string.label_no_network_connection);
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -103,7 +106,7 @@ public class ReviewsListFragmentActivity extends android.support.v4.app.Fragment
         Realm.setDefaultConfiguration(realmConfig);
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        RealmResults<RealmReview> reviews = realm.where(RealmReview.class).findAll().sort("completed_at", Sort.DESCENDING);
+        RealmResults<RealmReview> reviews = realm.where(RealmReview.class).findAll().sort(MODULE_COMPLETED_AT, Sort.DESCENDING);
         realm.commitTransaction();
         RealmReviewsAdapter realmAdapter = new RealmReviewsAdapter(getContext(), reviews);
         reviewListAdapter.setRealmAdapter(realmAdapter);

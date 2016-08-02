@@ -15,12 +15,11 @@
     <string name="label_completion_time">Completion Time </string>
     <string name="label_student_notes">Student Notes</string>
     <string name="label_student_feedback">Student Feedback</string>
-    <string name="title_activity_reports">ReportsActivity</string>
-    <!--Report keys-->
-    <string name="report_date1">date1</string>
-    <string name="report_date2">date2</string>
     <string name="label_reviews_period">Reviews Period</string>
     <string name="label_find">Find</string>
     <string name="label_total_reviews">Total Reviews</string>
     <string name="label_revenue">Revenue</string>
+    <string name="label_reviews_to_date">Your reviews are up to date!</string>
+    <string name="title_activity_reports">ReportsActivity</string>
+    <string name="label_no_network_connection">You are not connected to a network</string>
 </resources>

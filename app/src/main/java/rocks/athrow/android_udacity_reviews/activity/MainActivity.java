@@ -20,32 +20,32 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rocks.athrow.android_udacity_reviews.R;
 import rocks.athrow.android_udacity_reviews.adapter.TabNavigationAdapter;
+import rocks.athrow.android_udacity_reviews.util.Constants;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 
 public class MainActivity extends AppCompatActivity {
-    private boolean mTwoPane;
+
     private final static String DATE_DISPLAY = "MM/dd/yy";
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boolean DEBUG = false;
-        Context context = getApplicationContext();
-        String PREF_REPORT_DATE1 = context.getResources().getString(R.string.report_date1);
-        String PREF_REPORT_DATE2 = context.getResources().getString(R.string.report_date2);
+
         setContentView(R.layout.activity_main);
 
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        String reportDate1 = sharedPref.getString(PREF_REPORT_DATE1, "null");
-        String reportDate2 = sharedPref.getString(PREF_REPORT_DATE2, "null");
+        String reportDate1 = sharedPref.getString(Constants.PREF_REPORT_DATE1, "null");
+        String reportDate2 = sharedPref.getString(Constants.PREF_REPORT_DATE2, "null");
         if ( reportDate1.equals("null") && reportDate2.equals("null")){
             Date date1 = Utilities.getTodaysDate(DATE_DISPLAY);
             Date date2 = Utilities.getTodaysDate(DATE_DISPLAY);
             reportDate1 = Utilities.getDateAsString(date1, DATE_DISPLAY, null);
             reportDate2 = Utilities.getDateAsString(date2, DATE_DISPLAY, null);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(PREF_REPORT_DATE1, reportDate1);
-            editor.putString(PREF_REPORT_DATE2, reportDate2);
+            editor.putString(Constants.PREF_REPORT_DATE1, reportDate1);
+            editor.putString(Constants.PREF_REPORT_DATE2, reportDate2);
             editor.apply();
         }
 

@@ -1,6 +1,5 @@
 package rocks.athrow.android_udacity_reviews.data;
 
-import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -21,15 +20,16 @@ import rocks.athrow.android_udacity_reviews.util.Utilities;
  * This class manages the connection to the Udacity API
  * Created by joselopez on 3/10/16.
  */
-public class API {
+public final class API {
 
-    private Context mContext;
+    private API(){ throw new AssertionError("No API instances for you!"); }
+
     private static final String apiKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
-    private final static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    // Constructor
-    public API(Context context) {
-        this.mContext = context;
-    }
+    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    private static final String MODULE_REVIEWS = "submissions_completed";
+    private static final String MODULE_FEEDBACKS = "student_feedbacks";
+    private static final String REVIEWS_API_URL = "https://review-api.udacity.com/api/v1/me/submissions/completed";
+    private static final String FEEDBACKS_API_URL = "https://review-api.udacity.com/api/v1/me/student_feedbacks";
 
     /**
      * callAPI
@@ -38,44 +38,40 @@ public class API {
      * @param dateEnd the end date to retrieve result to
      * @return the API response in a string
      */
-    public String callAPI(String module, Date dateStart, Date dateEnd) {
-        Log.e("module ", module);
+    public static String callAPI(String module, Date dateStart, Date dateEnd) {
+        Log.d("module ", module);
         String APIUrl;
-        String MODULE_REVIEWS = "submissions_completed";
-        String MODULE_FEEDBACKS = "student_feedbacks";
-        String reviewsAPIUrl = "https://review-api.udacity.com/api/v1/me/submissions/completed";
-        String feedbacksAPIUrl =  "https://review-api.udacity.com/api/v1/me/student_feedbacks";
         if ( module.equals(MODULE_REVIEWS)){
-            APIUrl = reviewsAPIUrl;
+            APIUrl = REVIEWS_API_URL;
         }else if ( module.equals(MODULE_FEEDBACKS)){
-            APIUrl = feedbacksAPIUrl;
+            APIUrl = FEEDBACKS_API_URL;
         }else{
             return "error: empty module argument";
         }
-        Log.e("APIUrl ", APIUrl);
+        Log.d("APIUrl ", APIUrl);
 
         ArrayList<String> params = new ArrayList<>();
         boolean hasParams = false;
         if (dateStart != null) {
-            Log.e("dateStart ", "true");
-            params.add("start_date=" + Utilities.getDateAsString(dateStart,DATE_FORMAT, "UTC"));
+            Log.d("dateStart ", "true");
+            params.add("start_date=" + Utilities.getDateAsString(dateStart, DATE_FORMAT, "UTC"));
             hasParams = true;
         }
         if (dateEnd != null) {
             params.add("end_date=" + Utilities.getDateAsString(dateEnd, DATE_FORMAT, "UTC"));
             hasParams = true;
         }
-        Log.e("url ", APIUrl);
+        Log.d("url ", APIUrl);
         if (hasParams) {
             String UrlParams = Utilities.buildStringFromArray(params, "&");
             if (UrlParams != null) {
-                Log.e("urlParams ", UrlParams);
-                Log.e("reviewApiUrl ", reviewsAPIUrl);
+                Log.d("urlParams ", UrlParams);
+                Log.d("reviewApiUrl ", REVIEWS_API_URL);
                 APIUrl = APIUrl + "?" + UrlParams;
-                Log.e("API URL ", APIUrl);
+                Log.d("API URL ", APIUrl);
             }
         }else{
-            Log.e("params ", "no params");
+            Log.d("params ", "no params");
         }
 
         return httpConnect(APIUrl);
@@ -86,7 +82,7 @@ public class API {
      * This method handles communicating with the API and converting the input stream into a string
      * @return a json string to be used in a parsing method
      */
-    private String httpConnect(String APIurl) {
+    private static String httpConnect(String APIurl) {
         String results = null;
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
