@@ -1,6 +1,5 @@
 package rocks.athrow.android_udacity_reviews.data;
 
-import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -27,10 +26,10 @@ public final class API {
 
     private static final String apiKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    private static final String module_reviews = "submissions_completed";
-    private static final String module_feedbacks = "student_feedbacks";
-    private static final String reviewsAPIUrl = "https://review-api.udacity.com/api/v1/me/submissions/completed";
-    private static final String feedbacksAPIUrl = "https://review-api.udacity.com/api/v1/me/student_feedbacks";
+    private static final String MODULE_REVIEWS = "submissions_completed";
+    private static final String MODULE_FEEDBACKS = "student_feedbacks";
+    private static final String REVIEWS_API_URL = "https://review-api.udacity.com/api/v1/me/submissions/completed";
+    private static final String FEEDBACKS_API_URL = "https://review-api.udacity.com/api/v1/me/student_feedbacks";
 
     /**
      * callAPI
@@ -42,10 +41,10 @@ public final class API {
     public static String callAPI(String module, Date dateStart, Date dateEnd) {
         Log.d("module ", module);
         String APIUrl;
-        if ( module.equals(module_reviews)){
-            APIUrl = reviewsAPIUrl;
-        }else if ( module.equals(module_feedbacks)){
-            APIUrl = feedbacksAPIUrl;
+        if ( module.equals(MODULE_REVIEWS)){
+            APIUrl = REVIEWS_API_URL;
+        }else if ( module.equals(MODULE_FEEDBACKS)){
+            APIUrl = FEEDBACKS_API_URL;
         }else{
             return "error: empty module argument";
         }
@@ -55,7 +54,7 @@ public final class API {
         boolean hasParams = false;
         if (dateStart != null) {
             Log.d("dateStart ", "true");
-            params.add("start_date=" + Utilities.getDateAsString(dateStart,DATE_FORMAT, "UTC"));
+            params.add("start_date=" + Utilities.getDateAsString(dateStart, DATE_FORMAT, "UTC"));
             hasParams = true;
         }
         if (dateEnd != null) {
@@ -67,8 +66,8 @@ public final class API {
             String UrlParams = Utilities.buildStringFromArray(params, "&");
             if (UrlParams != null) {
                 Log.d("urlParams ", UrlParams);
-                Log.d("reviewApiUrl ", reviewsAPIUrl);
-                APIUrl = new StringBuilder().append(APIUrl).append("?").append(UrlParams).toString();
+                Log.d("reviewApiUrl ", REVIEWS_API_URL);
+                APIUrl = APIUrl + "?" + UrlParams;
                 Log.d("API URL ", APIUrl);
             }
         }else{
