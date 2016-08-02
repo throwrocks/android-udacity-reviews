@@ -20,6 +20,7 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import rocks.athrow.android_udacity_reviews.R;
+import rocks.athrow.android_udacity_reviews.util.Constants;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 import rocks.athrow.android_udacity_reviews.data.RealmReview;;
 
@@ -27,28 +28,26 @@ import rocks.athrow.android_udacity_reviews.data.RealmReview;;
  * A placeholder fragment containing a simple view.
  */
 public class ReportsActivityFragment extends Fragment {
+
     private final static String DATE_DISPLAY = "MM/dd/yy";
     private final static String DATE_UTC = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     private final static String FIELD_SELECTED_DATE = "selected_date";
     private final static String FIELD_COMPLETED_DATE = "completed_at";
     private final static String FIELD_PRICE = "price";
-    View rootView;
-    TextView date1;
-    TextView date2;
-    Button queryButton;
-    String PREF_REPORT_DATE1;
-    String PREF_REPORT_DATE2;
+    private View rootView;
+    private TextView date1;
+    private TextView date2;
+    private Button queryButton;
+
     public ReportsActivityFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        PREF_REPORT_DATE1 = getContext().getResources().getString(R.string.report_date1);
-        PREF_REPORT_DATE2 = getContext().getResources().getString(R.string.report_date2);
         // Get the dates from the shared preferences
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        String reportDate1 = sharedPref.getString(PREF_REPORT_DATE1, "null");
-        String reportDate2 = sharedPref.getString(PREF_REPORT_DATE2, "null");
+        String reportDate1 = sharedPref.getString(Constants.PREF_REPORT_DATE1, "null");
+        String reportDate2 = sharedPref.getString(Constants.PREF_REPORT_DATE2, "null");
         // Inflate the layout
         rootView = inflater.inflate(R.layout.fragment_reports, container, false);
         date1 = (TextView) rootView.findViewById(R.id.reports_date1);
@@ -143,7 +142,7 @@ public class ReportsActivityFragment extends Fragment {
             String date = Utilities.getDateAsString(selectedDate, DATE_DISPLAY, null);
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(PREF_REPORT_DATE1, date);
+            editor.putString(Constants.PREF_REPORT_DATE1, date);
             editor.apply();
             date1.setText(date);
         }
@@ -159,7 +158,7 @@ public class ReportsActivityFragment extends Fragment {
             String date = Utilities.getDateAsString(selectedDate, DATE_DISPLAY, null);
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(PREF_REPORT_DATE2, date);
+            editor.putString(Constants.PREF_REPORT_DATE2, date);
             editor.apply();
             date2.setText(date);
         }

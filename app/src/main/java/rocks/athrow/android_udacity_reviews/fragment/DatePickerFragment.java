@@ -19,9 +19,11 @@ import rocks.athrow.android_udacity_reviews.util.Utilities;
  * Created by jose on 7/24/16.
  */
 public class DatePickerFragment extends DialogFragment {
+
     private final static String FIELD_SELECTED_DATE = "selected_date";
     private final static String DATE_DISPLAY = "MM/dd/yy";
-    DatePickerDialog.OnDateSetListener ondateSet;
+    private DatePickerDialog.OnDateSetListener ondateSet;
+
     public DatePickerFragment() {
     }
 

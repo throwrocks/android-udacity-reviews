@@ -40,8 +40,7 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... params) {
         String jsonResults;
         ContentValues[] parsedResults = null;
-        // Create an API object
-        API mAPI = new API(mContext);
+
         //------------------------------------------------------------------------------------------
         // Get the DateStart and DateEnd for the query parameters (get most recent only)
         //------------------------------------------------------------------------------------------
@@ -72,7 +71,7 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
         //------------------------------------------------------------------------------------------
         // Get the results from the API
         //------------------------------------------------------------------------------------------
-        jsonResults = mAPI.callAPI(module, dateStart, null);
+        jsonResults = API.callAPI(module, dateStart, null);
         //Parse the results if not null
         if (jsonResults != null) {
             JSONParser parser = new JSONParser(mContext);

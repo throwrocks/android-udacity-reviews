@@ -25,10 +25,10 @@ import rocks.athrow.android_udacity_reviews.realmadapter.RealmRecyclerViewAdapte
  * ReviewListFragmentActivity RecyclerView
  */
 public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
-    private Context context;
 
     private final static String DATE_TIME_DISPLAY = "MM/dd/yy h:mm a";
     private final static String DATE_DISPLAY = "MM/dd/yy";
+    private Context context;
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -127,6 +127,8 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
             reviewListRecyclerView.ratingBar.setVisibility(View.VISIBLE);
             reviewListRecyclerView.ratingBar.setRating(rating);
         }
+
+        final Context context = viewHolder.itemView.getContext();
 
         String resultDisplay;
         if (result.equals("passed")) {
