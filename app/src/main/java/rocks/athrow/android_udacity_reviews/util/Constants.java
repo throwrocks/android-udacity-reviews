@@ -1,7 +1,7 @@
 package rocks.athrow.android_udacity_reviews.util;
 
 /**
- * Created by Izodine on 8/1/2016.
+ * Created by Anthony M. Santiago on 8/1/2016.
  * 
  * Class to hold global constants.
  */
