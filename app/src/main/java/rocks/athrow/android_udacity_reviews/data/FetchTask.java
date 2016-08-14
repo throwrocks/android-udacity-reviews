@@ -74,11 +74,10 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
         jsonResults = API.callAPI(module, dateStart, null);
         //Parse the results if not null
         if (jsonResults != null) {
-            JSONParser parser = new JSONParser(mContext);
             if (module.equals(MODULE_REVIEWS)) {
-                parsedResults = parser.parseReviews(jsonResults);
+                parsedResults = JSONParser.parseReviews(jsonResults);
             } else if (module.equals(MODULE_FEEDBACKS)) {
-                parsedResults = parser.parseFeedbacks(jsonResults);
+                parsedResults = JSONParser.parseFeedbacks(jsonResults);
             }
             // The parsedResults are not null, update the Realm database
             if (parsedResults != null) {

@@ -11,15 +11,10 @@ import org.json.JSONObject;
 /**
  * Created by joselopez on 7/5/16.
  */
-class JSONParser {
+final class JSONParser {
 
-    private static final String LOG_TAG = API.class.getSimpleName();
-    private ContentValues[] mContentValues;
-    private Context mContext;
-
-    // Constructor
-    public JSONParser(Context context) {
-        this.mContext = context;
+    private JSONParser(){
+        throw new AssertionError("No JSONParser instances for you!");
     }
 
     /**
@@ -28,11 +23,14 @@ class JSONParser {
      * @param reviewsJSON a string of results from submissions completed API call
      * @return a ContentValues array with the results as ContentValues
      */
-    public ContentValues[] parseReviews(String reviewsJSON) {
+    public static ContentValues[] parseReviews(String reviewsJSON) {
+        ContentValues[] contentValues = new ContentValues[0];
+
         try {
             JSONArray reviewsArray = new JSONArray(reviewsJSON);
             int reviewsQty = reviewsArray.length();
-            mContentValues = new ContentValues[reviewsQty];
+            contentValues = new ContentValues[reviewsQty];
+
             for (int i = 0; i < reviewsQty; i++) {
                 JSONObject reviewRecord = reviewsArray.getJSONObject(i);
                 // Create a ContentValues object
@@ -107,14 +105,14 @@ class JSONParser {
                 //----------------------------------------------------------------------------------
                 // Add the ContentValues to the Array
                 //----------------------------------------------------------------------------------
-                mContentValues[i] = reviewValues;
+                contentValues[i] = reviewValues;
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return mContentValues;
+        return contentValues;
     }
 
     /**
@@ -123,11 +121,13 @@ class JSONParser {
      * @param feedbacksJSON a string of results from student feedbacks API call
      * @return a ContentValues array with the results as ContentValues
      */
-    public ContentValues[] parseFeedbacks(String feedbacksJSON) {
+    public static ContentValues[] parseFeedbacks(String feedbacksJSON) {
+        ContentValues[] contentValues = new ContentValues[0];
         try {
             JSONArray feedbacksArray = new JSONArray(feedbacksJSON);
             int feedbacksQty = feedbacksArray.length();
-            mContentValues = new ContentValues[feedbacksQty];
+
+            contentValues = new ContentValues[feedbacksQty];
             for (int i = 0; i < feedbacksQty; i++) {
                 JSONObject reviewRecord = feedbacksArray.getJSONObject(i);
                 // Create a ContentValues object
@@ -168,14 +168,14 @@ class JSONParser {
                 //----------------------------------------------------------------------------------
                 // Add the ContentValues to the Array
                 //----------------------------------------------------------------------------------
-                mContentValues[i] = reviewValues;
+                contentValues[i] = reviewValues;
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return mContentValues;
+        return contentValues;
     }
 
 }
