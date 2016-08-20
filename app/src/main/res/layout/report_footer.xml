@@ -1,38 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/report_footer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginEnd="16dp"
     android:layout_marginStart="16dp"
+    android:layout_marginTop="4dp"
     android:orientation="vertical"
     android:weightSum="7">
 
     <include layout="@layout/separator_horizontal" />
 
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/project_name"
-            style="@style/tableRow"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3" />
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="3"
+            android:gravity="end"
+            android:text="@string/grand_totals"
+            android:textStyle="italic" />
 
         <TextView
-            android:id="@+id/project_count"
-            style="@style/tableRow"
+            android:id="@+id/reports_count_reviews"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/project_revenue"
-            style="@style/tableRow"
+            android:id="@+id/reports_revenue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp" />
     </LinearLayout>
-
 </LinearLayout>

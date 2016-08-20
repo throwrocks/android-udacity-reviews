@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:gravity="bottom"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/reports_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_reviews_period"
+        android:textColor="@color/primaryText"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/reports_date1_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:text="@string/label_from" />
+
+    <TextView
+        android:id="@+id/reports_date1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:background="?attr/editTextBackground" />
+
+    <TextView
+        android:id="@+id/reports_date2_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:text="@string/label_to" />
+
+    <TextView
+        android:id="@+id/reports_date2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:background="?attr/editTextBackground" />
+
+    <Button
+        android:id="@+id/reports_query_button"
+        style="@style/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        android:text="@string/label_find" />
+</LinearLayout>

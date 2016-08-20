@@ -95,8 +95,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         //------------------------------------------------------------------------------------------
         // Get the elapsed time between start/end
         //------------------------------------------------------------------------------------------
-        // TODO: Store this value in the database?
-        final String elapsedTime = Utilities.elapsedTime(assignedAt, completedAt);
+        final String elapsedTime = reviewRecord.getElapsedTimeDisplay();
         //------------------------------------------------------------------------------------------
         // Get the filename from the archive url
         //------------------------------------------------------------------------------------------

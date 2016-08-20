@@ -14,6 +14,7 @@ public class SummaryObject {
     String type;
     int reviewsCount;
     Number reviewsRevenue;
+
     String projectName;
     int projectCount;
     Number projectRevenue;

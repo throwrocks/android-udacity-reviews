@@ -5,6 +5,7 @@ import java.util.Date;
 import io.realm.RealmObject;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
+import rocks.athrow.android_udacity_reviews.util.Utilities;
 
 /**
  * Created by joselopez on 7/5/16.
@@ -30,6 +31,7 @@ public class RealmReview extends RealmObject {
     Date updated_at;
     Date assigned_at;
     Date completed_at;
+    long elapsed_time;
     //----------------------------------------------------------------------------------
     // Submission data
     //----------------------------------------------------------------------------------
@@ -63,6 +65,18 @@ public class RealmReview extends RealmObject {
     int feedback_rating;
 
     public RealmReview(){
+    }
+
+    public long getElapsed_time() {
+        return elapsed_time;
+    }
+
+    public void setElapsed_time(long elapsed_time) {
+        this.elapsed_time = elapsed_time;
+    }
+
+    public String getElapsedTimeDisplay(){
+        return Utilities.elapsedTimeDisplay(this.assigned_at, this.completed_at);
     }
 
     public Date getCompleted_at() {

@@ -78,10 +78,12 @@ public class UpdateRealm {
                 Date updated_at = Utilities.getStringAsDate(value.getAsString("updated_at"), DATE_UTC, TIMEZONE_UTC);
                 Date assigned_at = Utilities.getStringAsDate(value.getAsString("assigned_at"), DATE_UTC, TIMEZONE_UTC);
                 Date completed_at = Utilities.getStringAsDate(value.getAsString("completed_at"),DATE_UTC, TIMEZONE_UTC);
+                long elapsed_time = Utilities.elapsedMinuted(created_at, completed_at);
                 newReview.setCreated_at(created_at);
                 newReview.setUpdated_at(updated_at);
                 newReview.setAssigned_at(assigned_at);
                 newReview.setCompleted_at(completed_at);
+                newReview.setElapsed_time(elapsed_time);
                 //----------------------------------------------------------------------------------
                 // Submission data
                 //----------------------------------------------------------------------------------

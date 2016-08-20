@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import io.realm.Realm;
@@ -64,6 +65,14 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
             RealmResults<RealmFeedback> feedbacksResult = feedbacksQuery.findAll();
             if (feedbacksResult.size() > 0) {
                 dateStart = feedbacksResult.maxDate("created_at");
+            }else{
+                // If this is the first time downloading reviews the API will only return the
+                // last 30 days. Set the date start to when Udacity was founded to get all the
+                // history
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(0);
+                cal.set(2011, 4, 1, 1, 0, 0);
+                dateStart = cal.getTime();
             }
         }
         // Close realm

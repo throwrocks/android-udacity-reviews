@@ -10,16 +10,23 @@
     <string name="label_by">By&#160;</string>
     <string name="label_rate">Rate&#160;</string>
     <string name="label_id">ID#&#160;</string>
-    <string name="label_from">From&#160;</string>
-    <string name="label_to">To&#160;</string>
+    <string name="label_from">from</string>
+    <string name="label_to">to</string>
     <string name="label_completion_time">Completion Time </string>
     <string name="label_student_notes">Student Notes</string>
     <string name="label_student_feedback">Student Feedback</string>
-    <string name="label_reviews_period">Reviews Period</string>
+    <string name="label_reviews_period">Period</string>
     <string name="label_find">Find</string>
     <string name="label_total_reviews">Total Reviews</string>
     <string name="label_revenue">Revenue</string>
     <string name="label_reviews_to_date">Your reviews are up to date!</string>
     <string name="title_activity_reports">ReportsActivity</string>
     <string name="label_no_network_connection">You are not connected to a network</string>
+    <!-- Project Summary header -->
+    <string name="project">Project</string>
+    <string name="count">Count</string>
+    <string name="revenue">Revenue</string>
+    <string name="time_spent">Hours</string>
+    <!-- Project Summary footer -->
+    <string name="grand_totals">Grand Totals</string>
 </resources>

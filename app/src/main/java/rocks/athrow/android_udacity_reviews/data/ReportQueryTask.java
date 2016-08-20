@@ -35,7 +35,7 @@ public class ReportQueryTask extends AsyncTask<String, Void, ArrayList<SummaryOb
     @Override
     protected ArrayList<SummaryObject> doInBackground(String... String) {
         // Create an ArrayList of SummaryObjects
-        ArrayList<SummaryObject> summaryObjects = new ArrayList<SummaryObject>();
+        ArrayList<SummaryObject> summaryObjects = new ArrayList<>();
         // Get a Realm instance
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(context).build();
         Realm.setDefaultConfiguration(realmConfig);

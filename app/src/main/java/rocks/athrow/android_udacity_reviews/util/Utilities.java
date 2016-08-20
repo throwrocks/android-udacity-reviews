@@ -67,14 +67,14 @@ public final class Utilities {
     }
 
     /**
-     * elapsedTime
-     * Get the elapsed time between two dates
+     * elapsedTimeDisplay
+     * Get the elapsed time between two dates in readable format
      *
      * @param dateStart the date start
      * @param dateEnd   the date end
      * @return the elapsed hours and minutes
      */
-    public static String elapsedTime(Date dateStart, Date dateEnd) {
+    public static String elapsedTimeDisplay(Date dateStart, Date dateEnd) {
         long diff = dateEnd.getTime() - dateStart.getTime();
         long diffMinutes = diff / (60 * 1000) % 60;
         long diffHours = diff / (60 * 60 * 1000);
@@ -83,6 +83,18 @@ public final class Utilities {
             mins = "0" + mins;
         }
         return Long.toString(diffHours) + ":" + mins;
+    }
+
+    /**
+     * elapsedMinuted
+     * Get the elapsed minutes between two dates
+     *
+     * @param dateStart the date start
+     * @param dateEnd   the date end
+     * @return the elapsed hours and minutes in a long
+     */
+    public static long elapsedMinuted(Date dateStart, Date dateEnd) {
+        return dateEnd.getTime() - dateStart.getTime();
     }
 
     /**
