@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="7"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:orientation="horizontal">
+
     <TextView
+        android:layout_weight="3"
         android:id="@+id/project_name"
-        android:text="Project"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
     <TextView
-        android:id="@+id/project_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_weight="2"
+        android:id="@+id/project_count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_weight="2"
+        android:id="@+id/project_revenue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

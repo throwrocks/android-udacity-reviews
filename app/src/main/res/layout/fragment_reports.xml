@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/reports_fragment"
     tools:context=".fragment.ReportsActivityFragment"
     tools:showIn="@layout/activity_main">
 
@@ -114,11 +115,12 @@
             android:layout_marginStart="4dp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
-        android:id="@+id/report_project_summary"
+    <android.support.v7.widget.RecyclerView
+        android:orientation="vertical"
+        android:id="@+id/reports_project_summary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+
 </LinearLayout>
