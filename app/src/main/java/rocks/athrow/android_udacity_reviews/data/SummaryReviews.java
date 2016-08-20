@@ -6,10 +6,10 @@ import rocks.athrow.android_udacity_reviews.util.Utilities;
  * ReportSummary
  * This class is used to store the total reviews summary
  */
-public class SummaryReport{
+public class SummaryReviews{
     int reviewsCount;
     Number reviewsRevenue;
-    public  SummaryReport(int reviewsCount, Number reviewSummary){
+    public  SummaryReviews(int reviewsCount, Number reviewSummary){
         this.reviewsCount = reviewsCount;
         this.reviewsRevenue = reviewSummary;
     }

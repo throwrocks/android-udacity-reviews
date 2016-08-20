@@ -21,7 +21,7 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import rocks.athrow.android_udacity_reviews.R;
 import rocks.athrow.android_udacity_reviews.data.SummaryProject;
-import rocks.athrow.android_udacity_reviews.data.SummaryReport;
+import rocks.athrow.android_udacity_reviews.data.SummaryReviews;
 import rocks.athrow.android_udacity_reviews.util.Constants;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 import rocks.athrow.android_udacity_reviews.data.RealmReview;
@@ -125,15 +125,15 @@ public class ReportsActivityFragment extends Fragment {
         int count = results.size();
         Number revenue = results.sum(FIELD_PRICE);
         realm.close();
-        // Create a ReviewsSummary Object
-        SummaryReport reviewsSummary = new SummaryReport(count, revenue);
-        setReportViews(reviewsSummary, null);
+        // Create a SummaryReport Object
+        SummaryReviews summaryReviews = new SummaryReviews(count, revenue);
+        setReportViews(summaryReviews, null);
 
     }
 
-    public void setReportViews(SummaryReport reviewsSummary, SummaryProject projectsSummary){
-        String countDisplay = reviewsSummary.getReviewsCount();
-        String revenueDisplay = reviewsSummary.getReviewSummary();
+    public void setReportViews(SummaryReviews summaryReviews, SummaryProject projectsSummary){
+        String countDisplay = summaryReviews.getReviewsCount();
+        String revenueDisplay = summaryReviews.getReviewSummary();
         TextView revenueView = (TextView) rootView.findViewById(R.id.reports_revenue);
         TextView countView = (TextView) rootView.findViewById(R.id.reports_count_reviews);
         revenueView.setText(revenueDisplay);
