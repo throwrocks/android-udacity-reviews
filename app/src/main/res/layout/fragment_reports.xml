@@ -37,25 +37,24 @@
             android:id="@+id/reports_date1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
-            android:background="?attr/editTextBackground"
-        />
+            android:layout_marginStart="4dp"
+            android:background="?attr/editTextBackground" />
 
         <TextView
             android:id="@+id/reports_date2_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:text="@string/label_to" />
 
         <TextView
             android:id="@+id/reports_date2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:background="?attr/editTextBackground" />
 
         <Button
@@ -87,9 +86,8 @@
             android:id="@+id/reports_count_reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
-            />
+            android:layout_marginStart="4dp" />
 
     </LinearLayout>
 
@@ -112,8 +110,15 @@
             android:id="@+id/reports_revenue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp" />
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:id="@+id/report_project_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
 </LinearLayout>

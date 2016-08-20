@@ -3,6 +3,7 @@ package rocks.athrow.android_udacity_reviews.data;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -49,6 +50,7 @@ public class RealmReview extends RealmObject {
     //----------------------------------------------------------------------------------
     // Project data
     //----------------------------------------------------------------------------------
+    @Index
     String project_name;
     String project_hash_tag;
     String project_required_skills;

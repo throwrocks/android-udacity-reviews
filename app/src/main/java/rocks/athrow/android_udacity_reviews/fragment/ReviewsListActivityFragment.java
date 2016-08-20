@@ -1,4 +1,4 @@
-package rocks.athrow.android_udacity_reviews.activity;
+package rocks.athrow.android_udacity_reviews.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import rocks.athrow.android_udacity_reviews.R;
+import rocks.athrow.android_udacity_reviews.activity.MainActivity;
 import rocks.athrow.android_udacity_reviews.adapter.ReviewListAdapter;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 import rocks.athrow.android_udacity_reviews.data.FetchTask;
@@ -25,7 +26,7 @@ import rocks.athrow.android_udacity_reviews.realmadapter.RealmReviewsAdapter;
  * ReviewsListFragmentActivity
  * Created by josel on 7/5/2016.
  */
-public class ReviewsListFragmentActivity extends android.support.v4.app.Fragment implements MainActivity.ReviewsListFragmentCallback {
+public class ReviewsListActivityFragment extends android.support.v4.app.Fragment implements MainActivity.ReviewsListFragmentCallback {
 
     private final String MODULE_REVIEWS = "submissions_completed";
     private final String MODULE_FEEDBACKS = "student_feedbacks";

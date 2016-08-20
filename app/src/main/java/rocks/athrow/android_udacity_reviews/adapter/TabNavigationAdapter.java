@@ -7,10 +7,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import rocks.athrow.android_udacity_reviews.R;
-import rocks.athrow.android_udacity_reviews.activity.ReviewsListFragmentActivity;
+import rocks.athrow.android_udacity_reviews.fragment.ReviewsListActivityFragment;
 import rocks.athrow.android_udacity_reviews.fragment.ReportsActivityFragment;
 
 /**
+ * ReviewsListActivityFragment
  * Created by jose on 7/24/16.
  */
 public class TabNavigationAdapter extends FragmentPagerAdapter {
@@ -22,7 +23,7 @@ public class TabNavigationAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if ( position == 0 ){
-            return new ReviewsListFragmentActivity();
+            return new ReviewsListActivityFragment();
         } else if ( position == 1 ) {
             return new ReportsActivityFragment();
         }else{
