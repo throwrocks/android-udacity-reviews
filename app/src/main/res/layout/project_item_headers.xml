@@ -25,7 +25,6 @@
             android:layout_weight="2"
             android:text="@string/label_rate" />
 
-
         <TextView
             style="@style/tableHeaderDark"
             android:layout_width="0dp"
