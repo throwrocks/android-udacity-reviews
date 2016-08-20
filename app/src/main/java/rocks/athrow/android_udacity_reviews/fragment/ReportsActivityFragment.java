@@ -63,20 +63,19 @@ public class ReportsActivityFragment extends Fragment {
             date1.setText(reportDate1);
             date2.setText(reportDate2);
         }
-
+        Log.e("date1", "" + date1.getText());
+        Log.e("date2", "" + date2.getText());
         date1.setOnClickListener(new View.OnClickListener() {
-            final String selectedDate = date1.getText().toString();
-
             @Override
             public void onClick(View view) {
+                String selectedDate = date1.getText().toString();
                 showDatePicker(1, selectedDate);
             }
         });
         date2.setOnClickListener(new View.OnClickListener() {
-            final String selectedDate = date2.getText().toString();
-
             @Override
             public void onClick(View view) {
+                String selectedDate = date2.getText().toString();
                 showDatePicker(2, selectedDate);
             }
         });

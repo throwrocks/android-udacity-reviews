@@ -34,9 +34,11 @@ public class ProjectSummaryAdapter extends RecyclerView.Adapter<ProjectSummaryAd
         String projectName = holder.mItem.getProjectName();
         String projectCount = holder.mItem.getProjectCount();
         String projectRevenue = holder.mItem.getProjectRevenue();
+        String projecHours = holder.mItem.getProjectHours();
         holder.projectNameView.setText(projectName);
         holder.projectCountView.setText(projectCount);
         holder.projectRevenueView.setText(projectRevenue);
+        holder.projectHoursView.setText(projecHours);
 
     }
 
@@ -45,11 +47,13 @@ public class ProjectSummaryAdapter extends RecyclerView.Adapter<ProjectSummaryAd
         public final TextView projectNameView;
         public final TextView projectCountView;
         public final TextView projectRevenueView;
+        public final TextView projectHoursView;
 
         public ViewHolder(View view) {
             super(view);
             projectNameView = (TextView) view.findViewById(R.id.project_name);
             projectCountView = (TextView) view.findViewById(R.id.project_count);
+            projectHoursView = (TextView) view.findViewById(R.id.project_hours);
             projectRevenueView = (TextView) view.findViewById(R.id.project_revenue);
         }
     }

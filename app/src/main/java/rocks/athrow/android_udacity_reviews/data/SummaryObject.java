@@ -18,12 +18,15 @@ public class SummaryObject {
     String projectName;
     int projectCount;
     Number projectRevenue;
+    long projectHours;
 
-    public SummaryObject(String type, String projectName, int projectCount, Number projectRevenue){
+    public SummaryObject(String type, String projectName, int projectCount,
+                         Number projectRevenue, long projectHours){
         this.type = type;
         this.projectName = projectName;
         this.projectCount = projectCount;
         this.projectRevenue = projectRevenue;
+        this.projectHours = projectHours;
     }
 
     public  SummaryObject(String type, int reviewsCount, Number reviewSummary){
@@ -52,4 +55,7 @@ public class SummaryObject {
         return Utilities.formatCurrency(projectRevenue.doubleValue());
     }
 
+    public String getProjectHours() {
+        return String.valueOf(this.projectHours);
+    }
 }

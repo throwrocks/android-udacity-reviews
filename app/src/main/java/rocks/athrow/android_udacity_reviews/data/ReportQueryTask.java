@@ -21,6 +21,7 @@ public class ReportQueryTask extends AsyncTask<String, Void, ArrayList<SummaryOb
     private Context context;
     private final static String FIELD_COMPLETED_DATE = "completed_at";
     private final static String FIELD_PRICE = "price";
+    private final static String FIELD_HOURS = "elapsed_time";
     public OnReportQueryCompleted listener = null;
     Date date1;
     Date date2;
@@ -74,11 +75,13 @@ public class ReportQueryTask extends AsyncTask<String, Void, ArrayList<SummaryOb
                 // Execute the query
                 RealmResults<RealmReview> projectResults = projectQuery.findAll();
                 realm.commitTransaction();
-                // Get the project's revenue
+                // Get the project attributes
                 Number projectRevenue = projectResults.sum(FIELD_PRICE);
+                long projectHours = projectResults.sum(FIELD_HOURS).longValue();
                 int projectsCount = projectResults.size();
                 // Store the project's summary
-                SummaryObject summaryProject = new SummaryObject("project", projectName, projectsCount, projectRevenue);
+                SummaryObject summaryProject = new SummaryObject("project", projectName,
+                        projectsCount, projectRevenue, projectHours);
                 Log.e("project: ", projectResults.size() + " " + projectName + " " + projectRevenue);
                 summaryObjects.add(summaryProject);
                 i++;
