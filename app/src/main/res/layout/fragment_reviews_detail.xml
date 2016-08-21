@@ -45,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:labelFor="@+id/review_detail_user_name"
-                    android:text="@string/review_detail_label_from" />
+                    android:text="@string/review_detail_label_by" />
 
                 <TextView
                     android:id="@+id/review_detail_user_name"

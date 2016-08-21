@@ -22,7 +22,9 @@ import rocks.athrow.android_udacity_reviews.util.Utilities;
  */
 public final class API {
 
-    private API(){ throw new AssertionError("No API instances for you!"); }
+    private API() {
+        throw new AssertionError("No API instances for you!");
+    }
 
     private static final String apiKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
@@ -33,19 +35,20 @@ public final class API {
 
     /**
      * callAPI
-     * @param module the API module (supported: submissions_completed, student_feedbacks)
+     *
+     * @param module    the API module (supported: submissions_completed, student_feedbacks)
      * @param dateStart the start date to retrieve results from
-     * @param dateEnd the end date to retrieve result to
+     * @param dateEnd   the end date to retrieve result to
      * @return the API response in a string
      */
     public static String callAPI(String module, Date dateStart, Date dateEnd) {
         Log.d("module ", module);
         String APIUrl;
-        if ( module.equals(MODULE_REVIEWS)){
+        if (module.equals(MODULE_REVIEWS)) {
             APIUrl = REVIEWS_API_URL;
-        }else if ( module.equals(MODULE_FEEDBACKS)){
+        } else if (module.equals(MODULE_FEEDBACKS)) {
             APIUrl = FEEDBACKS_API_URL;
-        }else{
+        } else {
             return "error: empty module argument";
         }
         Log.d("APIUrl ", APIUrl);
@@ -70,7 +73,7 @@ public final class API {
                 APIUrl = APIUrl + "?" + UrlParams;
                 Log.d("API URL ", APIUrl);
             }
-        }else{
+        } else {
             Log.d("params ", "no params");
         }
 
@@ -80,6 +83,7 @@ public final class API {
     /**
      * httpConnect
      * This method handles communicating with the API and converting the input stream into a string
+     *
      * @return a json string to be used in a parsing method
      */
     private static String httpConnect(String APIurl) {
