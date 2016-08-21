@@ -124,7 +124,6 @@ public class ReviewsListActivityFragment extends android.support.v4.app.Fragment
         if (fetchFeedbacks != null) {
             fetchFeedbacks.cancel(true);
         }
-
     }
 
     @Override

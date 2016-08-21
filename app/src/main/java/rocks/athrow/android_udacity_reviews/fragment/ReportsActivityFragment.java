@@ -86,6 +86,7 @@ public class ReportsActivityFragment extends Fragment {
                 reportQuery();
             }
         });
+        reportQuery();
         return rootView;
     }
 
@@ -122,13 +123,13 @@ public class ReportsActivityFragment extends Fragment {
                 if (summaryObjects != null) {
                     setReportViews(summaryObjects);
                 } else {
+                    // TODO: handle message in the layout. We don't want to the toast to show in the reviews fragment
                     Context context = getContext();
                     CharSequence text = context.getResources().getString(R.string.reports_no_reviews_found);
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
-
             }
         };
         // Add query conditions
