@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -130,8 +132,6 @@ public class ReportsActivityFragment extends Fragment {
         Date date2 = Utilities.getDateEnd(Utilities.getStringAsDate(selectedDate2, DATE_DISPLAY, null));
         ReportQueryTask queryTask = new ReportQueryTask(getActivity(), onReportQueryCompleted, date1, date2);
         queryTask.execute();
-
-
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -144,10 +144,13 @@ public class ReportsActivityFragment extends Fragment {
         Log.e("summaryObject", "" + summaryObject.size());
         SummaryObject summaryReviews = summaryObject.get(0);
         String countDisplay = summaryReviews.getReviewsCount();
+        String hoursDisplay = summaryReviews.getElapsedTime();
         String revenueDisplay = summaryReviews.getReviewsRevenue();
-        TextView revenueView = (TextView) rootView.findViewById(R.id.reports_revenue);
         TextView countView = (TextView) rootView.findViewById(R.id.reports_count_reviews);
+        TextView hoursView = (TextView) rootView.findViewById(R.id.report_hours);
+        TextView revenueView = (TextView) rootView.findViewById(R.id.reports_revenue);
         revenueView.setText(revenueDisplay);
+        hoursView.setText(hoursDisplay);
         countView.setText(countDisplay);
         summaryObject.remove(0);
         setupRecyclerView((RecyclerView) recyclerView);

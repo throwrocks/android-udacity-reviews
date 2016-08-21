@@ -26,7 +26,7 @@
     <string name="project">Project</string>
     <string name="count">Count</string>
     <string name="revenue">Revenue</string>
-    <string name="time_spent">Hours</string>
+    <string name="time_spent">Time</string>
     <!-- Project Summary footer -->
     <string name="grand_totals">Grand Totals</string>
 </resources>

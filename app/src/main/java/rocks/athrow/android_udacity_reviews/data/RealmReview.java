@@ -67,9 +67,6 @@ public class RealmReview extends RealmObject {
     public RealmReview(){
     }
 
-    public long getElapsed_time() {
-        return elapsed_time;
-    }
 
     public void setElapsed_time(long elapsed_time) {
         this.elapsed_time = elapsed_time;

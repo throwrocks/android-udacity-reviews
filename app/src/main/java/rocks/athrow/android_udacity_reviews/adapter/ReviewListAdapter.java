@@ -109,8 +109,6 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         //------------------------------------------------------------------------------------------
         // Set the views
         //------------------------------------------------------------------------------------------
-
-
         reviewListRecyclerView.viewReviewId.setText(idString);
         reviewListRecyclerView.viewProjectName.setText(projectName);
         reviewListRecyclerView.viewCompletedAt.setText(completedAtListDisplay);
@@ -167,9 +165,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
             }
         });
 
-
     }
-
     /* The inner RealmBaseAdapter
      * view count is applied here.
      *

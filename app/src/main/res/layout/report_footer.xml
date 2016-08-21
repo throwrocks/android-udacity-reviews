@@ -4,41 +4,65 @@
     android:layout_height="wrap_content"
     android:layout_marginEnd="16dp"
     android:layout_marginStart="16dp"
-    android:layout_marginTop="4dp"
-    android:orientation="vertical"
-    android:weightSum="7">
+    android:orientation="vertical">
 
     <include layout="@layout/separator_horizontal" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/lightBackgrond"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_weight="3"
-            android:gravity="end"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:paddingBottom="4dp"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            android:paddingTop="4dp"
             android:text="@string/grand_totals"
+            android:textSize="16sp"
             android:textStyle="italic" />
 
         <TextView
             android:id="@+id/reports_count_reviews"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
+            android:gravity="center_horizontal"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
             android:textColor="@color/primaryText"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/report_hours"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_horizontal"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/reports_revenue"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
+            android:background="@color/revenueRow"
+            android:gravity="end"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
             android:textColor="@color/primaryText"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 </LinearLayout>

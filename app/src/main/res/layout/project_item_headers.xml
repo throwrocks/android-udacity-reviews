@@ -5,22 +5,26 @@
     android:layout_marginStart="16dp"
     android:orientation="vertical"
     android:weightSum="12">
+
     <include layout="@layout/separator_horizontal" />
+
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <TextView
             style="@style/tableHeaderDark"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:text="@string/project" />
 
         <TextView
             style="@style/tableHeaderDark"
             android:layout_width="0dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="@string/count" />
@@ -28,16 +32,18 @@
         <TextView
             style="@style/tableHeaderDark"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="@string/revenue" />
-
-        <TextView
-            style="@style/tableHeaderDark"
-            android:layout_width="0dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="@string/time_spent" />
-
+        <TextView
+            style="@style/tableHeaderDark"
+            android:layout_width="0dp"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="end"
+            android:text="@string/revenue" />
     </LinearLayout>
 </LinearLayout>

@@ -14,6 +14,7 @@ public class SummaryObject {
     String type;
     int reviewsCount;
     Number reviewsRevenue;
+    Number elapsedTime;
 
     String projectName;
     int projectCount;
@@ -29,10 +30,11 @@ public class SummaryObject {
         this.projectHours = projectHours;
     }
 
-    public  SummaryObject(String type, int reviewsCount, Number reviewSummary){
+    public  SummaryObject(String type, int reviewsCount, Number reviewSummary, Number elapsedTime){
         this.type = type;
         this.reviewsCount = reviewsCount;
         this.reviewsRevenue = reviewSummary;
+        this.elapsedTime = elapsedTime;
     }
 
     public String getReviewsCount() {
@@ -41,6 +43,10 @@ public class SummaryObject {
 
     public String getReviewsRevenue() {
         return Utilities.formatCurrency(reviewsRevenue.doubleValue());
+    }
+
+    public String getElapsedTime() {
+        return Utilities.millisecondsToHours(elapsedTime.longValue());
     }
 
     public String getProjectName(){
@@ -56,6 +62,7 @@ public class SummaryObject {
     }
 
     public String getProjectHours() {
-        return String.valueOf(this.projectHours);
+        return Utilities.millisecondsToHours(this.projectHours);
+        //return String.valueOf(this.projectHours);
     }
 }

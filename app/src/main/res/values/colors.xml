@@ -14,4 +14,5 @@
     <color name="greenPassed">#00C853</color>
     <color name="orangeFailed">#EF6C00</color>
     <color name="grayCantReview">#757575</color>
+    <color name="revenueRow">#C8E6C9</color>
 </resources>
