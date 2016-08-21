@@ -6,5 +6,5 @@ Set your API key in the gradle.properties file.
 
 `MyUdacityApiKey = "my token"`
 
-![List View](http://throw.rocks/android-projects/code-reviewer-app/list-view-2016-07-24.png)
-![Detail View](http://throw.rocks/android-projects/code-reviewer-app/detail-view-2016-07-24.png)
+![List View](http://throw.rocks/android-projects/code-reviewer-app/list-view-2016-08-20.png)
+![Detail View](http://throw.rocks/android-projects/code-reviewer-app/detail-view-2016-08-20.png)
