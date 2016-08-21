@@ -119,7 +119,15 @@ public class ReportsActivityFragment extends Fragment {
             @Override
             public void OnReportQueryCompleted(ArrayList<SummaryObject> summaryObjects) {
                 mSummaryObjects = summaryObjects;
-                setReportViews(summaryObjects);
+                if (summaryObjects != null) {
+                    setReportViews(summaryObjects);
+                } else {
+                    Context context = getContext();
+                    CharSequence text = context.getResources().getString(R.string.reports_no_reviews_found);
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
 
             }
         };

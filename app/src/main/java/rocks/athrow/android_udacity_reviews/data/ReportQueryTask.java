@@ -95,6 +95,6 @@ public class ReportQueryTask extends AsyncTask<String, Void, ArrayList<SummaryOb
 
     @Override
     protected void onPostExecute(ArrayList<SummaryObject> summaryObjects) {
-        listener.OnReportQueryCompleted(summaryObjects);
+            listener.OnReportQueryCompleted(summaryObjects);
     }
 }
