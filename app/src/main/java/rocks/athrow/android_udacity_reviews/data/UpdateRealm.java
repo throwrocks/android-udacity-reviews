@@ -190,7 +190,7 @@ public class UpdateRealm {
                 //----------------------------------------------------------------------------------
                 realm.copyToRealmOrUpdate(newFeedback);
                 //----------------------------------------------------------------------------------
-                // Update the project rating
+                // Update the reports_project rating
                 //----------------------------------------------------------------------------------
                 RealmQuery<RealmReview> reviewsQuery = realm.where(RealmReview.class);
                 reviewsQuery.equalTo("id", submission_id);

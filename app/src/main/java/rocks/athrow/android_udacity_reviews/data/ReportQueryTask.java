@@ -60,7 +60,7 @@ public class ReportQueryTask extends AsyncTask<String, Void, ArrayList<SummaryOb
         // Store the reviews summary
         SummaryObject summaryReviews = new SummaryObject("reviews", count, revenue, hours);
         summaryObjects.add(summaryReviews);
-        // Get the distinct project names
+        // Get the distinct reports_project names
         RealmResults<RealmReview> projects = query.distinct("project_name");
         Log.e("projects ", "" + projects.size());
         int totalProjectsCount = projects.size();
@@ -77,14 +77,14 @@ public class ReportQueryTask extends AsyncTask<String, Void, ArrayList<SummaryOb
                 // Execute the query
                 RealmResults<RealmReview> projectResults = projectQuery.findAll();
                 realm.commitTransaction();
-                // Get the project attributes
+                // Get the reports_project attributes
                 Number projectRevenue = projectResults.sum(FIELD_PRICE);
                 long projectHours = projectResults.sum(FIELD_HOURS).longValue();
                 int projectsCount = projectResults.size();
-                // Store the project's summary
-                SummaryObject summaryProject = new SummaryObject("project", projectName,
+                // Store the reports_project's summary
+                SummaryObject summaryProject = new SummaryObject("reports_project", projectName,
                         projectsCount, projectRevenue, projectHours);
-                Log.e("project: ", projectResults.size() + " " + projectName + " " + projectRevenue);
+                Log.e("reports_project: ", projectResults.size() + " " + projectName + " " + projectRevenue);
                 summaryObjects.add(summaryProject);
                 i++;
             }

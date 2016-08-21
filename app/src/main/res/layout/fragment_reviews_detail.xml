@@ -45,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:labelFor="@+id/review_detail_user_name"
-                    android:text="@string/label_from" />
+                    android:text="@string/review_detail_label_from" />
 
                 <TextView
                     android:id="@+id/review_detail_user_name"
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:labelFor="@+id/review_detail_review_rate"
-                    android:text="@string/label_rate" />
+                    android:text="@string/review_detail_label_rate" />
 
                 <TextView
                     android:id="@+id/review_detail_review_rate"
@@ -85,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:labelFor="@+id/review_detail_review_id"
-                    android:text="@string/label_id" />
+                    android:text="@string/review_detail_label_id" />
 
                 <TextView
                     android:id="@+id/review_detail_review_id"
@@ -149,7 +149,7 @@
                     android:layout_width="38dp"
                     android:layout_height="wrap_content"
                     android:labelFor="@+id/review_detail_completed_at"
-                    android:text="@string/label_from"
+                    android:text="@string/review_detail_label_from"
                     android:textSize="12sp" />
 
                 <TextView
@@ -172,7 +172,7 @@
                     android:layout_width="38dp"
                     android:layout_height="wrap_content"
                     android:labelFor="@+id/review_detail_completed_at"
-                    android:text="@string/label_to"
+                    android:text="@string/review_detail_label_to"
                     android:textSize="12sp" />
 
                 <TextView
@@ -199,7 +199,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:labelFor="@+id/review_detail_result"
-                android:text="@string/label_completion_time" />
+                android:text="@string/review_detail_label_completion_time" />
 
             <TextView
                 android:id="@+id/review_detail_elapsed_time"
@@ -225,7 +225,7 @@
             android:id="@+id/review_detail_student_notes_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_student_notes"
+            android:text="@string/review_detail_label_student_notes"
             android:textColor="@color/secondaryText"
             android:textSize="14sp" />
 
@@ -249,7 +249,7 @@
             android:id="@+id/review_detail_student_feedback_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_student_feedback"
+            android:text="@string/review_detail_label_student_feedback"
             android:textColor="@color/secondaryText"
             android:textSize="14sp" />
 

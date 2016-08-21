@@ -167,7 +167,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
 
     }
     /* The inner RealmBaseAdapter
-     * view count is applied here.
+     * view reports_count is applied here.
      *
      * getRealmAdapter is defined in RealmRecyclerViewAdapter.
      */

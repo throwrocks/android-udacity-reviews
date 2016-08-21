@@ -58,7 +58,7 @@ public class ReviewsListActivityFragment extends android.support.v4.app.Fragment
             public void onFetchReviewsCompleted() {
                 swipeContainer.setRefreshing(false);
 
-                CharSequence text = context.getString(R.string.label_reviews_to_date);
+                CharSequence text = context.getString(R.string.review_detail_label_reviews_to_date);
                 int duration = Toast.LENGTH_SHORT;
                 final Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
@@ -75,7 +75,7 @@ public class ReviewsListActivityFragment extends android.support.v4.app.Fragment
                     fetchFeedbacks = new FetchTask(getContext(), MODULE_FEEDBACKS, null, null);
                     fetchFeedbacks.execute();
                 } else {
-                    CharSequence text = context.getString(R.string.label_no_network_connection);
+                    CharSequence text = context.getString(R.string.general_no_network_connection);
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();

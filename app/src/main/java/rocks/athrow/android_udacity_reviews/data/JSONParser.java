@@ -99,7 +99,7 @@ final class JSONParser {
                 // The commented out variables are referencing elements that are not in the JSON
                 // response. It seems they were deprecated but not remoevd from the documentation
                 //----------------------------------------------------------------------------------
-                JSONObject projectNode = reviewRecord.getJSONObject("project");
+                JSONObject projectNode = reviewRecord.getJSONObject("reports_project");
                 String project_name = projectNode.getString("name");
                 reviewValues.put("project_name", project_name);
                 //----------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ final class JSONParser {
                 int user_id = reviewRecord.getInt("id");
                 int grader_id = reviewRecord.getInt("grader_id");
                 //int project_id = reviewRecord.getInt("project_id");
-                JSONObject projectNode = reviewRecord.getJSONObject("project");
+                JSONObject projectNode = reviewRecord.getJSONObject("reports_project");
                 String project_name = projectNode.getString("name");
                 reviewValues.put("id", id);
                 reviewValues.put("submission_id", submission_id);

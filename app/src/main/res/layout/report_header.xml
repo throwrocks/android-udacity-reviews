@@ -12,7 +12,7 @@
         android:id="@+id/reports_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label_reviews_period"
+        android:text="@string/review_detail_label_reviews_period"
         android:textColor="@color/primaryText"
         android:textSize="18sp" />
 
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
-        android:text="@string/label_from" />
+        android:text="@string/review_detail_label_from" />
 
     <TextView
         android:id="@+id/reports_date1"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
-        android:text="@string/label_to" />
+        android:text="@string/review_detail_label_to" />
 
     <TextView
         android:id="@+id/reports_date2"
@@ -56,5 +56,5 @@
         android:layout_gravity="end"
         android:paddingEnd="4dp"
         android:paddingStart="4dp"
-        android:text="@string/label_find" />
+        android:text="@string/review_detail_label_find" />
 </LinearLayout>

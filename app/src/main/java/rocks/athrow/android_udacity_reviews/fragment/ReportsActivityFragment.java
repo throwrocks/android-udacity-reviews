@@ -16,8 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -116,7 +115,6 @@ public class ReportsActivityFragment extends Fragment {
      * Find the records by date range and display the results
      */
     private void reportQuery() {
-
         OnReportQueryCompleted onReportQueryCompleted = new OnReportQueryCompleted() {
             @Override
             public void OnReportQueryCompleted(ArrayList<SummaryObject> summaryObjects) {
@@ -130,8 +128,17 @@ public class ReportsActivityFragment extends Fragment {
         String selectedDate2 = date2.getText().toString();
         Date date1 = Utilities.getStringAsDate(selectedDate1, DATE_DISPLAY, null);
         Date date2 = Utilities.getDateEnd(Utilities.getStringAsDate(selectedDate2, DATE_DISPLAY, null));
-        ReportQueryTask queryTask = new ReportQueryTask(getActivity(), onReportQueryCompleted, date1, date2);
-        queryTask.execute();
+        // Validate the dates
+        if (date1.before(date2) || date1.equals(date2)) {
+            ReportQueryTask queryTask = new ReportQueryTask(getActivity(), onReportQueryCompleted, date1, date2);
+            queryTask.execute();
+        } else {
+            Context context = getContext();
+            CharSequence text = context.getResources().getString(R.string.reports_invalid_date_range);
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -141,7 +148,6 @@ public class ReportsActivityFragment extends Fragment {
     }
 
     private void setReportViews(ArrayList<SummaryObject> summaryObject) {
-        Log.e("summaryObject", "" + summaryObject.size());
         SummaryObject summaryReviews = summaryObject.get(0);
         String countDisplay = summaryReviews.getReviewsCount();
         String hoursDisplay = summaryReviews.getElapsedTime();
