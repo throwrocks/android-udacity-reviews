@@ -1,7 +1,6 @@
 package rocks.athrow.android_udacity_reviews.data;
 
 import android.net.Uri;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +25,7 @@ public final class API {
         throw new AssertionError("No API instances for you!");
     }
 
-    private static final String apiKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
+    //private static final String apiKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     private static final String MODULE_REVIEWS = "submissions_completed";
     private static final String MODULE_FEEDBACKS = "student_feedbacks";
@@ -41,8 +40,7 @@ public final class API {
      * @param dateEnd   the end date to retrieve result to
      * @return the API response in a string
      */
-    public static String callAPI(String module, Date dateStart, Date dateEnd) {
-        Log.d("module ", module);
+    public static String callAPI(String APIKey, String module, Date dateStart, Date dateEnd) {
         String APIUrl;
         if (module.equals(MODULE_REVIEWS)) {
             APIUrl = REVIEWS_API_URL;
@@ -51,12 +49,9 @@ public final class API {
         } else {
             return "error: empty module argument";
         }
-        Log.d("APIUrl ", APIUrl);
-
         ArrayList<String> params = new ArrayList<>();
         boolean hasParams = false;
         if (dateStart != null) {
-            Log.d("dateStart ", "true");
             params.add("start_date=" + Utilities.getDateAsString(dateStart, DATE_FORMAT, "UTC"));
             hasParams = true;
         }
@@ -64,20 +59,15 @@ public final class API {
             params.add("end_date=" + Utilities.getDateAsString(dateEnd, DATE_FORMAT, "UTC"));
             hasParams = true;
         }
-        Log.d("url ", APIUrl);
         if (hasParams) {
             String UrlParams = Utilities.buildStringFromArray(params, "&");
             if (UrlParams != null) {
-                Log.d("urlParams ", UrlParams);
-                Log.d("reviewApiUrl ", REVIEWS_API_URL);
                 APIUrl = APIUrl + "?" + UrlParams;
-                Log.d("API URL ", APIUrl);
             }
-        } else {
-            Log.d("params ", "no params");
         }
+        // TODO: Handle invalid parameter
 
-        return httpConnect(APIUrl);
+        return httpConnect(APIKey, APIUrl);
     }
 
     /**
@@ -86,7 +76,7 @@ public final class API {
      *
      * @return a json string to be used in a parsing method
      */
-    private static String httpConnect(String APIurl) {
+    private static String httpConnect(String APIKey, String APIurl) {
         String results = null;
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
@@ -97,7 +87,7 @@ public final class API {
             // Establish the connection
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
-            urlConnection.addRequestProperty("Authorization", apiKey);
+            urlConnection.addRequestProperty("Authorization",APIKey );
             urlConnection.addRequestProperty("Content-Length", "0");
             urlConnection.addRequestProperty("Accept", "application/json");
             urlConnection.connect();
@@ -136,8 +126,6 @@ public final class API {
                 }
             }
         }
-        Log.i("json ", results);
         return results;
     }
-
 }

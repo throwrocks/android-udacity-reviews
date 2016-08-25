@@ -2,6 +2,7 @@ package rocks.athrow.android_udacity_reviews.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import rocks.athrow.android_udacity_reviews.R;
 import rocks.athrow.android_udacity_reviews.adapter.ReviewListAdapter;
 import rocks.athrow.android_udacity_reviews.activity.MainActivity;
 
@@ -27,10 +29,13 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     private MainActivity.ReviewsListFragmentCallback listener;
     private final String MODULE_REVIEWS = "submissions_completed";
     private final String MODULE_FEEDBACKS = "student_feedbacks";
+    private final String APIKey;
 
 
     // Constructor
     public FetchTask(Context context, String module, ReviewListAdapter adapter, MainActivity.ReviewsListFragmentCallback listener) {
+        SharedPreferences sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        this.APIKey = sharedPref.getString("api_key","");
         this.mContext = context;
         this.module = module;
         this.mAdapter = adapter;
@@ -80,7 +85,7 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
         //------------------------------------------------------------------------------------------
         // Get the results from the API
         //------------------------------------------------------------------------------------------
-        jsonResults = API.callAPI(module, dateStart, null);
+        jsonResults = API.callAPI(APIKey, module, dateStart, null);
         //Parse the results if not null
         if (jsonResults != null) {
             if (module.equals(MODULE_REVIEWS)) {

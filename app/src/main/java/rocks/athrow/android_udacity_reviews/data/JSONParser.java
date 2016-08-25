@@ -1,7 +1,6 @@
 package rocks.athrow.android_udacity_reviews.data;
 
 import android.content.ContentValues;
-import android.content.Context;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,6 +8,9 @@ import org.json.JSONObject;
 
 
 /**
+ * JSONParser
+ * A class to parse Review data
+ * There are two types of Review entities: Reviews and Feedbacks
  * Created by joselopez on 7/5/16.
  */
 final class JSONParser {

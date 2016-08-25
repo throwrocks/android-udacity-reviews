@@ -2,6 +2,8 @@ package rocks.athrow.android_udacity_reviews;
 
 import org.junit.Test;
 
+import rocks.athrow.android_udacity_reviews.data.API;
+
 import static org.junit.Assert.*;
 
 /**
@@ -9,7 +11,12 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+    public void testAPI() throws Exception {
+        String reviewsJSON = API.callAPI("reviews", null, null);
+        String feedbacksJSON = API.callAPI("feedbacks", null, null);
+        assertTrue(reviewsJSON != null);
+        assertTrue(feedbacksJSON != null);
+
+
     }
 }

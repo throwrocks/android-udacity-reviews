@@ -1,13 +1,18 @@
 package rocks.athrow.android_udacity_reviews;
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 
-/**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
- */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
-    }
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
+import rocks.athrow.android_udacity_reviews.activity.MainActivity;
+
+@RunWith(AndroidJUnit4.class)
+public class ApplicationTest {
+    @Rule
+    public ActivityTestRule<MainActivity> mActivityRule =
+            new ActivityTestRule<>(MainActivity.class);
+
+
 }

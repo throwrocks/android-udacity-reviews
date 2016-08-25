@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +29,13 @@ import rocks.athrow.android_udacity_reviews.util.Constants;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 
 /**
- * A placeholder fragment containing a simple view.
+ * ReportsActivityFragment
  */
 public class ReportsActivityFragment extends Fragment {
 
     private final static String DATE_DISPLAY = "MM/dd/yy";
     private final static String FIELD_SELECTED_DATE = "selected_date";
+    private final static String VALUE_NULL = "null";
     private View rootView;
     private TextView date1;
     private TextView date2;
@@ -50,8 +50,8 @@ public class ReportsActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Get the dates from the shared preferences
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        String reportDate1 = sharedPref.getString(Constants.PREF_REPORT_DATE1, "null");
-        String reportDate2 = sharedPref.getString(Constants.PREF_REPORT_DATE2, "null");
+        String reportDate1 = sharedPref.getString(Constants.PREF_REPORT_DATE1, VALUE_NULL);
+        String reportDate2 = sharedPref.getString(Constants.PREF_REPORT_DATE2, VALUE_NULL);
         // Inflate the layout
         rootView = inflater.inflate(R.layout.fragment_reports, container, false);
         recyclerView = rootView.findViewById(R.id.reports_project_summary);
@@ -60,12 +60,10 @@ public class ReportsActivityFragment extends Fragment {
         date2 = (TextView) rootView.findViewById(R.id.reports_date2);
         Button queryButton = (Button) rootView.findViewById(R.id.reports_query_button);
         // Set the views
-        if (!reportDate1.equals("null") && !reportDate2.equals("null")) {
+        if (!reportDate1.equals(VALUE_NULL) && !reportDate2.equals(VALUE_NULL)) {
             date1.setText(reportDate1);
             date2.setText(reportDate2);
         }
-        Log.e("date1", "" + date1.getText());
-        Log.e("date2", "" + date2.getText());
         date1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
