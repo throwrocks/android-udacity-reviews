@@ -118,7 +118,7 @@ public class FetchTask extends AsyncTask<String, Void, Integer> {
     protected void onPostExecute(Integer result) {
         super.onPostExecute(result);
         if (!isCancelled()) {
-            if (result == 1 && module.equals(MODULE_REVIEWS)) {
+            if (result == 0 && module.equals(MODULE_REVIEWS)) {
                 mAdapter.notifyDataSetChanged();
             }
             if (listener != null) {

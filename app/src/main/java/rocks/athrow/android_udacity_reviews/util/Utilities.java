@@ -4,8 +4,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import junit.framework.Assert;
-
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
