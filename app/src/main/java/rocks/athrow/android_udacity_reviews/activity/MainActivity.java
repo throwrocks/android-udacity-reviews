@@ -21,7 +21,6 @@ import io.realm.RealmConfiguration;
 import rocks.athrow.android_udacity_reviews.BuildConfig;
 import rocks.athrow.android_udacity_reviews.R;
 import rocks.athrow.android_udacity_reviews.adapter.TabNavigationAdapter;
-import rocks.athrow.android_udacity_reviews.data.API;
 import rocks.athrow.android_udacity_reviews.util.Constants;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
      * An interface to update the UI after getting new reviews from the API
      */
     public interface ReviewsListFragmentCallback {
-        void onFetchReviewsCompleted();
+        void onFetchReviewsCompleted(int result);
     }
 
     @Override

@@ -22,7 +22,7 @@ import rocks.athrow.android_udacity_reviews.activity.MainActivity;
  * A class to fetch Review data from the Udacity API
  * and to handle calling the parse methods and the update database methods
  */
-public class FetchTask extends AsyncTask<String, Void, Void> {
+public class FetchTask extends AsyncTask<String, Void, Integer> {
     private final Context mContext;
     private final String module;
     private final ReviewListAdapter mAdapter;
@@ -43,7 +43,7 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(String... params) {
+    protected Integer doInBackground(String... params) {
         String jsonResults;
         ContentValues[] parsedResults = null;
 
@@ -107,22 +107,22 @@ public class FetchTask extends AsyncTask<String, Void, Void> {
                     //----------------------------------------------------------------------------------
                     updateRealm.updateFeedbacks(parsedResults);
                 }
+                return 0;
             }
         }
-        Log.i("results", jsonResults);
-        return null;
+        return -1;
     }
 
+
     @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        Log.i("results", "" + isCancelled());
+    protected void onPostExecute(Integer result) {
+        super.onPostExecute(result);
         if (!isCancelled()) {
-            if (module.equals(MODULE_REVIEWS)) {
+            if (result == 1 && module.equals(MODULE_REVIEWS)) {
                 mAdapter.notifyDataSetChanged();
             }
             if (listener != null) {
-                listener.onFetchReviewsCompleted();
+                listener.onFetchReviewsCompleted(result);
             }
         }
 

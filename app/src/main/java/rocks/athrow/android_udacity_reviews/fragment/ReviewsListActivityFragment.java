@@ -55,10 +55,16 @@ public class ReviewsListActivityFragment extends android.support.v4.app.Fragment
         // with a callBack to remove itself and present a toast when finishing the FetchReviews task
         final MainActivity.ReviewsListFragmentCallback callback = new MainActivity.ReviewsListFragmentCallback() {
             @Override
-            public void onFetchReviewsCompleted() {
+            public void onFetchReviewsCompleted(int result) {
                 swipeContainer.setRefreshing(false);
+                CharSequence text;
+                if ( result == -1 ){
+                    text = "Bad server response. Make sure your API key is up to date.";
+                }
+                else{
+                    text = context.getString(R.string.review_detail_label_reviews_to_date);
+                }
 
-                CharSequence text = context.getString(R.string.review_detail_label_reviews_to_date);
                 int duration = Toast.LENGTH_SHORT;
                 final Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
@@ -127,7 +133,7 @@ public class ReviewsListActivityFragment extends android.support.v4.app.Fragment
     }
 
     @Override
-    public void onFetchReviewsCompleted() {
+    public void onFetchReviewsCompleted(int result) {
 
     }
 }
