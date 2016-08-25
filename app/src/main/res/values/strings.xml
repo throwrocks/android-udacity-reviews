@@ -9,7 +9,10 @@
     <string name="nav_reports">Reports</string>
     <!-- General-->
     <string name="general_no_network_connection">You are not connected to a network</string>
-    <!-- Review detail strings -->
+    <!-- Reviews list -->
+    <string name="review_list_bad_reviews_up_to_date">Your reviews are up to date!</string>
+    <string name="review_list_bad_server_response">Bad server response. Make sure your API key is up to date.</string>
+    <!-- Review detail -->
     <string name="review_detail_label_by">By&#160;</string>
     <string name="review_detail_label_rate">Rate&#160;</string>
     <string name="review_detail_label_id">ID#&#160;</string>
@@ -22,7 +25,6 @@
     <string name="review_detail_label_find">Find</string>
     <string name="review_detail_label_total_reviews">Total Reviews</string>
     <string name="review_detail_label_revenue">Revenue</string>
-    <string name="review_detail_label_reviews_to_date">Your reviews are up to date!</string>
     <!-- Report Fragment: Project Summary header -->
     <string name="reports_project">Project</string>
     <string name="reports_count">Count</string>

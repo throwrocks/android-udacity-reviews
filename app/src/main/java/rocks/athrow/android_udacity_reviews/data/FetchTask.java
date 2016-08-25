@@ -125,6 +125,5 @@ public class FetchTask extends AsyncTask<String, Void, Integer> {
                 listener.onFetchReviewsCompleted(result);
             }
         }
-
     }
 }

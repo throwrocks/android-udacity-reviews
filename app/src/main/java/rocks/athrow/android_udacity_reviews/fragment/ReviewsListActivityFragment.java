@@ -59,12 +59,11 @@ public class ReviewsListActivityFragment extends android.support.v4.app.Fragment
                 swipeContainer.setRefreshing(false);
                 CharSequence text;
                 if ( result == -1 ){
-                    text = "Bad server response. Make sure your API key is up to date.";
+                    text = context.getString(R.string.review_list_bad_server_response);
                 }
                 else{
-                    text = context.getString(R.string.review_detail_label_reviews_to_date);
+                    text = context.getString(R.string.review_list_bad_reviews_up_to_date);
                 }
-
                 int duration = Toast.LENGTH_SHORT;
                 final Toast toast = Toast.makeText(context, text, duration);
                 toast.show();

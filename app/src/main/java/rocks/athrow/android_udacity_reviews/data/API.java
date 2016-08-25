@@ -11,7 +11,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
-import rocks.athrow.android_udacity_reviews.BuildConfig;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 
 /**
@@ -24,8 +23,6 @@ public final class API {
     private API() {
         throw new AssertionError("No API instances for you!");
     }
-
-    //private static final String apiKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     private static final String MODULE_REVIEWS = "submissions_completed";
     private static final String MODULE_FEEDBACKS = "student_feedbacks";
@@ -66,7 +63,6 @@ public final class API {
             }
         }
         // TODO: Handle invalid parameter
-
         return httpConnect(APIKey, APIUrl);
     }
 
