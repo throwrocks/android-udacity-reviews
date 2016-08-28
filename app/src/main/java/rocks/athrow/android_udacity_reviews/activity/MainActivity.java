@@ -21,6 +21,7 @@ import io.realm.RealmConfiguration;
 import rocks.athrow.android_udacity_reviews.BuildConfig;
 import rocks.athrow.android_udacity_reviews.R;
 import rocks.athrow.android_udacity_reviews.adapter.TabNavigationAdapter;
+import rocks.athrow.android_udacity_reviews.data.PreferencesHelper;
 import rocks.athrow.android_udacity_reviews.util.Constants;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 
@@ -36,23 +37,21 @@ public class MainActivity extends AppCompatActivity {
         boolean DEBUG = false;
 
         setContentView(R.layout.activity_main);
-        SharedPreferences sharedPref = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        String reportDate1 = sharedPref.getString(Constants.PREF_REPORT_DATE1, "null");
-        String reportDate2 = sharedPref.getString(Constants.PREF_REPORT_DATE2, "null");
-        SharedPreferences.Editor editor = sharedPref.edit();
-        if ( reportDate1.equals("null") && reportDate2.equals("null")){
+        PreferencesHelper sharedPref = new PreferencesHelper(this);
+        String reportDate1 = sharedPref.loadString(Constants.PREF_REPORT_DATE1, Constants.PREF_EMPTY_STRING);
+        String reportDate2 = sharedPref.loadString(Constants.PREF_REPORT_DATE2, Constants.PREF_EMPTY_STRING);
+        if ( reportDate1.equals(Constants.PREF_EMPTY_STRING) && reportDate2.equals(Constants.PREF_EMPTY_STRING)){
             Date date1 = Utilities.getTodaysDate(DATE_DISPLAY);
             Date date2 = Utilities.getTodaysDate(DATE_DISPLAY);
             reportDate1 = Utilities.getDateAsString(date1, DATE_DISPLAY, null);
             reportDate2 = Utilities.getDateAsString(date2, DATE_DISPLAY, null);
-            editor.putString(Constants.PREF_REPORT_DATE1, reportDate1);
-            editor.putString(Constants.PREF_REPORT_DATE2, reportDate2);
+            sharedPref.save(Constants.PREF_REPORT_DATE1, reportDate1);
+            sharedPref.save(Constants.PREF_REPORT_DATE2, reportDate2);
         }
         // Save the API key to the shared preferences
         // TODO: When the settings are properly implemented this will not be necessary
         String API_KEY = BuildConfig.UDACITY_REVIEWER_API_KEY;;
-        editor.putString("api_key", API_KEY);
-        editor.apply();
+        sharedPref.save(Constants.PREF_API_KEY, API_KEY);
 
         TabNavigationAdapter mSectionsPagerAdapter = new TabNavigationAdapter(getSupportFragmentManager(), this);
         ViewPager mViewPager = (ViewPager) findViewById(R.id.container);

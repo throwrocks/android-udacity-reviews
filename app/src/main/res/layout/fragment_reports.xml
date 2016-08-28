@@ -11,6 +11,14 @@
 
     <include layout="@layout/report_header" />
 
+    <TextView
+        android:id="@+id/reports_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:visibility="gone" />
+
     <include layout="@layout/report_body" />
 
     <include layout="@layout/report_footer" />

@@ -2,7 +2,6 @@ package rocks.athrow.android_udacity_reviews.data;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import java.util.Calendar;
@@ -14,6 +13,7 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import rocks.athrow.android_udacity_reviews.activity.MainActivity;
 import rocks.athrow.android_udacity_reviews.adapter.ReviewListAdapter;
+import rocks.athrow.android_udacity_reviews.util.Constants;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 
 /**
@@ -23,27 +23,25 @@ import rocks.athrow.android_udacity_reviews.util.Utilities;
 public class FetchFeedbacksTask extends AsyncTask<String, Void, Integer> {
     private final Context mContext;
     private final ReviewListAdapter mAdapter;
-    private MainActivity.ReviewsListFragmentCallback listener;
-    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    private static final String MODULE_FEEDBACKS = "student_feedbacks";
-    private String APIKey;
+    private final MainActivity.ReviewsListFragmentCallback mListener;
+    private final String mAPIKey;
 
     public FetchFeedbacksTask(Context context, ReviewListAdapter adapter,
                               MainActivity.ReviewsListFragmentCallback listener) {
-        SharedPreferences sharedPref =
-                context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        this.APIKey = sharedPref.getString("api_key", "");
         this.mContext = context;
+        PreferencesHelper mSharedPref = new PreferencesHelper(mContext);
+        this.mAPIKey = mSharedPref.loadString(Constants.PREF_API_KEY, Constants.PREF_EMPTY_STRING);
         this.mAdapter = adapter;
-        this.listener = listener;
+        this.mListener = listener;
     }
 
     @Override
     protected Integer doInBackground(String... params) {
         String jsonResults;
         ContentValues[] parsedResults;
-        ContentValues apiParams = new ContentValues();
         Date dateStart;
+        ContentValues apiParams = new ContentValues();
+        apiParams.put(Constants.API_MODULE, Constants.API_MODULE_FEEDBACKS);
         // Begin Realm Transaction
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
         Realm.setDefaultConfiguration(realmConfig);
@@ -64,11 +62,9 @@ public class FetchFeedbacksTask extends AsyncTask<String, Void, Integer> {
         }
         // Close realm
         realm.close();
-        // Get the results from the API
-        apiParams.put("module", MODULE_FEEDBACKS);
-        apiParams.put("date_start", Utilities.getDateAsString(dateStart, DATE_FORMAT, null));
+        apiParams.put("date_start", Utilities.getDateAsString(dateStart, Constants.UTIL_DATE_FORMAT, null));
         apiParams.put("date_end", "");
-        jsonResults = API.callAPI(APIKey, apiParams);
+        jsonResults = API.callAPI(mAPIKey, apiParams);
         //Parse the results if not null
         parsedResults = JSONParser.parseFeedbacks(jsonResults);
         // The parsedResults are not null, update the Realm database
@@ -87,8 +83,8 @@ public class FetchFeedbacksTask extends AsyncTask<String, Void, Integer> {
             if (result == 0) {
                 mAdapter.notifyDataSetChanged();
             }
-            if (listener != null) {
-                listener.onFetchReviewsCompleted(result);
+            if (mListener != null) {
+                mListener.onFetchReviewsCompleted(result);
             }
         }
     }

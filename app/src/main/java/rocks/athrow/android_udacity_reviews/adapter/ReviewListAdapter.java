@@ -28,7 +28,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
 
     private final static String DATE_TIME_DISPLAY = "MM/dd/yy h:mm a";
     private final static String DATE_DISPLAY = "MM/dd/yy";
-    private Context context;
+    private Context mContext;
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -57,7 +57,7 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
     }
 
     public ReviewListAdapter(Context context) {
-        this.context = context;
+        this.mContext = context;
     }
 
     @Override
@@ -128,19 +128,20 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
         final Context context = viewHolder.itemView.getContext();
 
         String resultDisplay;
-        if (result.equals("passed")) {
-            resultDisplay = "P";
-            //noinspection deprecation
-            reviewListRecyclerView.viewResult.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.badge_passed));
-        } else if (result.equals("failed")) {
-            resultDisplay = "F";
-            //noinspection deprecation
-            reviewListRecyclerView.viewResult.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.badge_failed));
-        } else {
-            resultDisplay = "CR";
-            //noinspection deprecation
-            reviewListRecyclerView.viewResult.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.badge_cant_review));
-            reviewListRecyclerView.viewResult.setTextSize(10);
+        switch (result){
+            case "passed":
+                resultDisplay = "P";
+                reviewListRecyclerView.viewResult.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.badge_passed));
+                break;
+            case "failed":
+                resultDisplay = "F";
+                reviewListRecyclerView.viewResult.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.badge_failed));
+                break;
+            default:
+                resultDisplay = "CR";
+                reviewListRecyclerView.viewResult.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.badge_cant_review));
+                reviewListRecyclerView.viewResult.setTextSize(10);
+                break;
         }
 
         reviewListRecyclerView.viewResult.setText(resultDisplay);
@@ -160,7 +161,6 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
                 viewDetailsActivity.putExtra("elapsed_time", elapsedTime);
                 viewDetailsActivity.putExtra("notes", studentNotes);
                 viewDetailsActivity.putExtra("rating", rating);
-
                 context.startActivity(viewDetailsActivity);
             }
         });
