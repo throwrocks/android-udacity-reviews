@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set DEBUG to true to clear the database when the app starts / for testing
-        boolean DEBUG = false;
+        boolean DEBUG = true;
 
         setContentView(R.layout.activity_main);
         PreferencesHelper sharedPref = new PreferencesHelper(this);

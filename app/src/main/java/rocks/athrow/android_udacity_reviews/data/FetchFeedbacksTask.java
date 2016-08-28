@@ -40,8 +40,6 @@ public class FetchFeedbacksTask extends AsyncTask<String, Void, Integer> {
         String jsonResults;
         ContentValues[] parsedResults;
         Date dateStart;
-        ContentValues apiParams = new ContentValues();
-        apiParams.put(Constants.API_MODULE, Constants.API_MODULE_FEEDBACKS);
         // Begin Realm Transaction
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
         Realm.setDefaultConfiguration(realmConfig);
@@ -62,9 +60,8 @@ public class FetchFeedbacksTask extends AsyncTask<String, Void, Integer> {
         }
         // Close realm
         realm.close();
-        apiParams.put("date_start", Utilities.getDateAsString(dateStart, Constants.UTIL_DATE_FORMAT, null));
-        apiParams.put("date_end", "");
-        jsonResults = API.callAPI(mAPIKey, apiParams);
+        String dateStartString = Utilities.getDateAsString(dateStart, Constants.UTIL_DATE_FORMAT, null);
+        jsonResults = API.callFeedbacksAPI(mAPIKey, dateStartString, null);
         //Parse the results if not null
         parsedResults = JSONParser.parseFeedbacks(jsonResults);
         // The parsedResults are not null, update the Realm database

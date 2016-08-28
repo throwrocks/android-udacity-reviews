@@ -38,8 +38,6 @@ public class FetchReviewsTask extends AsyncTask<String, Void, Integer> {
     protected Integer doInBackground(String... params) {
         String jsonResults;
         ContentValues[] parsedResults;
-        ContentValues apiParams = new ContentValues();
-        apiParams.put(Constants.API_MODULE, Constants.API_MODULE_REVIEWS);
         // Get the DateStart and DateEnd for the query parameters (get most recent only)
         Date dateStart;
         String dateStartString;
@@ -58,9 +56,7 @@ public class FetchReviewsTask extends AsyncTask<String, Void, Integer> {
         }
         // Close realm
         realm.close();
-        apiParams.put("date_start", dateStartString);
-        apiParams.put("date_end", "");
-        jsonResults = API.callAPI(mAPIKey, apiParams);
+        jsonResults = API.callReviewsAPI(mAPIKey, dateStartString, null);
         //Parse the results if not null
         if (jsonResults != null) {
             parsedResults = JSONParser.parseReviews(jsonResults);

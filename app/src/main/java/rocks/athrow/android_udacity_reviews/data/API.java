@@ -1,6 +1,7 @@
 package rocks.athrow.android_udacity_reviews.data;
 
-import android.content.ContentValues;
+import java.util.ArrayList;
+
 import android.net.Uri;
 
 import java.io.BufferedReader;
@@ -9,7 +10,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 
@@ -24,33 +24,41 @@ public final class API {
         throw new AssertionError("No API instances for you!");
     }
 
-    private static final String MODULE_REVIEWS = "submissions_completed";
-    private static final String MODULE_FEEDBACKS = "student_feedbacks";
-    private static final String REVIEWS_API_URL = "https://review-api.udacity.com/api/v1/me/submissions/completed";
-    private static final String FEEDBACKS_API_URL = "https://review-api.udacity.com/api/v1/me/student_feedbacks";
-
     /**
-     * callAPI
-     *
-     * @param params a ContentValues object containing the parameters
+     * callReviewsAPI
+     * @param APIKey the API key string
+
      * @return the API response in a string
      */
-    public static String callAPI(String APIKey, ContentValues params) {
-        String APIUrl;
-        String module = params.getAsString("module");
-        switch (module) {
-            case MODULE_REVIEWS:
-                APIUrl = REVIEWS_API_URL;
-                break;
-            case MODULE_FEEDBACKS:
-                APIUrl = FEEDBACKS_API_URL;
-                break;
-            default:
-                return "error: invalid module argument";
-        }
+    public static String callReviewsAPI(String APIKey, String dateStart, String dateEnd){
+        String APIUrl = "https://review-api.udacity.com/api/v1/me/submissions/completed";
         ArrayList<String> paramsArray = new ArrayList<>();
-        String dateStart = params.getAsString("date_start");
-        String dateEnd = params.getAsString("date_end");
+        boolean hasParams = false;
+        if (dateStart != null && !dateStart.equals("")) {
+            paramsArray.add("start_date=" + dateStart);
+            hasParams = true;
+        }
+        if (dateEnd != null && !dateEnd.equals("")) {
+            paramsArray.add("end_date=" + dateEnd);
+            hasParams = true;
+        }
+        if (hasParams) {
+            String UrlParams = Utilities.buildStringFromArray(paramsArray, "&");
+            if (UrlParams != null) {
+                APIUrl = APIUrl + "?" + UrlParams;
+            }
+        }
+        return httpConnect(APIKey, APIUrl);
+    }
+    /**
+     * callFeedbacksAPI
+     * @param APIKey the API key string
+     *
+     * @return the API response in a string
+     */
+    public static String callFeedbacksAPI(String APIKey, String dateStart, String dateEnd){
+        String APIUrl = "https://review-api.udacity.com/api/v1/me/student_feedbacks";
+        ArrayList<String> paramsArray = new ArrayList<>();
         boolean hasParams = false;
         if (dateStart != null && !dateStart.equals("")) {
             paramsArray.add("start_date=" + dateStart);

@@ -1,8 +1,6 @@
 package rocks.athrow.android_udacity_reviews;
 
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,11 +22,8 @@ import static org.junit.Assert.*;
 @Config(manifest = Config.NONE)
 @RunWith(RobolectricTestRunner.class)
 public class UnitTests extends Robolectric {
-    String MODULE_REVIEWS = "submissions_completed";
-    String MODULE_FEEDBACKS = "student_feedbacks";
     String EMPTY_STRING = "";
     String API_KEY = "api_key";
-    String API_ERROR_INVALID_MODULE = "error: invalid module argument";
     String mAPIKey;
     PreferencesHelper mSharedPreferences;
     String mBuildAPIKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
@@ -43,18 +38,10 @@ public class UnitTests extends Robolectric {
             mAPIKey = mSharedPreferences.loadString(API_KEY, EMPTY_STRING);
         }
         if ( mJSONReviews == null ){
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("module", MODULE_REVIEWS);
-            contentValues.put("date_start", EMPTY_STRING);
-            contentValues.put("date_end", EMPTY_STRING);
-            mJSONReviews = API.callAPI(mAPIKey, contentValues);
+            mJSONReviews = API.callFeedbacksAPI(mAPIKey, null, null);
         }
         if ( mJSONFeedbacks == null ){
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("module", MODULE_FEEDBACKS);
-            contentValues.put("date_start", EMPTY_STRING);
-            contentValues.put("date_end", EMPTY_STRING);
-            mJSONFeedbacks = API.callAPI(mAPIKey, contentValues);
+            mJSONFeedbacks = API.callFeedbacksAPI(mAPIKey, null, null);
         }
     }
 
@@ -69,20 +56,17 @@ public class UnitTests extends Robolectric {
     }
 
     @Test
-    public void testAPIPassNullKey() throws Exception {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("module", MODULE_REVIEWS);
-        String results = API.callAPI(null, contentValues);
+    public void testReviewsAPIPassNullKey() throws Exception {
+        String results = API.callReviewsAPI(null, null, null);
         assertTrue(results == null);
     }
 
     @Test
-    public void testAPIPassInvalidModule() throws Exception {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("module", "");
-        String results = API.callAPI(API_KEY, contentValues);
-        assertTrue(results.equals(API_ERROR_INVALID_MODULE));
+    public void testFeedbacksAPIPassNullKey() throws Exception {
+        String results = API.callFeedbacksAPI(null, null, null);
+        assertTrue(results == null);
     }
+
 
     @Test
     public void testParsingReviews() throws Exception {
