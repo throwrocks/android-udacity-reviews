@@ -14,6 +14,7 @@ import org.robolectric.annotation.Config;
 
 import rocks.athrow.android_udacity_reviews.data.API;
 import rocks.athrow.android_udacity_reviews.data.JSONParser;
+import rocks.athrow.android_udacity_reviews.data.PreferencesHelper;
 
 import static org.junit.Assert.*;
 
@@ -29,7 +30,7 @@ public class UnitTests extends Robolectric {
     String API_KEY = "api_key";
     String API_ERROR_INVALID_MODULE = "error: invalid module argument";
     String mAPIKey;
-    SharedPreferences mSharedPreferences;
+    PreferencesHelper mSharedPreferences;
     String mBuildAPIKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
     String mJSONReviews = null;
     String mJSONFeedbacks = null;
@@ -37,12 +38,9 @@ public class UnitTests extends Robolectric {
     @Before
     public void setUp() throws Exception {
         if (mAPIKey == null) {
-            mSharedPreferences = RuntimeEnvironment.application.
-                    getSharedPreferences("prefs", Context.MODE_PRIVATE);
-            SharedPreferences.Editor mMockEditor = mSharedPreferences.edit();
-            mMockEditor.putString(API_KEY, mBuildAPIKey);
-            mMockEditor.apply();
-            mAPIKey = mSharedPreferences.getString(API_KEY, EMPTY_STRING);
+            mSharedPreferences = new PreferencesHelper(RuntimeEnvironment.application.getApplicationContext());
+            mSharedPreferences.save(API_KEY, mBuildAPIKey);
+            mAPIKey = mSharedPreferences.loadString(API_KEY, EMPTY_STRING);
         }
         if ( mJSONReviews == null ){
             ContentValues contentValues = new ContentValues();
