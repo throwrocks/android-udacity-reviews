@@ -38,12 +38,15 @@ public final class API {
     public static String callAPI(String APIKey, ContentValues params) {
         String APIUrl;
         String module = params.getAsString("module");
-        if (module.equals(MODULE_REVIEWS)) {
-            APIUrl = REVIEWS_API_URL;
-        } else if (module.equals(MODULE_FEEDBACKS)) {
-            APIUrl = FEEDBACKS_API_URL;
-        } else {
-            return "error: empty module argument";
+        switch (module) {
+            case MODULE_REVIEWS:
+                APIUrl = REVIEWS_API_URL;
+                break;
+            case MODULE_FEEDBACKS:
+                APIUrl = FEEDBACKS_API_URL;
+                break;
+            default:
+                return "error: empty module argument";
         }
         ArrayList<String> paramsArray = new ArrayList<>();
         String dateStart = params.getAsString("date_start");
