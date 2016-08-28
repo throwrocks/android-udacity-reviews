@@ -36,7 +36,7 @@ public class UnitTests extends Mockito {
     @Mock
     SharedPreferences.Editor editor = sharedPrefs.edit();
 
-
+/*
     @Test
     public void testAPIKey() throws Exception {
         String prefAPIKey = BuildConfig.UDACITY_REVIEWER_API_KEY;
@@ -63,5 +63,5 @@ public class UnitTests extends Mockito {
         String feedbacksJSON = API.callAPI(null, FEEDBACKS, null, null);
         assertTrue(reviewsJSON.equals(API_ERROR));
         assertTrue(feedbacksJSON.equals(API_ERROR));
-    }
+    }*/
 }

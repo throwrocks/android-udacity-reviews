@@ -1,5 +1,6 @@
 package rocks.athrow.android_udacity_reviews.data;
 
+import android.content.ContentValues;
 import android.net.Uri;
 
 import java.io.BufferedReader;
@@ -9,7 +10,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 
@@ -23,7 +23,7 @@ public final class API {
     private API() {
         throw new AssertionError("No API instances for you!");
     }
-    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
     private static final String MODULE_REVIEWS = "submissions_completed";
     private static final String MODULE_FEEDBACKS = "student_feedbacks";
     private static final String REVIEWS_API_URL = "https://review-api.udacity.com/api/v1/me/submissions/completed";
@@ -32,13 +32,12 @@ public final class API {
     /**
      * callAPI
      *
-     * @param module    the API module (supported: submissions_completed, student_feedbacks)
-     * @param dateStart the start date to retrieve results from
-     * @param dateEnd   the end date to retrieve result to
+     * @param params a ContentValues object containing the parameters
      * @return the API response in a string
      */
-    public static String callAPI(String APIKey, String module, Date dateStart, Date dateEnd) {
+    public static String callAPI(String APIKey, ContentValues params) {
         String APIUrl;
+        String module = params.getAsString("module");
         if (module.equals(MODULE_REVIEWS)) {
             APIUrl = REVIEWS_API_URL;
         } else if (module.equals(MODULE_FEEDBACKS)) {
@@ -46,23 +45,24 @@ public final class API {
         } else {
             return "error: empty module argument";
         }
-        ArrayList<String> params = new ArrayList<>();
+        ArrayList<String> paramsArray = new ArrayList<>();
+        String dateStart = params.getAsString("date_start");
+        String dateEnd = params.getAsString("date_end");
         boolean hasParams = false;
-        if (dateStart != null) {
-            params.add("start_date=" + Utilities.getDateAsString(dateStart, DATE_FORMAT, "UTC"));
+        if (!dateStart.equals("")) {
+            paramsArray.add("start_date=" + dateStart);
             hasParams = true;
         }
-        if (dateEnd != null) {
-            params.add("end_date=" + Utilities.getDateAsString(dateEnd, DATE_FORMAT, "UTC"));
+        if (!dateEnd.equals("")) {
+            paramsArray.add("end_date=" + dateEnd);
             hasParams = true;
         }
         if (hasParams) {
-            String UrlParams = Utilities.buildStringFromArray(params, "&");
+            String UrlParams = Utilities.buildStringFromArray(paramsArray, "&");
             if (UrlParams != null) {
                 APIUrl = APIUrl + "?" + UrlParams;
             }
         }
-        // TODO: Handle invalid parameter
         return httpConnect(APIKey, APIUrl);
     }
 
@@ -83,7 +83,7 @@ public final class API {
             // Establish the connection
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
-            urlConnection.addRequestProperty("Authorization",APIKey );
+            urlConnection.addRequestProperty("Authorization", APIKey);
             urlConnection.addRequestProperty("Content-Length", "0");
             urlConnection.addRequestProperty("Accept", "application/json");
             urlConnection.connect();
