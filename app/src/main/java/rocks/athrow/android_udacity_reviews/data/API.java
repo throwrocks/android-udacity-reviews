@@ -46,17 +46,17 @@ public final class API {
                 APIUrl = FEEDBACKS_API_URL;
                 break;
             default:
-                return "error: empty module argument";
+                return "error: invalid module argument";
         }
         ArrayList<String> paramsArray = new ArrayList<>();
         String dateStart = params.getAsString("date_start");
         String dateEnd = params.getAsString("date_end");
         boolean hasParams = false;
-        if (!dateStart.equals("")) {
+        if (dateStart != null && !dateStart.equals("")) {
             paramsArray.add("start_date=" + dateStart);
             hasParams = true;
         }
-        if (!dateEnd.equals("")) {
+        if (dateEnd != null && !dateEnd.equals("")) {
             paramsArray.add("end_date=" + dateEnd);
             hasParams = true;
         }
@@ -80,34 +80,26 @@ public final class API {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         try {
-            // Build the URL
             Uri builtUri = Uri.parse(APIurl).buildUpon().build();
             URL url = new URL(builtUri.toString());
-            // Establish the connection
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.addRequestProperty("Authorization", APIKey);
             urlConnection.addRequestProperty("Content-Length", "0");
             urlConnection.addRequestProperty("Accept", "application/json");
             urlConnection.connect();
-            // Read the input stream into a String
             InputStream inputStream = urlConnection.getInputStream();
             StringBuilder buffer = new StringBuilder();
             if (inputStream == null) {
-                // Nothing to do.
                 results = null;
                 return null;
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging ->  + "\n"
                 buffer.append(line);
             }
             if (buffer.length() == 0) {
-                // Stream was empty.  No point in parsing.
                 results = null;
             }
             results = buffer.toString();

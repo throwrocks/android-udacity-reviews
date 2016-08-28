@@ -13,7 +13,7 @@ import org.json.JSONObject;
  * There are two types of Review entities: Reviews and Feedbacks
  * Created by joselopez on 7/5/16.
  */
-final class JSONParser {
+public final class JSONParser {
 
     private JSONParser() {
         throw new AssertionError("No JSONParser instances for you!");
