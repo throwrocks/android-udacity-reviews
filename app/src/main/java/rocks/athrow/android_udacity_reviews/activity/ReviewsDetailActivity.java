@@ -2,9 +2,11 @@ package rocks.athrow.android_udacity_reviews.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -75,6 +77,16 @@ public class ReviewsDetailActivity extends AppCompatActivity {
                     .add(R.id.review_detail_container, fragment)
                     .commit();
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button by going back, don't re-create the list
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
