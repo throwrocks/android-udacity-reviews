@@ -48,7 +48,7 @@ public final class API {
                 APIUrl = APIUrl + "?" + UrlParams;
             }
         }
-        return httpConnect(APIKey, APIUrl);
+        return httpConnect(APIKey, APIUrl, "GET", "");
     }
     /**
      * callFeedbacksAPI
@@ -74,25 +74,29 @@ public final class API {
                 APIUrl = APIUrl + "?" + UrlParams;
             }
         }
-        return httpConnect(APIKey, APIUrl);
+        return httpConnect(APIKey, APIUrl, "GET", "");
     }
 
     /**
      * httpConnect
      * This method handles communicating with the API and converting the input stream into a string
-     *
+     * @param apiKey the API key
+     * @param apiUrl the request url
+     * @param requestMethod the request's method (GET, PUT, DELETE)
+     * @param requestBody the request's body (optional)
      * @return a json string to be used in a parsing method
      */
-    private static String httpConnect(String APIKey, String APIurl) {
+    private static String httpConnect(String apiKey, String apiUrl, String requestMethod, String requestBody) {
         String results = null;
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         try {
-            Uri builtUri = Uri.parse(APIurl).buildUpon().build();
+            Uri builtUri = Uri.parse(apiUrl).buildUpon().build();
             URL url = new URL(builtUri.toString());
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.addRequestProperty("Authorization", APIKey);
+            urlConnection.setRequestMethod(requestMethod);
+            urlConnection.addRequestProperty("Body", requestBody);
+            urlConnection.addRequestProperty("Authorization", apiKey);
             urlConnection.addRequestProperty("Content-Length", "0");
             urlConnection.addRequestProperty("Accept", "application/json");
             urlConnection.connect();
