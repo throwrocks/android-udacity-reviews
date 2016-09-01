@@ -38,7 +38,7 @@ public class UnitTests extends Robolectric {
             mAPIKey = mSharedPreferences.loadString(API_KEY, EMPTY_STRING);
         }
         if ( mJSONReviews == null ){
-            mJSONReviews = API.callFeedbacksAPI(mAPIKey, null, null);
+            mJSONReviews = API.callReviewsAPI(mAPIKey, null, null);
         }
         if ( mJSONFeedbacks == null ){
             mJSONFeedbacks = API.callFeedbacksAPI(mAPIKey, null, null);
