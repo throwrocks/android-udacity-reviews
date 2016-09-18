@@ -132,7 +132,6 @@ public class ReportsActivityFragment extends Fragment {
                     mReportBodyView.setVisibility(View.GONE);
                     mReportFooterView.setVisibility(View.GONE);
                     mReportMessage.setText(text);
-
                 }
             }
         };

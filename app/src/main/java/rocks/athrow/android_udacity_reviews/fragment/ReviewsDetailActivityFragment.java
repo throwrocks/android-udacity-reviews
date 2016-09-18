@@ -26,8 +26,6 @@ import rocks.athrow.android_udacity_reviews.data.RealmFeedback;
  * A placeholder fragment containing a simple view.
  */
 public class ReviewsDetailActivityFragment extends Fragment {
-
-
     public static final String ARG_REVIEW_ID = "id";
     public static final String ARG_PROJECT_NAME = "project_name";
     public static final String ARG_PRICE = "price";
