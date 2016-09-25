@@ -5,7 +5,7 @@ package rocks.athrow.android_udacity_reviews.data;
  * Created by josel on 9/25/2016.
  */
 
-public final class APIResponse {
+final class APIResponse {
 
     private String responseText;
     private int responseCode;
@@ -18,7 +18,7 @@ public final class APIResponse {
      *
      * @param responseCode the API's response code number
      */
-    public void setResponseCode(int responseCode) {
+    void setResponseCode(int responseCode) {
         this.responseCode = responseCode;
     }
 
@@ -27,7 +27,7 @@ public final class APIResponse {
      *
      * @param responseText the API's response text
      */
-    public void setResponseText(String responseText) {
+    void setResponseText(String responseText) {
         this.responseText = responseText;
     }
 
@@ -36,7 +36,7 @@ public final class APIResponse {
      *
      * @return the API's response code number
      */
-    public int getResponseCode() {
+    int getResponseCode() {
         return responseCode;
     }
 
@@ -45,7 +45,7 @@ public final class APIResponse {
      *
      * @return the API's response text
      */
-    public String getResponseText() {
+    String getResponseText() {
         return responseText;
     }
 

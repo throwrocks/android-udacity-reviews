@@ -15,7 +15,7 @@ import rocks.athrow.android_udacity_reviews.fragment.ReportsActivityFragment;
  * Created by jose on 7/24/16.
  */
 public class TabNavigationAdapter extends FragmentPagerAdapter {
-    Context mContext;
+    private Context mContext;
     public TabNavigationAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.mContext = context;

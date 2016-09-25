@@ -26,11 +26,11 @@ public final class API {
 
     /**
      * callReviewsAPI
+     *
      * @param APIKey the API key string
-
      * @return the API response in a string
      */
-    public static String callReviewsAPI(String APIKey, String dateStart, String dateEnd){
+    public static APIResponse callReviewsAPI(String APIKey, String dateStart, String dateEnd) {
         String APIUrl = "https://review-api.udacity.com/api/v1/me/submissions/completed";
         ArrayList<String> paramsArray = new ArrayList<>();
         boolean hasParams = false;
@@ -50,13 +50,14 @@ public final class API {
         }
         return httpConnect(APIKey, APIUrl, "GET", "");
     }
+
     /**
      * callFeedbacksAPI
-     * @param APIKey the API key string
      *
+     * @param APIKey the API key string
      * @return the API response in a string
      */
-    public static String callFeedbacksAPI(String APIKey, String dateStart, String dateEnd){
+    public static APIResponse callFeedbacksAPI(String APIKey, String dateStart, String dateEnd) {
         String APIUrl = "https://review-api.udacity.com/api/v1/me/student_feedbacks";
         ArrayList<String> paramsArray = new ArrayList<>();
         boolean hasParams = false;
@@ -80,14 +81,15 @@ public final class API {
     /**
      * httpConnect
      * This method handles communicating with the API and converting the input stream into a string
-     * @param apiKey the API key
-     * @param apiUrl the request url
+     *
+     * @param apiKey        the API key
+     * @param apiUrl        the request url
      * @param requestMethod the request's method (GET, PUT, DELETE)
-     * @param requestBody the request's body (optional)
+     * @param requestBody   the request's body (optional)
      * @return a json string to be used in a parsing method
      */
-    private static String httpConnect(String apiKey, String apiUrl, String requestMethod, String requestBody) {
-        String results = null;
+    private static APIResponse httpConnect(String apiKey, String apiUrl, String requestMethod, String requestBody) {
+        APIResponse apiResponse = new APIResponse();
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         try {
@@ -100,11 +102,11 @@ public final class API {
             urlConnection.addRequestProperty("Content-Length", "0");
             urlConnection.addRequestProperty("Accept", "application/json");
             urlConnection.connect();
+            apiResponse.setResponseCode(urlConnection.getResponseCode());
             InputStream inputStream = urlConnection.getInputStream();
             StringBuilder buffer = new StringBuilder();
             if (inputStream == null) {
-                results = null;
-                return null;
+                return apiResponse;
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
@@ -112,11 +114,12 @@ public final class API {
                 buffer.append(line);
             }
             if (buffer.length() == 0) {
-                results = null;
+                return apiResponse;
             }
-            results = buffer.toString();
+            apiResponse.setResponseText(buffer.toString());
         } catch (IOException v) {
-            results = null;
+            apiResponse.setResponseText(v.toString());
+            return apiResponse;
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -129,6 +132,6 @@ public final class API {
                 }
             }
         }
-        return results;
+        return apiResponse;
     }
 }

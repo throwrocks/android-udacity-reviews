@@ -1,8 +1,6 @@
 package rocks.athrow.android_udacity_reviews.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +26,6 @@ import rocks.athrow.android_udacity_reviews.util.Utilities;
 public class MainActivity extends AppCompatActivity {
 
     private final static String DATE_DISPLAY = "MM/dd/yy";
-    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,14 +78,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        // TODO: Implement two pane layout
-        if (findViewById(R.id.review_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
-        }
     }
 
     /**

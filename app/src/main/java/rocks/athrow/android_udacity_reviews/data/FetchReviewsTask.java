@@ -56,15 +56,19 @@ public class FetchReviewsTask extends AsyncTask<String, Void, Integer> {
         }
         // Close realm
         realm.close();
-        jsonResults = API.callReviewsAPI(mAPIKey, dateStartString, null);
-        //Parse the results if not null
-        if (jsonResults != null) {
-            parsedResults = JSONParser.parseReviews(jsonResults);
-            // The parsedResults are not null, update the Realm database
-            if (parsedResults != null) {
-                UpdateRealm updateRealm = new UpdateRealm(mContext);
-                updateRealm.updateReviews(parsedResults);
-                return 0;
+        APIResponse apiResponse = API.callReviewsAPI(mAPIKey, dateStartString, null);
+        int responseCode = apiResponse.getResponseCode();
+        if (responseCode == 200) {
+            jsonResults = apiResponse.getResponseText();
+            //Parse the results if not null
+            if (jsonResults != null) {
+                parsedResults = JSONParser.parseReviews(jsonResults);
+                // The parsedResults are not null, update the Realm database
+                if (parsedResults != null) {
+                    UpdateRealm updateRealm = new UpdateRealm(mContext);
+                    updateRealm.updateReviews(parsedResults);
+                    return 0;
+                }
             }
         }
         return -1;

@@ -8,9 +8,38 @@ import io.realm.annotations.PrimaryKey;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 
 /**
+ * RealmReview
  * Created by joselopez on 7/5/16.
  */
 public class RealmReview extends RealmObject {
+    class fields{
+        final static String id = "id";
+        final static String project_id = "project_id";
+        final static String rubric_id = "rubric_id";
+        final static String user_id = "user_id";
+        final static String grader_id = "grader_id";
+        final static String user = "user";
+        final static String name = "name";
+        final static String user_name = "user_name";
+        final static String created_at = "created_at";
+        final static String updated_at ="updated_at";
+        final static String assigned_at = "assigned_at";
+        final static String completed_at = "completed_at";
+        final static String price = "price";
+        final static String repo_url = "repo_url";
+        final static String commit_sha = "commit_sha";
+        final static String archive_url = "archive_url";
+        final static String udacity_key = "udacity_key";
+        final static String held_at = "held_at";
+        final static String notes = "notes";
+        final static String status = "status";
+        final static String result = "result";
+        final static String status_reason = "status_reason";
+        final static String result_reason = "result_reason";
+        final static String project = "project";
+        final static String project_name = "project_name";
+
+    }
     //----------------------------------------------------------------------------------
     // IDs
     //----------------------------------------------------------------------------------
@@ -66,7 +95,6 @@ public class RealmReview extends RealmObject {
 
     public RealmReview(){
     }
-
 
     public void setElapsed_time(long elapsed_time) {
         this.elapsed_time = elapsed_time;

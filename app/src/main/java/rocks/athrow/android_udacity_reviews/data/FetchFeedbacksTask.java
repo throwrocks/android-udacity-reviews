@@ -61,14 +61,18 @@ public class FetchFeedbacksTask extends AsyncTask<String, Void, Integer> {
         // Close realm
         realm.close();
         String dateStartString = Utilities.getDateAsString(dateStart, Constants.UTIL_DATE_FORMAT, null);
-        jsonResults = API.callFeedbacksAPI(mAPIKey, dateStartString, null);
-        //Parse the results if not null
-        parsedResults = JSONParser.parseFeedbacks(jsonResults);
-        // The parsedResults are not null, update the Realm database
-        if (parsedResults != null) {
-            UpdateRealm updateRealm = new UpdateRealm(mContext);
-            updateRealm.updateFeedbacks(parsedResults);
-            return 0;
+        APIResponse apiResponse = API.callFeedbacksAPI(mAPIKey, dateStartString, null);
+        int responseCode = apiResponse.getResponseCode();
+        if (responseCode == 200) {
+            jsonResults = apiResponse.getResponseText();
+            //Parse the results if not null
+            parsedResults = JSONParser.parseFeedbacks(jsonResults);
+            // The parsedResults are not null, update the Realm database
+            if (parsedResults != null) {
+                UpdateRealm updateRealm = new UpdateRealm(mContext);
+                updateRealm.updateFeedbacks(parsedResults);
+                return 0;
+            }
         }
         return -1;
     }

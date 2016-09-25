@@ -32,17 +32,16 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
-        public LinearLayout viewReviewItem;
-        public TextView viewReviewId;
-        public TextView viewProjectName;
-        public TextView viewCompletedAt;
-        public TextView viewUserName;
-        public TextView viewResult;
-        public TextView viewFilename;
-        public TextView viewReviewNone;
-        public RatingBar ratingBar;
+        LinearLayout viewReviewItem;
+        TextView viewReviewId;
+        TextView viewProjectName;
+        TextView viewCompletedAt;
+        TextView viewUserName;
+        TextView viewResult;
+        TextView viewReviewNone;
+        RatingBar ratingBar;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             viewReviewItem = (LinearLayout) view.findViewById(R.id.review_item);
             viewProjectName = (TextView) view.findViewById(R.id.review_item_project_name);
