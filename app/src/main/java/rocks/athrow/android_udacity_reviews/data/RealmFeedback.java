@@ -10,18 +10,19 @@ import io.realm.annotations.PrimaryKey;
  */
 public class RealmFeedback extends RealmObject {
     @PrimaryKey
+    private
     int id;
-    int rubric_id;
-    int submission_id;
-    int user_id;
-    int rating;
-    String body;
-    Date created_at;
-    Date updated_at;
-    int grader_id;
-    String read_at;
-    int project_id;
-    String project_name;
+    private int rubric_id;
+    private int submission_id;
+    private int user_id;
+    private int rating;
+    private String body;
+    private Date created_at;
+    private Date updated_at;
+    private int grader_id;
+    private String read_at;
+    private int project_id;
+    private String project_name;
 
     public RealmFeedback() {
     }

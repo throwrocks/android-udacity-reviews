@@ -15,54 +15,54 @@ public class RealmReview extends RealmObject {
     // IDs
     //----------------------------------------------------------------------------------
     @PrimaryKey
-    int id;
-    int project_id;
-    int rubric_id;
-    int user_id;
-    int grader_id;
+    private int id;
+    private int project_id;
+    private int rubric_id;
+    private int user_id;
+    private int grader_id;
     //----------------------------------------------------------------------------------
     // User
     //----------------------------------------------------------------------------------
-    String user_name;
+    private String user_name;
     //----------------------------------------------------------------------------------
     // Dates
     //----------------------------------------------------------------------------------
-    Date created_at;
-    Date updated_at;
-    Date assigned_at;
-    Date completed_at;
-    long elapsed_time;
+    private Date created_at;
+    private Date updated_at;
+    private Date assigned_at;
+    private Date completed_at;
+    private long elapsed_time;
     //----------------------------------------------------------------------------------
     // Submission data
     //----------------------------------------------------------------------------------
-    double price;
-    String repo_url;
-    String commit_sha;
-    String archive_url;
-    String udacity_key;
-    String held_at;
-    String notes;
+    private double price;
+    private String repo_url;
+    private String commit_sha;
+    private String archive_url;
+    private String udacity_key;
+    private String held_at;
+    private String notes;
     //----------------------------------------------------------------------------------
     // Submission data
     //----------------------------------------------------------------------------------
-    String status;
-    String result;
-    String status_reason;
-    String result_reason;
+    private String status;
+    private String result;
+    private String status_reason;
+    private String result_reason;
     //----------------------------------------------------------------------------------
     // Project data
     //----------------------------------------------------------------------------------
     @Index
-    String project_name;
-    String project_hash_tag;
-    String project_required_skills;
-    int project_awaiting_review_count;
-    Boolean project_visible;
-    int project_audit_rubric_id;
+    private String project_name;
+    private String project_hash_tag;
+    private String project_required_skills;
+    private int project_awaiting_review_count;
+    private Boolean project_visible;
+    private int project_audit_rubric_id;
     //----------------------------------------------------------------------------------
     // Added / Not in the API
     //----------------------------------------------------------------------------------
-    int feedback_rating;
+    private int feedback_rating;
 
     public RealmReview(){
     }
