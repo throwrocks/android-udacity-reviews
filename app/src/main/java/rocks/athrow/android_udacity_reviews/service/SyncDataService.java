@@ -117,8 +117,11 @@ public class SyncDataService extends IntentService {
                 e.printStackTrace();
             }
         }
-
-        response.putExtra("response_code", 200);
+        if ( reviewsAPIResponseCode == 200 && feedbacksAPIResponseCode == 200 ){
+            response.putExtra("response_code", 200);
+        }else{
+            response.putExtra("response_code", 401);
+        }
         LocalBroadcastManager.getInstance(this).sendBroadcast(response);
 
     }
