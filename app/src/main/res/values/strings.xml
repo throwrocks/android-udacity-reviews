@@ -26,6 +26,9 @@
     <string name="review_detail_label_find">Find</string>
     <string name="review_detail_label_total_reviews">Total Reviews</string>
     <string name="review_detail_label_revenue">Revenue</string>
+    <string name="review_detail_not_rated">Not Rated</string>
+    <string name="review_detail_no_notes">No notes provided</string>
+    <string name="review_detail_no_feedback">No feedback provided</string>
     <!-- Report Fragment: Project Summary header -->
     <string name="reports_project">Project</string>
     <string name="reports_count">Count</string>

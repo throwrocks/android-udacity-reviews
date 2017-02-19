@@ -1,11 +1,11 @@
 package rocks.athrow.android_udacity_reviews.fragment;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +19,8 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import rocks.athrow.android_udacity_reviews.R;
-import rocks.athrow.android_udacity_reviews.util.Utilities;
 import rocks.athrow.android_udacity_reviews.data.RealmFeedback;
+import rocks.athrow.android_udacity_reviews.util.Utilities;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -39,6 +39,11 @@ public class ReviewsDetailActivityFragment extends Fragment {
     public static final String ARG_STUDENT_NOTES = "notes";
     public static final String ARG_RATING = "rating";
     public static final String ARG_STUDENT_FEEDBACK = "student_feedback";
+    private static final String CREATED_AT = "created_at";
+    private static final String SUBMISSION_ID = "submission_id";
+    private static final String NULL = "null";
+    private static final String PASSED = "passed";
+    private static final String FAILED = "failed";
     private static final String UDACITY_REVIEWS_URL = "https://review.udacity.com/#!/reviews/";
     private String projectName;
     private double price;
@@ -56,10 +61,6 @@ public class ReviewsDetailActivityFragment extends Fragment {
     private int rating;
     private String studentFeedback;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ReviewsDetailActivityFragment() {
     }
 
@@ -82,7 +83,6 @@ public class ReviewsDetailActivityFragment extends Fragment {
         rating = getArguments().getInt(ARG_RATING);
         fileName = getArguments().getString(ARG_FILENAME);
         studentFeedback = getArguments().getString(ARG_STUDENT_FEEDBACK);
-
         // Get the feedback
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
         Realm.setDefaultConfiguration(realmConfig);
@@ -90,21 +90,19 @@ public class ReviewsDetailActivityFragment extends Fragment {
         realm.beginTransaction();
         RealmQuery<RealmFeedback> query = realm.where(RealmFeedback.class);
         // Add query conditions:
-        query.equalTo("submission_id", Integer.parseInt(reviewId));
-        RealmResults<RealmFeedback> feedbacks = query.findAll().sort("created_at", Sort.DESCENDING);
+        query.equalTo(SUBMISSION_ID, Integer.parseInt(reviewId));
+        RealmResults<RealmFeedback> feedbacks = query.findAll().sort(CREATED_AT, Sort.DESCENDING);
         realm.commitTransaction();
         if ( feedbacks.size() > 0 ){
             studentFeedback = feedbacks.get(0).getBody();
         }
-
+        realm.close();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_reviews_detail, container, false);
-
-
         // Get the views
         TextView projectNameView = (TextView) rootView.findViewById(R.id.review_detail_review_project_name);
         TextView userNameView = (TextView) rootView.findViewById(R.id.review_detail_user_name);
@@ -129,11 +127,9 @@ public class ReviewsDetailActivityFragment extends Fragment {
         resultView.setText(result);
         elapsedTimeView.setText(elapsedTime);
         reviewButton.setText(reviewUrl);
-
-
-        Log.d("price",  "" + price);
+        Resources res = getResources();
         if ( rating == 0 ){
-            viewReviewNone.setText("Not Rated");
+            viewReviewNone.setText(res.getString(R.string.review_detail_not_rated));
             viewReviewNone.setVisibility(View.VISIBLE);
             ratingBar.setVisibility(View.GONE);
         }else if ( rating > 0) {
@@ -141,34 +137,28 @@ public class ReviewsDetailActivityFragment extends Fragment {
             ratingBar.setVisibility(View.VISIBLE);
             ratingBar.setRating(rating);
         }
-
-
-        if (studentNotes.equals("") || studentNotes.equals("null")) {
-            studentNotes = "No notes provided";
+        if (studentNotes.isEmpty() || studentNotes.equals(NULL)) {
+            studentNotes = res.getString(R.string.review_detail_no_notes);
         }
         studentNotesView.setText(studentNotes);
-
-        if ( studentFeedback == null){
-            studentFeedback = "No feedback provided";
-        }else if ( studentFeedback.equals("") || studentFeedback.equals("null")){
-            studentFeedback = "No feedback provided";
+        if ( studentFeedback == null || studentFeedback.isEmpty() || studentFeedback.equals(NULL)) {
+            studentFeedback = res.getString(R.string.review_detail_no_feedback);
         }
         viewStudentFeedback.setText(studentFeedback);
-
-
-        if (result.equals("passed")) {
-            //noinspection deprecation
-            resultView.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.badge_passed));
-        } else if (result.equals("failed")) {
-            //noinspection deprecation
-            resultView.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.badge_failed));
-        } else {
-            //noinspection deprecation
-            resultView.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.badge_cant_review));
-
+        switch (result){
+            case PASSED:
+                //noinspection deprecation
+                resultView.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.badge_passed));
+                break;
+            case FAILED:
+                //noinspection deprecation
+                resultView.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.badge_failed));
+                break;
+            default:
+                //noinspection deprecation
+                resultView.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.badge_cant_review));
         }
-
-        // Set the button to open the file
+        // Set the button to open the review
         reviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,8 +168,6 @@ public class ReviewsDetailActivityFragment extends Fragment {
                 startActivity(i);
             }
         });
-
-
         return rootView;
     }
 }
