@@ -1,76 +1,62 @@
 package rocks.athrow.android_udacity_reviews.activity;
 
-import android.content.Context;
-import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
-import android.util.Log;
+import android.preference.PreferenceActivity;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import rocks.athrow.android_udacity_reviews.R;
+import rocks.athrow.android_udacity_reviews.data.PreferencesHelper;
 
 
-public class SettingsActivity extends AppCompatPreferenceActivity {
-
-    private static final boolean ALWAYS_SIMPLE_PREFS = true;
-
+@SuppressWarnings("deprecation")
+public class SettingsActivity extends PreferenceActivity{
+    private static final String API_KEY = "api_key";
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.preference);
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        setupSimplePreferencesScreen();
-    }
-
-    private void setupSimplePreferencesScreen() {
-        if (!isSimplePreferences(this)) {
-            return;
-        }
-
-        addPreferencesFromResource(R.xml.preference);
-        bindPreferenceSummaryToValue(findPreference("api_key"));
-    }
-
-    private static boolean isXLargeTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK) >=
-                Configuration.SCREENLAYOUT_SIZE_XLARGE;
-    }
-
-    private static boolean isSimplePreferences(Context context) {
-        return ALWAYS_SIMPLE_PREFS
-                || Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
-                || !isXLargeTablet(context);
-    }
-
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener =
-            new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
-
-            if (preference instanceof EditTextPreference) {
-                preference.setSummary(stringValue);
-                Log.i("Change ", "true");
-
-
-            } else {
-                preference.setSummary(stringValue);
+    protected void onResume(){
+        super.onResume();
+        getPreferenceScreen().findPreference(API_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                updatePreference(API_KEY);
+                return false;
             }
-            return true;
-        }
-    };
+        });
+        updatePreference(API_KEY);
+    }
 
-    private static void bindPreferenceSummaryToValue(Preference preference) {
-        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(
-                preference,
-                PreferenceManager.getDefaultSharedPreferences(preference.getContext()).
-                        getString(preference.getKey(), ""));
+    private void updatePreference(String key){
+        if (key.equals(API_KEY)){
+            Preference preference = findPreference(key);
+            if (preference instanceof EditTextPreference){
+                EditTextPreference editTextPreference =  (EditTextPreference)preference;
+                PreferencesHelper preferencesHelper = new PreferencesHelper(getApplicationContext());
+                String apiKey = editTextPreference.getText();
+                preferencesHelper.save(API_KEY, apiKey);
+                if (editTextPreference.getText() != null ){
+                    editTextPreference.setSummary(apiKey);
+                }else{
+                    editTextPreference.setSummary("");
+                }
+            }
+        }
+    }
+
+    // TODO: Implement an option to delete the database
+    private void deleteDatabase(){RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
+        Realm.setDefaultConfiguration(realmConfig);
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
+        realm.close();
     }
 }

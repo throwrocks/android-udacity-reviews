@@ -10,6 +10,7 @@
     <!-- General-->
     <string name="general_no_network_connection">You are not connected to a network</string>
     <!-- Reviews list -->
+    <string name="review_list_empty_key">Please enter your API key in the settings.</string>
     <string name="review_list_bad_reviews_up_to_date">Your reviews are up to date!</string>
     <string name="review_list_bad_server_response">Bad server response. Make sure your API key is up to date.</string>
     <!-- Review detail -->

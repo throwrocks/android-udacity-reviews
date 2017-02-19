@@ -6,6 +6,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
+ * RealmFeedback
  * Created by josel on 7/6/2016.
  */
 public class RealmFeedback extends RealmObject {

@@ -11,7 +11,6 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import rocks.athrow.android_udacity_reviews.data.API;
-import rocks.athrow.android_udacity_reviews.data.JSONParser;
 import rocks.athrow.android_udacity_reviews.data.PreferencesHelper;
 
 import static org.junit.Assert.*;

@@ -1,8 +1,12 @@
 package rocks.athrow.android_udacity_reviews.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,24 +19,20 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import rocks.athrow.android_udacity_reviews.R;
-import rocks.athrow.android_udacity_reviews.activity.MainActivity;
 import rocks.athrow.android_udacity_reviews.adapter.ReviewListAdapter;
-import rocks.athrow.android_udacity_reviews.data.FetchFeedbacksTask;
-import rocks.athrow.android_udacity_reviews.data.FetchReviewsTask;
-import rocks.athrow.android_udacity_reviews.util.Utilities;
 import rocks.athrow.android_udacity_reviews.data.RealmReview;
 import rocks.athrow.android_udacity_reviews.realmadapter.RealmReviewsAdapter;
+import rocks.athrow.android_udacity_reviews.service.SyncDataService;
+import rocks.athrow.android_udacity_reviews.util.Utilities;
 
 /**
  * ReviewsListFragmentActivity
  * Created by josel on 7/5/2016.
  */
-public class ReviewsListActivityFragment extends android.support.v4.app.Fragment implements MainActivity.ReviewsListFragmentCallback {
+public class ReviewsListActivityFragment extends android.support.v4.app.Fragment {
     private final String MODULE_COMPLETED_AT = "completed_at";
     private ReviewListAdapter reviewListAdapter;
     private SwipeRefreshLayout swipeContainer;
-    private FetchReviewsTask fetchReviews;
-    private FetchFeedbacksTask fetchFeedbacks;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,38 +45,22 @@ public class ReviewsListActivityFragment extends android.support.v4.app.Fragment
         if (recyclerView != null) {
             setupRecyclerView((RecyclerView) recyclerView);
         }
-
         final Context context = getContext();
-
         // Set up the SwipeRefreshLayout
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         // with a callBack to remove itself and present a toast when finishing the FetchReviews task
-        final MainActivity.ReviewsListFragmentCallback callback = new MainActivity.ReviewsListFragmentCallback() {
-            @Override
-            public void onFetchReviewsCompleted(int result) {
-                swipeContainer.setRefreshing(false);
-                CharSequence text;
-                if ( result == -1 ){
-                    text = context.getString(R.string.review_list_bad_server_response);
-                }
-                else{
-                    text = context.getString(R.string.review_list_bad_reviews_up_to_date);
-                }
-                int duration = Toast.LENGTH_SHORT;
-                final Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-        };
         // and with a listener to trigger the FetchReviews task
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 boolean isConnected = Utilities.isConnected(getContext());
                 if (isConnected) {
-                    fetchReviews = new FetchReviewsTask(getContext(), reviewListAdapter, callback);
-                    fetchReviews.execute();
-                    fetchFeedbacks = new FetchFeedbacksTask(getContext(), reviewListAdapter, null);
-                    fetchFeedbacks.execute();
+                    Intent updateDBIntent = new Intent(context, SyncDataService.class);
+                    updateDBIntent.setAction(SyncDataService.ACTION_SYNC_DATA);
+                    LocalBroadcastManager.getInstance(context).
+                            registerReceiver(new ResponseReceiver(),
+                                    new IntentFilter(SyncDataService.ACTION_SYNC_DATA));
+                    context.startService(updateDBIntent);
                 } else {
                     CharSequence text = context.getString(R.string.general_no_network_connection);
                     int duration = Toast.LENGTH_SHORT;
@@ -121,16 +105,41 @@ public class ReviewsListActivityFragment extends android.support.v4.app.Fragment
     public void onPause() {
         super.onPause();
         swipeContainer.setRefreshing(false);
-        if (fetchReviews != null) {
+        // TODO: Check if service is running
+        /**if (fetchReviews != null) {
             fetchReviews.cancel(true);
         }
         if (fetchFeedbacks != null) {
             fetchFeedbacks.cancel(true);
+        }**/
+    }
+    /**
+     * ResponseReceiver
+     * This class is used to manage the response from the UpdateDB Service
+     */
+    private class ResponseReceiver extends BroadcastReceiver {
+
+        private ResponseReceiver() {
+        }
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int responseCode = intent.getIntExtra("response_code", 0);
+            swipeContainer.setRefreshing(false);
+            CharSequence text;
+            if ( responseCode == -1 ){
+                text = context.getString(R.string.review_list_empty_key);
+            }
+            else if ( responseCode != 200 ){
+                text = context.getString(R.string.review_list_bad_server_response);
+            }
+            else{
+                reviewListAdapter.notifyDataSetChanged();
+                text = context.getString(R.string.review_list_bad_reviews_up_to_date);
+            }
+            int duration = Toast.LENGTH_SHORT;
+            final Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }
     }
 
-    @Override
-    public void onFetchReviewsCompleted(int result) {
-
-    }
 }

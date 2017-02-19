@@ -1,10 +1,10 @@
 package rocks.athrow.android_udacity_reviews.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,9 +14,6 @@ import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import java.util.Date;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import rocks.athrow.android_udacity_reviews.BuildConfig;
 import rocks.athrow.android_udacity_reviews.R;
 import rocks.athrow.android_udacity_reviews.adapter.TabNavigationAdapter;
 import rocks.athrow.android_udacity_reviews.data.PreferencesHelper;
@@ -30,9 +27,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Set DEBUG to true to clear the database when the app starts / for testing
-        boolean DEBUG = false;
-
         setContentView(R.layout.activity_main);
         PreferencesHelper sharedPref = new PreferencesHelper(this);
         String reportDate1 = sharedPref.loadString(Constants.PREF_REPORT_DATE1, Constants.PREF_EMPTY_STRING);
@@ -45,18 +39,12 @@ public class MainActivity extends AppCompatActivity {
             sharedPref.save(Constants.PREF_REPORT_DATE1, reportDate1);
             sharedPref.save(Constants.PREF_REPORT_DATE2, reportDate2);
         }
-        // Save the API key to the shared preferences
-        // TODO: When the settings are properly implemented this will not be necessary
-        String API_KEY = BuildConfig.UDACITY_REVIEWER_API_KEY;;
-        sharedPref.save(Constants.PREF_API_KEY, API_KEY);
-
         TabNavigationAdapter mSectionsPagerAdapter = new TabNavigationAdapter(getSupportFragmentManager(), this);
         ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         // Set up the TabLayout with the PageViewer
         TabLayout mTabLayout = (TabLayout) findViewById(R.id.tabNavigation);
         mTabLayout.setupWithViewPager(mViewPager);
-
         // Stetho used to inspect the Realm database
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
@@ -64,29 +52,12 @@ public class MainActivity extends AppCompatActivity {
                         .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                         .build());
 
-        if (DEBUG) {
-            // Delete everything (for testing only)
-            RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
-            Realm.setDefaultConfiguration(realmConfig);
-            Realm realm = Realm.getDefaultInstance();
-            realm.beginTransaction();
-            realm.deleteAll();
-            realm.commitTransaction();
-        }
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
     }
 
-    /**
-     * ReviewsListFragmentCallback
-     * An interface to update the UI after getting new reviews from the API
-     */
-    public interface ReviewsListFragmentCallback {
-        void onFetchReviewsCompleted(int result);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

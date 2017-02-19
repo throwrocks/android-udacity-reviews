@@ -1,9 +1,12 @@
 package rocks.athrow.android_udacity_reviews.data;
 
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
 
@@ -12,6 +15,8 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
+
+import static android.R.attr.value;
 
 /**
  * UpdateRealm
@@ -32,101 +37,100 @@ public class UpdateRealm {
      *
      * @param reviews an array of ContentValues built from the JSONParser
      */
-    public void updateReviews(ContentValues[] reviews) {
-        for (ContentValues value : reviews) {
+    public void updateReviews(JSONArray reviews) {
+        int reviewsQty = reviews.length();
+        if (reviewsQty == 0) {
+            return;
+        }
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
+        Realm.setDefaultConfiguration(realmConfig);
+        Realm realm = Realm.getDefaultInstance();
+        for (int i = 0; i < reviewsQty; i++) {
             Log.e("value ", "" + value);
-            int findId = value.getAsInteger("id");
-            RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
-            Realm.setDefaultConfiguration(realmConfig);
-            Realm realm = Realm.getDefaultInstance();
             try {
+                JSONObject reviewRecord = reviews.getJSONObject(i);
+                RealmReview newReview = new RealmReview();
                 realm.beginTransaction();
-                // Build the query looking at all users:
-                RealmQuery<RealmReview> query = realm.where(RealmReview.class);
-                // Add query conditions:
-                query.equalTo("id", findId);
-                // Execute the query:
-                RealmResults<RealmReview> results = query.findAll();
-                int resultsCount = results.size();
-                // If record doesn't exist,. create it
-                if (resultsCount == 0) {
-                    // Create new Review object
-                    RealmReview newReview = new RealmReview();
-                    //----------------------------------------------------------------------------------
-                    // IDs
-                    //----------------------------------------------------------------------------------
-                    int id = value.getAsInteger("id");
-                    int project_id = value.getAsInteger("id");
-                    int rubric_id = value.getAsInteger("rubric_id");
-                    int user_id = value.getAsInteger("id");
-                    int grader_id = value.getAsInteger("grader_id");
-                    newReview.setId(id);
-                    newReview.setProject_id(project_id);
-                    newReview.setRubric_id(rubric_id);
-                    newReview.setUser_id(user_id);
-                    newReview.setGrader_id(grader_id);
-                    //----------------------------------------------------------------------------------
-                    // User
-                    //----------------------------------------------------------------------------------
-                    String user_name = value.getAsString("user_name");
-                    newReview.setUser_name(user_name);
-                    //----------------------------------------------------------------------------------
-                    // Dates
-                    //----------------------------------------------------------------------------------
-                    Date created_at = Utilities.getStringAsDate(value.getAsString("created_at"), DATE_UTC, TIMEZONE_UTC);
-                    Date updated_at = Utilities.getStringAsDate(value.getAsString("updated_at"), DATE_UTC, TIMEZONE_UTC);
-                    Date assigned_at = Utilities.getStringAsDate(value.getAsString("assigned_at"), DATE_UTC, TIMEZONE_UTC);
-                    Date completed_at = Utilities.getStringAsDate(value.getAsString("completed_at"), DATE_UTC, TIMEZONE_UTC);
-                    long elapsed_time = Utilities.elapsedMilliseconds(assigned_at, completed_at);
-                    newReview.setCreated_at(created_at);
-                    newReview.setUpdated_at(updated_at);
-                    newReview.setAssigned_at(assigned_at);
-                    newReview.setCompleted_at(completed_at);
-                    newReview.setElapsed_time(elapsed_time);
-                    //----------------------------------------------------------------------------------
-                    // Submission data
-                    //----------------------------------------------------------------------------------
-                    double price = value.getAsDouble("price");
-                    String repo_url = value.getAsString("repo_url");
-                    String commit_sha = value.getAsString("commit_sha");
-                    String archive_url = value.getAsString("archive_url");
-                    String udacity_key = value.getAsString("udacity_key");
-                    String held_at = value.getAsString("held_at");
-                    String student_notes = value.getAsString("notes");
-                    newReview.setPrice(price);
-                    newReview.setRepo_url(repo_url);
-                    newReview.setCommit_sha(commit_sha);
-                    newReview.setArchive_url(archive_url);
-                    newReview.setUdacity_key(udacity_key);
-                    newReview.setHeld_at(held_at);
-                    newReview.setNotes(student_notes);
-                    //----------------------------------------------------------------------------------
-                    // Status and Result
-                    //----------------------------------------------------------------------------------
-                    String status = value.getAsString("status");
-                    String result = value.getAsString("result");
-                    String status_reason = value.getAsString("status_reason");
-                    String result_reason = value.getAsString("result_reason");
-                    newReview.setStatus(status);
-                    newReview.setResult(result);
-                    newReview.setStatus_reason(status_reason);
-                    newReview.setResult_reason(result_reason);
-                    //----------------------------------------------------------------------------------
-                    // Project data
-                    //----------------------------------------------------------------------------------
-                    String project_name = value.getAsString("project_name");
-                    newReview.setProject_name(project_name);
-                    //----------------------------------------------------------------------------------
-                    // + Copy to Realm
-                    //----------------------------------------------------------------------------------
-                    realm.copyToRealmOrUpdate(newReview);
-                }
+                //----------------------------------------------------------------------------------
+                // IDs
+                //----------------------------------------------------------------------------------
+                int id = reviewRecord.getInt(RealmReview.fields.id);
+                int project_id = reviewRecord.getInt(RealmReview.fields.project_id);
+                int rubric_id = reviewRecord.getInt(RealmReview.fields.rubric_id);
+                int user_id = reviewRecord.getInt(RealmReview.fields.id);
+                int grader_id = reviewRecord.getInt(RealmReview.fields.grader_id);
+                newReview.setId(id);
+                newReview.setProject_id(project_id);
+                newReview.setRubric_id(rubric_id);
+                newReview.setUser_id(user_id);
+                newReview.setGrader_id(grader_id);
+                //----------------------------------------------------------------------------------
+                // User
+                //----------------------------------------------------------------------------------
+                JSONObject userNode = reviewRecord.getJSONObject(RealmReview.fields.user);
+                String user_name = userNode.getString(RealmReview.fields.name);
+                newReview.setUser_name(user_name);
+                //----------------------------------------------------------------------------------
+                // Dates
+                //----------------------------------------------------------------------------------
+                String created_at = reviewRecord.getString(RealmReview.fields.created_at);
+                String updated_at = reviewRecord.getString(RealmReview.fields.updated_at);
+                String assigned_at = reviewRecord.getString(RealmReview.fields.assigned_at);
+                String completed_at = reviewRecord.getString(RealmReview.fields.completed_at);
+                Date created_at_date = Utilities.getStringAsDate(created_at, DATE_UTC, TIMEZONE_UTC);
+                Date updated_at_date = Utilities.getStringAsDate(updated_at, DATE_UTC, TIMEZONE_UTC);
+                Date assigned_at_date = Utilities.getStringAsDate(assigned_at, DATE_UTC, TIMEZONE_UTC);
+                Date completed_at_date = Utilities.getStringAsDate(completed_at, DATE_UTC, TIMEZONE_UTC);
+                long elapsed_time = Utilities.elapsedMilliseconds(assigned_at_date, completed_at_date);
+                newReview.setCreated_at(created_at_date);
+                newReview.setUpdated_at(updated_at_date);
+                newReview.setAssigned_at(assigned_at_date);
+                newReview.setCompleted_at(completed_at_date);
+                newReview.setElapsed_time(elapsed_time);
+                //----------------------------------------------------------------------------------
+                // Submission data
+                //----------------------------------------------------------------------------------
+                double price = reviewRecord.getDouble(RealmReview.fields.price);
+                String repo_url = reviewRecord.getString(RealmReview.fields.repo_url);
+                String commit_sha = reviewRecord.getString(RealmReview.fields.commit_sha);
+                String archive_url = reviewRecord.getString(RealmReview.fields.archive_url);
+                String udacity_key = reviewRecord.getString(RealmReview.fields.udacity_key);
+                String held_at = reviewRecord.getString(RealmReview.fields.held_at);
+                String student_notes = reviewRecord.getString(RealmReview.fields.notes);
+                newReview.setPrice(price);
+                newReview.setRepo_url(repo_url);
+                newReview.setCommit_sha(commit_sha);
+                newReview.setArchive_url(archive_url);
+                newReview.setUdacity_key(udacity_key);
+                newReview.setHeld_at(held_at);
+                newReview.setNotes(student_notes);
+                //----------------------------------------------------------------------------------
+                // Status and Result
+                //----------------------------------------------------------------------------------
+                String status = reviewRecord.getString(RealmReview.fields.status);
+                String result = reviewRecord.getString(RealmReview.fields.result);
+                String status_reason = reviewRecord.getString(RealmReview.fields.status_reason);
+                String result_reason = reviewRecord.getString(RealmReview.fields.result_reason);
+                newReview.setStatus(status);
+                newReview.setResult(result);
+                newReview.setStatus_reason(status_reason);
+                newReview.setResult_reason(result_reason);
+                //----------------------------------------------------------------------------------
+                // Project data
+                // The commented out variables are referencing elements that are not in the JSON
+                // response. It seems they were deprecated but not remoevd from the documentation
+                //----------------------------------------------------------------------------------
+                JSONObject projectNode = reviewRecord.getJSONObject(RealmReview.fields.project);
+                String project_name = projectNode.getString(RealmReview.fields.name);
+                newReview.setProject_name(project_name);
+                realm.copyToRealmOrUpdate(newReview);
                 realm.commitTransaction();
-                realm.close();
-            } catch (Exception e) {
+            } catch (JSONException e) {
+                e.printStackTrace();
                 realm.cancelTransaction();
             }
         }
+        realm.close();
     }
 
     /**
@@ -134,80 +138,69 @@ public class UpdateRealm {
      *
      * @param feedbacks an array of ContentValues built from the JSONParser
      */
-    public void updateFeedbacks(ContentValues[] feedbacks) {
-        int feedbacksCount = feedbacks.length;
-        Log.e("feedbacks Qty ", "" + feedbacksCount);
-        for (ContentValues value : feedbacks) {
-            int findId = value.getAsInteger("id");
-            RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
-            Realm.setDefaultConfiguration(realmConfig);
-            Realm realm = Realm.getDefaultInstance();
+    public void updateFeedbacks(JSONArray feedbacks) {
+        int feedbacksQty = feedbacks.length();
+        if (feedbacksQty == 0) {
+            return;
+        }
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext).build();
+        Realm.setDefaultConfiguration(realmConfig);
+        Realm realm = Realm.getDefaultInstance();
+        for (int i = 0; i < feedbacksQty; i++) {
+            Log.e("value ", "" + value);
             try {
+                JSONObject feedbackRecord = feedbacks.getJSONObject(i);
+                RealmFeedback newFeedback = new RealmFeedback();
                 realm.beginTransaction();
-                // Build the query looking at all users:
-                RealmQuery<RealmFeedback> query = realm.where(RealmFeedback.class);
-                // Add query conditions:
-                query.equalTo("id", findId);
-                // Execute the query:
-                RealmResults<RealmFeedback> results = query.findAll();
-                int resultsCount = results.size();
-                // If record doesn't exist,. create it
-                if (resultsCount == 0) {
-                    // Create new Review object
-                    RealmFeedback newFeedback = new RealmFeedback();
-                    //----------------------------------------------------------------------------------
-                    // IDs
-                    //----------------------------------------------------------------------------------
-                    int id = value.getAsInteger("id");
-                    int rubric_id = value.getAsInteger("rubric_id");
-                    int submission_id = value.getAsInteger("submission_id");
-                    int user_id = value.getAsInteger("id");
-                    int grader_id = value.getAsInteger("grader_id");
-                    //int project_id = value.getAsInteger("id");
-                    String project_name = value.getAsString("project_name");
-                    newFeedback.setId(id);
-                    newFeedback.setRubric_id(rubric_id);
-                    newFeedback.setSubmission_id(submission_id);
-                    newFeedback.setUser_id(user_id);
-                    newFeedback.setGrader_id(grader_id);
-                    //newFeedback.setProject_id(project_id);
-                    newFeedback.setProject_name(project_name);
-                    //----------------------------------------------------------------------------------
-                    // Feedback information
-                    //----------------------------------------------------------------------------------
-                    int rating = value.getAsInteger("rating");
-                    String body = value.getAsString("body");
-                    newFeedback.setRating(rating);
-                    newFeedback.setBody(body);
-                    //----------------------------------------------------------------------------------
-                    // Dates
-                    //----------------------------------------------------------------------------------
-                    Date created_at = Utilities.getStringAsDate(value.getAsString("created_at"), DATE_UTC, TIMEZONE_UTC);
-                    Date updated_at = Utilities.getStringAsDate(value.getAsString("updated_at"), DATE_UTC, TIMEZONE_UTC);
-                    newFeedback.setCreated_at(created_at);
-                    newFeedback.setUpdated_at(updated_at);
-                    //----------------------------------------------------------------------------------
-                    // + Copy to Realm
-                    //----------------------------------------------------------------------------------
-                    realm.copyToRealmOrUpdate(newFeedback);
-                    //----------------------------------------------------------------------------------
-                    // Update the reports_project rating
-                    //----------------------------------------------------------------------------------
-                    RealmQuery<RealmReview> reviewsQuery = realm.where(RealmReview.class);
-                    reviewsQuery.equalTo("id", submission_id);
-                    RealmResults<RealmReview> reviewsResult = reviewsQuery.findAll();
-                    if (reviewsResult.size() > 0) {
-                        reviewsResult.get(0).setFeedback_rating(rating);
-                    }
-
+                //----------------------------------------------------------------------------------
+                // IDs
+                //----------------------------------------------------------------------------------
+                int id = feedbackRecord.getInt("id");
+                int rubric_id = feedbackRecord.getInt("rubric_id");
+                int submission_id = feedbackRecord.getInt("submission_id");
+                int user_id = feedbackRecord.getInt("id");
+                int grader_id = feedbackRecord.getInt("grader_id");
+                JSONObject projectNode = feedbackRecord.getJSONObject("project");
+                String project_name = projectNode.getString("name");
+                newFeedback.setId(id);
+                newFeedback.setRubric_id(rubric_id);
+                newFeedback.setSubmission_id(submission_id);
+                newFeedback.setUser_id(user_id);
+                newFeedback.setGrader_id(grader_id);
+                newFeedback.setProject_name(project_name);
+                //----------------------------------------------------------------------------------
+                // Feedback information
+                //----------------------------------------------------------------------------------
+                int rating = feedbackRecord.getInt("rating");
+                String body = feedbackRecord.getString("body");
+                newFeedback.setRating(rating);
+                newFeedback.setBody(body);
+                //----------------------------------------------------------------------------------
+                // Dates
+                //----------------------------------------------------------------------------------
+                String created_at = feedbackRecord.getString("created_at");
+                String updated_at = feedbackRecord.getString("updated_at");
+                Date created_at_date = Utilities.getStringAsDate(created_at, DATE_UTC, TIMEZONE_UTC);
+                Date updated_at_date = Utilities.getStringAsDate(updated_at, DATE_UTC, TIMEZONE_UTC);
+                newFeedback.setCreated_at(created_at_date);
+                newFeedback.setUpdated_at(updated_at_date);
+                realm.copyToRealmOrUpdate(newFeedback);
+                //----------------------------------------------------------------------------------
+                // Update the reports_project rating
+                //----------------------------------------------------------------------------------
+                RealmQuery<RealmReview> reviewsQuery = realm.where(RealmReview.class);
+                reviewsQuery.equalTo("id", submission_id);
+                RealmResults<RealmReview> reviewsResult = reviewsQuery.findAll();
+                if (reviewsResult.size() > 0) {
+                    reviewsResult.get(0).setFeedback_rating(rating);
                 }
                 realm.commitTransaction();
-                realm.close();
-            } catch (Exception e) {
+            }catch (JSONException e){
                 realm.cancelTransaction();
+                e.printStackTrace();
             }
-
         }
+        realm.close();
     }
 
 }
