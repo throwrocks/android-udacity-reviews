@@ -21,7 +21,6 @@ import rocks.athrow.android_udacity_reviews.util.Constants;
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 
 public class MainActivity extends AppCompatActivity {
-
     private final static String DATE_DISPLAY = "MM/dd/yy";
 
     @Override
