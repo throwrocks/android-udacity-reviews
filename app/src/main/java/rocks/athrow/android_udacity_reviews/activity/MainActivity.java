@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
             sharedPref.save(Constants.PREF_REPORT_DATE2, reportDate2);
         }
         TabNavigationAdapter mSectionsPagerAdapter = new TabNavigationAdapter(getSupportFragmentManager(), this);
-        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
+        ViewPager mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         // Set up the TabLayout with the PageViewer
-        TabLayout mTabLayout = (TabLayout) findViewById(R.id.tabNavigation);
+        TabLayout mTabLayout = findViewById(R.id.tabNavigation);
         mTabLayout.setupWithViewPager(mViewPager);
         // Stetho used to inspect the Realm database
         Stetho.initialize(
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                         .build());
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 

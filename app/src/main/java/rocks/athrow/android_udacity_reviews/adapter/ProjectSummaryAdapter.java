@@ -1,10 +1,13 @@
 package rocks.athrow.android_udacity_reviews.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
 
@@ -18,8 +21,11 @@ import rocks.athrow.android_udacity_reviews.data.SummaryObject;
 public class ProjectSummaryAdapter extends RecyclerView.Adapter<ProjectSummaryAdapter.ViewHolder> {
     private final ArrayList<SummaryObject> summaryObjects;
 
-    public ProjectSummaryAdapter(ArrayList<SummaryObject> summaryObjects) {
+    private Context mContext;
+
+    public ProjectSummaryAdapter(ArrayList<SummaryObject> summaryObjects, Context context) {
         this.summaryObjects = summaryObjects;
+        this.mContext = context;
     }
 
     @Override
@@ -29,7 +35,7 @@ public class ProjectSummaryAdapter extends RecyclerView.Adapter<ProjectSummaryAd
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = summaryObjects.get(position);
         String projectName = holder.mItem.getProjectName();
         String projectCount = holder.mItem.getProjectCount();
@@ -40,6 +46,16 @@ public class ProjectSummaryAdapter extends RecyclerView.Adapter<ProjectSummaryAd
         holder.projectRevenueView.setText(projectRevenue);
         holder.projectHoursView.setText(projecHours);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int[] ratingsArrayForSpecificProject = holder.mItem.getRatingsForSpecificProject();
+                int[] ratingsArrayForProjects = holder.mItem.getRatingsForProjects();
+
+                final RatingBarItemAdapter adapter = new RatingBarItemAdapter(ratingsArrayForSpecificProject, ratingsArrayForProjects);
+                new MaterialDialog.Builder(mContext).title(holder.mItem.getProjectName()).adapter(adapter, null).show();
+            }
+        });
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,10 +67,10 @@ public class ProjectSummaryAdapter extends RecyclerView.Adapter<ProjectSummaryAd
 
         ViewHolder(View view) {
             super(view);
-            projectNameView = (TextView) view.findViewById(R.id.project_name);
-            projectCountView = (TextView) view.findViewById(R.id.project_count);
-            projectHoursView = (TextView) view.findViewById(R.id.project_hours);
-            projectRevenueView = (TextView) view.findViewById(R.id.project_revenue);
+            projectNameView = view.findViewById(R.id.project_name);
+            projectCountView = view.findViewById(R.id.project_count);
+            projectHoursView = view.findViewById(R.id.project_hours);
+            projectRevenueView = view.findViewById(R.id.project_revenue);
         }
     }
 

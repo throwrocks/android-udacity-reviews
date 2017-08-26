@@ -57,13 +57,13 @@ public class ReportsActivityFragment extends Fragment {
         // Inflate the layout
         mRootView = inflater.inflate(R.layout.fragment_reports, container, false);
         mRecyclerView = mRootView.findViewById(R.id.reports_project_summary);
-        mReportBodyView = (LinearLayout) mRootView.findViewById(R.id.report_body);
-        mReportFooterView = (LinearLayout) mRootView.findViewById(R.id.report_footer);
-        mReportMessage = (TextView) mRootView.findViewById(R.id.reports_message);
+        mReportBodyView = mRootView.findViewById(R.id.report_body);
+        mReportFooterView = mRootView.findViewById(R.id.report_footer);
+        mReportMessage = mRootView.findViewById(R.id.reports_message);
         // Set the date range views
-        mDate1View = (TextView) mRootView.findViewById(R.id.reports_date1);
-        mDate2View = (TextView) mRootView.findViewById(R.id.reports_date2);
-        Button queryButton = (Button) mRootView.findViewById(R.id.reports_query_button);
+        mDate1View = mRootView.findViewById(R.id.reports_date1);
+        mDate2View = mRootView.findViewById(R.id.reports_date2);
+        Button queryButton = mRootView.findViewById(R.id.reports_query_button);
         // Set the views
         if (!reportDate1.equals(Constants.PREF_EMPTY_STRING) && !reportDate2.equals(Constants.PREF_EMPTY_STRING)) {
             mDate1View.setText(reportDate1);
@@ -156,7 +156,7 @@ public class ReportsActivityFragment extends Fragment {
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new ProjectSummaryAdapter(mSummaryObjects);
+        mAdapter = new ProjectSummaryAdapter(mSummaryObjects, getContext());
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -165,9 +165,9 @@ public class ReportsActivityFragment extends Fragment {
         String countDisplay = summaryReviews.getReviewsCount();
         String hoursDisplay = summaryReviews.getElapsedTime();
         String revenueDisplay = summaryReviews.getReviewsRevenue();
-        TextView countView = (TextView) mRootView.findViewById(R.id.reports_count_reviews);
-        TextView hoursView = (TextView) mRootView.findViewById(R.id.report_hours);
-        TextView revenueView = (TextView) mRootView.findViewById(R.id.reports_revenue);
+        TextView countView = mRootView.findViewById(R.id.reports_count_reviews);
+        TextView hoursView = mRootView.findViewById(R.id.report_hours);
+        TextView revenueView = mRootView.findViewById(R.id.reports_revenue);
         revenueView.setText(revenueDisplay);
         hoursView.setText(hoursDisplay);
         countView.setText(countDisplay);

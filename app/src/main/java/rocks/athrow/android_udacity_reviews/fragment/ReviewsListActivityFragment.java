@@ -47,7 +47,7 @@ public class ReviewsListActivityFragment extends android.support.v4.app.Fragment
         }
         final Context context = getContext();
         // Set up the SwipeRefreshLayout
-        swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        swipeContainer = rootView.findViewById(R.id.swipeContainer);
         // with a callBack to remove itself and present a toast when finishing the FetchReviews task
         // and with a listener to trigger the FetchReviews task
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

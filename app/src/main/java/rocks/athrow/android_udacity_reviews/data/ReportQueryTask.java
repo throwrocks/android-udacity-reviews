@@ -2,7 +2,6 @@ package rocks.athrow.android_udacity_reviews.data;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,6 +57,30 @@ public class ReportQueryTask extends AsyncTask<String, Void, ArrayList<SummaryOb
         if (count == 0) {
             return null;
         }
+
+        int[] ratingsArrayProjects = new int[5];
+
+        for (int i=0;i<count;i++) {
+            switch (results.get(i).getFeedback_rating()) {
+                case 1:
+                    ratingsArrayProjects[0]++;
+                    break;
+                case 2:
+                    ratingsArrayProjects[1]++;
+                    break;
+                case 3:
+                    ratingsArrayProjects[2]++;
+                    break;
+                case 4:
+                    ratingsArrayProjects[3]++;
+                    break;
+                case 5:
+                    ratingsArrayProjects[4]++;
+                    break;
+                default:
+            }
+        }
+
         Number revenue = results.sum(FIELD_PRICE);
         Number hours = results.sum(FIELD_ELAPSED_TIME);
         // Store the reviews summary
@@ -83,9 +106,33 @@ public class ReportQueryTask extends AsyncTask<String, Void, ArrayList<SummaryOb
                 Number projectRevenue = projectResults.sum(FIELD_PRICE);
                 long projectHours = projectResults.sum(FIELD_HOURS).longValue();
                 int projectsCount = projectResults.size();
+
+                int[] ratingsArraySpecificProject = new int[5];
+
+                for (int j = 0; j < projectResults.size(); j++) {
+                    switch (projectResults.get(j).getFeedback_rating()) {
+                        case 1:
+                            ratingsArraySpecificProject[0]++;
+                            break;
+                        case 2:
+                            ratingsArraySpecificProject[1]++;
+                            break;
+                        case 3:
+                            ratingsArraySpecificProject[2]++;
+                            break;
+                        case 4:
+                            ratingsArraySpecificProject[3]++;
+                            break;
+                        case 5:
+                            ratingsArraySpecificProject[4]++;
+                            break;
+                        default:
+                    }
+                }
+
                 // Store the reports_project's summary
                 SummaryObject summaryProject = new SummaryObject(VALUE_PROJECTS, projectName,
-                        projectsCount, projectRevenue, projectHours);
+                        projectsCount, projectRevenue, projectHours, ratingsArraySpecificProject, ratingsArrayProjects);
                 summaryObjects.add(summaryProject);
                 i++;
             }
