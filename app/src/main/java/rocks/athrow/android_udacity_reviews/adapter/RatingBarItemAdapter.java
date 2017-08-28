@@ -35,7 +35,13 @@ class RatingBarItemAdapter extends RecyclerView.Adapter<RatingBarItemAdapter.But
     @Override
     public void onBindViewHolder(ButtonVH holder, int position) {
         // format string to have only one decimal place
-        holder.count.setText(itemsForSpecificProject[position] + " (" + String.format("%.1f", (((float)itemsForSpecificProject[position]/itemsForProjects[position])*100)) + "%)");
+        float percentage;
+        if (itemsForProjects[position] == 0) {
+            percentage = 0;
+        } else {
+            percentage = (((float)itemsForSpecificProject[position]/itemsForProjects[position])*100);
+        }
+        holder.count.setText(itemsForSpecificProject[position] + " (" + String.format("%.1f", percentage) + "%)");
         holder.rating.setRating(position+1);
     }
 
