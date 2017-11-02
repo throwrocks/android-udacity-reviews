@@ -16,11 +16,9 @@ import rocks.athrow.android_udacity_reviews.R;
 class RatingBarItemAdapter extends RecyclerView.Adapter<RatingBarItemAdapter.ButtonVH> {
 
     private final int[] itemsForSpecificProject;
-    private final int[] itemsForProjects;
 
-    RatingBarItemAdapter(int[] itemsForSpecificProject, int[] itemForProjects) {
+    RatingBarItemAdapter(int[] itemsForSpecificProject) {
         this.itemsForSpecificProject = itemsForSpecificProject;
-        this.itemsForProjects = itemForProjects;
     }
 
     @Override
@@ -34,14 +32,19 @@ class RatingBarItemAdapter extends RecyclerView.Adapter<RatingBarItemAdapter.But
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ButtonVH holder, int position) {
-        // format string to have only one decimal place
-        float percentage;
-        if (itemsForProjects[position] == 0) {
+        // format string to have 3 decimal places
+        double percentage;
+        float itemsForSpecificProjectSum = 0;
+        for (int i=0;i<itemsForSpecificProject.length;i++) {
+            itemsForSpecificProjectSum += itemsForSpecificProject[i];
+        }
+        if (itemsForSpecificProject[position] == 0) {
             percentage = 0;
         } else {
-            percentage = (((float)itemsForSpecificProject[position]/itemsForProjects[position])*100);
+            percentage = (((double) itemsForSpecificProject[position]/itemsForSpecificProjectSum)*100);
         }
-        holder.count.setText(itemsForSpecificProject[position] + " (" + String.format("%.1f", percentage) + "%)");
+        // "%.3f" means 3 decimal places
+        holder.count.setText(itemsForSpecificProject[position] + " (" + String.format("%.3f", percentage) + "%)");
         holder.rating.setRating(position+1);
     }
 

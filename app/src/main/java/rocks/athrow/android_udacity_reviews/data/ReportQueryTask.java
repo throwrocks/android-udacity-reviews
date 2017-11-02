@@ -11,6 +11,7 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import rocks.athrow.android_udacity_reviews.interfaces.OnReportQueryCompleted;
+import rocks.athrow.android_udacity_reviews.util.Constants;
 
 /**
  * ReportQueryTask
@@ -58,24 +59,24 @@ public class ReportQueryTask extends AsyncTask<String, Void, ArrayList<SummaryOb
             return null;
         }
 
-        int[] ratingsArrayProjects = new int[5];
+        Constants.ratingsArrayProjects = new int[5];
 
         for (int i=0;i<count;i++) {
             switch (results.get(i).getFeedback_rating()) {
                 case 1:
-                    ratingsArrayProjects[0]++;
+                    Constants.ratingsArrayProjects[0]++;
                     break;
                 case 2:
-                    ratingsArrayProjects[1]++;
+                    Constants.ratingsArrayProjects[1]++;
                     break;
                 case 3:
-                    ratingsArrayProjects[2]++;
+                    Constants.ratingsArrayProjects[2]++;
                     break;
                 case 4:
-                    ratingsArrayProjects[3]++;
+                    Constants.ratingsArrayProjects[3]++;
                     break;
                 case 5:
-                    ratingsArrayProjects[4]++;
+                    Constants.ratingsArrayProjects[4]++;
                     break;
                 default:
             }
@@ -132,7 +133,7 @@ public class ReportQueryTask extends AsyncTask<String, Void, ArrayList<SummaryOb
 
                 // Store the reports_project's summary
                 SummaryObject summaryProject = new SummaryObject(VALUE_PROJECTS, projectName,
-                        projectsCount, projectRevenue, projectHours, ratingsArraySpecificProject, ratingsArrayProjects);
+                        projectsCount, projectRevenue, projectHours, ratingsArraySpecificProject, Constants.ratingsArrayProjects);
                 summaryObjects.add(summaryProject);
                 i++;
             }

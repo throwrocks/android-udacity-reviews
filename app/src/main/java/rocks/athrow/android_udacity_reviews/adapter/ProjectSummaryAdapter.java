@@ -50,9 +50,8 @@ public class ProjectSummaryAdapter extends RecyclerView.Adapter<ProjectSummaryAd
             @Override
             public void onClick(View view) {
                 int[] ratingsArrayForSpecificProject = holder.mItem.getRatingsForSpecificProject();
-                int[] ratingsArrayForProjects = holder.mItem.getRatingsForProjects();
 
-                final RatingBarItemAdapter adapter = new RatingBarItemAdapter(ratingsArrayForSpecificProject, ratingsArrayForProjects);
+                final RatingBarItemAdapter adapter = new RatingBarItemAdapter(ratingsArrayForSpecificProject);
                 new MaterialDialog.Builder(mContext).title(holder.mItem.getProjectName()).adapter(adapter, null).show();
             }
         });
