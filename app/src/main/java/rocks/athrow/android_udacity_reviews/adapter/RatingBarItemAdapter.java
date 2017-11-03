@@ -2,6 +2,7 @@ package rocks.athrow.android_udacity_reviews.adapter;
 
 import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,22 +36,45 @@ class RatingBarItemAdapter extends RecyclerView.Adapter<RatingBarItemAdapter.But
         // format string to have 3 decimal places
         double percentage;
         float itemsForSpecificProjectSum = 0;
-        for (int i=0;i<itemsForSpecificProject.length;i++) {
-            itemsForSpecificProjectSum += itemsForSpecificProject[i];
+        String ratingsText;
+        float ratings;
+        for (int anItemsForSpecificProject : itemsForSpecificProject) {
+            itemsForSpecificProjectSum += anItemsForSpecificProject;
         }
-        if (itemsForSpecificProject[position] == 0) {
-            percentage = 0;
+
+        if (position == 5) {
+            // show average
+            ratings = calculateAverageRatings(itemsForSpecificProject);
+            ratingsText = calculateAverageRatings(itemsForSpecificProject) + " (AVERAGE)";
         } else {
-            percentage = (((double) itemsForSpecificProject[position]/itemsForSpecificProjectSum)*100);
+            ratings = position + 1;
+            if (itemsForSpecificProject[position] == 0) {
+                percentage = 0;
+            } else {
+                percentage = (((double) itemsForSpecificProject[position] / itemsForSpecificProjectSum) * 100);
+            }
+
+            // "%.3f" means 3 decimal places
+            ratingsText = itemsForSpecificProject[position] + " (" + String.format("%.3f", percentage) + "%)";
         }
-        // "%.3f" means 3 decimal places
-        holder.count.setText(itemsForSpecificProject[position] + " (" + String.format("%.3f", percentage) + "%)");
-        holder.rating.setRating(position+1);
+
+        holder.count.setText(ratingsText);
+        holder.rating.setRating(ratings);
+    }
+
+    private float calculateAverageRatings(int[] ratingsArray) {
+        int starSum = ratingsArray[0] + ratingsArray[1] * 2 + ratingsArray[2] * 3 + ratingsArray[3] * 4 + ratingsArray[4] * 5;
+        int ratingsSum = ratingsArray[0] + ratingsArray[1] + ratingsArray[2] + ratingsArray[3] + ratingsArray[4];
+        if (ratingsSum == 0) {
+            return 0;
+        }
+        Log.i("Adapter", "result:" + starSum / ratingsSum);
+        return Float.parseFloat((String.format("%.3f", ((float)starSum/ratingsSum))));
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 6;
     }
 
     static class ButtonVH extends RecyclerView.ViewHolder {
