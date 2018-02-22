@@ -1,8 +1,7 @@
 package rocks.athrow.android_udacity_reviews.data;
 
-import java.util.ArrayList;
-
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import rocks.athrow.android_udacity_reviews.util.Utilities;
 
@@ -115,7 +115,8 @@ public final class API {
             }
             if (buffer.length() == 0) {
                 return apiResponse;
-            }
+        }
+            Log.i("API", "response string: " + buffer.toString());
             apiResponse.setResponseText(buffer.toString());
         } catch (IOException v) {
             apiResponse.setResponseText(v.toString());

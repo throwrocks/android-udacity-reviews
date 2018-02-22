@@ -19,4 +19,7 @@ public final class Constants {
     public static final String API_MODULE_FEEDBACKS = "student_feedbacks";
     // Utility Constants
     public static final String UTIL_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
+    // array of ratings for each individual project
+    public static int[] ratingsArrayProjects;
 }

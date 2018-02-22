@@ -43,15 +43,15 @@ public class ReviewListAdapter extends RealmRecyclerViewAdapter<RealmReview> {
 
         ViewHolder(View view) {
             super(view);
-            viewReviewItem = (LinearLayout) view.findViewById(R.id.review_item);
-            viewProjectName = (TextView) view.findViewById(R.id.review_item_project_name);
-            viewCompletedAt = (TextView) view.findViewById(R.id.review_item_completed_at);
-            viewUserName = (TextView) view.findViewById(R.id.review_user_name);
-            viewUserName = (TextView) view.findViewById(R.id.review_user_name);
-            viewResult = (TextView) view.findViewById(R.id.review_result);
-            viewReviewId = (TextView) view.findViewById(R.id.review_id);
-            ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
-            viewReviewNone = (TextView) view.findViewById(R.id.review_rating_none);
+            viewReviewItem = view.findViewById(R.id.review_item);
+            viewProjectName = view.findViewById(R.id.review_item_project_name);
+            viewCompletedAt = view.findViewById(R.id.review_item_completed_at);
+            viewUserName = view.findViewById(R.id.review_user_name);
+            viewUserName = view.findViewById(R.id.review_user_name);
+            viewResult = view.findViewById(R.id.review_result);
+            viewReviewId = view.findViewById(R.id.review_id);
+            ratingBar = view.findViewById(R.id.rating_bar);
+            viewReviewNone = view.findViewById(R.id.review_rating_none);
         }
     }
 

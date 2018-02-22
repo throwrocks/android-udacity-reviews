@@ -12,16 +12,28 @@ import rocks.athrow.android_udacity_reviews.util.Utilities;
  */
 public class SummaryObject {
     // The type of SummaryObject (reviews or project)
-    String type;
+    private String type;
     // Reviews Summary fields
-    int reviewsCount;
-    Number reviewsRevenue;
-    Number elapsedTime;
+    private int reviewsCount;
+    private Number reviewsRevenue;
+    private Number elapsedTime;
     // Project Summary fields
-    String projectName;
-    int projectCount;
-    Number projectRevenue;
-    long projectHours;
+    private String projectName;
+    private int projectCount;
+    private Number projectRevenue;
+    private long projectHours;
+
+    private int[] ratingsForSpecificProject;
+
+    private int[] ratingsForProjects;
+
+    public int[] getRatingsForSpecificProject() {
+        return ratingsForSpecificProject;
+    }
+
+    public int[] getRatingsForProjects() {
+        return ratingsForProjects;
+    }
 
     /**
      * SummaryObject
@@ -31,7 +43,7 @@ public class SummaryObject {
      * @param reviewsRevenue the total revenue for the reviews
      * @param elapsedTime    the total time between assignment and completion, in millis
      */
-    public SummaryObject(String type, int reviewsCount, Number reviewsRevenue, Number elapsedTime) {
+    SummaryObject(String type, int reviewsCount, Number reviewsRevenue, Number elapsedTime) {
         this.type = type;
         this.reviewsCount = reviewsCount;
         this.reviewsRevenue = reviewsRevenue;
@@ -75,12 +87,14 @@ public class SummaryObject {
      * @param projectHours   the total hours for the project
      */
     public SummaryObject(String type, String projectName, int projectCount,
-                         Number projectRevenue, long projectHours) {
+                         Number projectRevenue, long projectHours, int[] ratingsForSpecificProject, int[] ratingsForProjects) {
         this.type = type;
         this.projectName = projectName;
         this.projectCount = projectCount;
         this.projectRevenue = projectRevenue;
         this.projectHours = projectHours;
+        this.ratingsForSpecificProject = ratingsForSpecificProject;
+        this.ratingsForProjects = ratingsForProjects;
     }
 
     /**

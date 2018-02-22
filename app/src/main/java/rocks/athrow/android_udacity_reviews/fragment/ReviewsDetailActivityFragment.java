@@ -104,19 +104,19 @@ public class ReviewsDetailActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_reviews_detail, container, false);
         // Get the views
-        TextView projectNameView = (TextView) rootView.findViewById(R.id.review_detail_review_project_name);
-        TextView userNameView = (TextView) rootView.findViewById(R.id.review_detail_user_name);
-        TextView reviewRateView = (TextView) rootView.findViewById(R.id.review_detail_review_rate);
-        TextView reviewIdView = (TextView) rootView.findViewById(R.id.review_detail_review_id);
-        TextView assignedAtView = (TextView) rootView.findViewById(R.id.review_detail_assigned_at);
-        TextView completedAtView = (TextView) rootView.findViewById(R.id.review_detail_completed_at);
-        TextView resultView = (TextView) rootView.findViewById(R.id.review_detail_result);
-        TextView elapsedTimeView = (TextView) rootView.findViewById(R.id.review_detail_elapsed_time);
-        Button reviewButton = (Button) rootView.findViewById(R.id.review_details_project_review);
-        TextView studentNotesView = (TextView) rootView.findViewById(R.id.review_detail_student_notes);
-        RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.rating_bar);
-        TextView viewReviewNone = (TextView) rootView.findViewById(R.id.review_rating_none);
-        TextView viewStudentFeedback = (TextView) rootView.findViewById(R.id.review_detail_student_feedback);
+        TextView projectNameView = rootView.findViewById(R.id.review_detail_review_project_name);
+        TextView userNameView = rootView.findViewById(R.id.review_detail_user_name);
+        TextView reviewRateView = rootView.findViewById(R.id.review_detail_review_rate);
+        TextView reviewIdView = rootView.findViewById(R.id.review_detail_review_id);
+        TextView assignedAtView = rootView.findViewById(R.id.review_detail_assigned_at);
+        TextView completedAtView = rootView.findViewById(R.id.review_detail_completed_at);
+        TextView resultView = rootView.findViewById(R.id.review_detail_result);
+        TextView elapsedTimeView = rootView.findViewById(R.id.review_detail_elapsed_time);
+        Button reviewButton = rootView.findViewById(R.id.review_details_project_review);
+        TextView studentNotesView = rootView.findViewById(R.id.review_detail_student_notes);
+        RatingBar ratingBar = rootView.findViewById(R.id.rating_bar);
+        TextView viewReviewNone = rootView.findViewById(R.id.review_rating_none);
+        TextView viewStudentFeedback = rootView.findViewById(R.id.review_detail_student_feedback);
         // Set the views
         projectNameView.setText(projectName);
         reviewRateView.setText(priceDisplay);
